@@ -13,36 +13,19 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: 'Nunito', sans-serif; background: #f0f7ff; color: #0c1a2e; min-height: 100vh; }
-
-  /* HEADER */
-  .header {
-    background: linear-gradient(135deg, #0c1a2e 0%, #0e3460 60%, #0ea5e9 100%);
-    padding: 20px 16px 16px;
-    color: #fff;
-    position: sticky; top: 0; z-index: 100;
-  }
+  .header { background: linear-gradient(135deg, #0c1a2e 0%, #0e3460 60%, #0ea5e9 100%); padding: 20px 16px 16px; color: #fff; position: sticky; top: 0; z-index: 100; }
   .header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-  .header-logo { font-size: 28px; }
-  .header-title { font-weight: 900; font-size: 20px; letter-spacing: -0.5px; }
-  .header-sub { font-size: 12px; opacity: 0.7; }
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .stat-card { border-radius: 12px; padding: 8px 4px; text-align: center; border: 1px solid; }
   .stat-val { font-weight: 900; font-size: 22px; }
   .stat-lbl { font-size: 10px; color: #cce4f7; font-weight: 600; }
-
-  /* MAIN */
   .main { max-width: 480px; margin: 0 auto; padding: 14px 12px 80px; }
-
-  /* SEARCH & FILTERS */
   .search-bar { display: flex; gap: 8px; margin-bottom: 10px; }
   .search-bar input { flex: 1; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #bae6fd; font-size: 14px; outline: none; font-family: 'Nunito', sans-serif; background: #fff; }
   .filters { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-  .filter-btn { padding: 5px 14px; border-radius: 999px; border: 1.5px solid #bae6fd; background: #fff; color: #0369a1; font-weight: 700; font-size: 12px; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all .15s; }
+  .filter-btn { padding: 5px 14px; border-radius: 999px; border: 1.5px solid #bae6fd; background: #fff; color: #0369a1; font-weight: 700; font-size: 12px; cursor: pointer; font-family: 'Nunito', sans-serif; }
   .filter-btn.active { background: #0ea5e9; color: #fff; border-color: #0ea5e9; }
-
-  /* CLIENT CARDS */
-  .client-card { background: #fff; border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(14,165,233,.08); cursor: pointer; transition: box-shadow .2s, transform .1s; border: 1.5px solid #e0f2fe; }
-  .client-card:active { transform: scale(0.98); }
+  .client-card { background: #fff; border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(14,165,233,.08); cursor: pointer; border: 1.5px solid #e0f2fe; }
   .client-card.urgent { border-color: #fdba74; }
   .client-card.overdue { border-color: #fca5a5; background: #fff9f9; }
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
@@ -50,39 +33,26 @@
   .card-addr { font-size: 12px; color: #64748b; margin-top: 2px; }
   .card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
   .card-info { font-size: 12px; color: #0369a1; font-weight: 700; }
-
-  /* BADGES */
   .badge { padding: 2px 10px; border-radius: 999px; font-weight: 700; font-size: 12px; white-space: nowrap; }
   .badge-ok { background: #dcfce7; color: #15803d; }
   .badge-warn { background: #fef9c3; color: #a16207; }
   .badge-urgent { background: #ffedd5; color: #ea580c; }
   .badge-overdue { background: #fee2e2; color: #dc2626; }
   .badge-today { background: #fef9c3; color: #b45309; }
-
-  /* BUTTONS */
-  .btn { padding: 10px 16px; border-radius: 12px; border: none; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Nunito', sans-serif; transition: opacity .15s; }
-  .btn:active { opacity: .8; }
+  .btn { padding: 10px 16px; border-radius: 12px; border: none; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Nunito', sans-serif; }
   .btn-primary { background: linear-gradient(90deg, #0ea5e9, #0284c7); color: #fff; }
   .btn-sm { padding: 5px 12px; font-size: 11px; border-radius: 999px; }
   .btn-outline { background: #fff; border: 1.5px solid #bae6fd; color: #0369a1; }
   .btn-danger { background: #fff; border: 1.5px solid #fca5a5; color: #dc2626; }
   .btn-block { width: 100%; padding: 14px; border-radius: 16px; font-size: 16px; }
-
-  /* FAB */
-  .fab { position: fixed; bottom: 24px; right: 24px; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; font-size: 28px; cursor: pointer; box-shadow: 0 4px 20px rgba(14,165,233,.5); display: flex; align-items: center; justify-content: center; font-family: 'Nunito', sans-serif; z-index: 50; transition: transform .15s; }
-  .fab:active { transform: scale(.93); }
-
-  /* FORM */
+  .fab { position: fixed; bottom: 24px; right: 24px; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; font-size: 28px; cursor: pointer; box-shadow: 0 4px 20px rgba(14,165,233,.5); display: flex; align-items: center; justify-content: center; z-index: 50; }
   .page-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
   .back-btn { background: none; border: none; font-size: 24px; cursor: pointer; padding: 4px; }
   .page-title { font-weight: 900; font-size: 18px; flex: 1; }
   .form-group { margin-bottom: 12px; }
   .form-label { font-weight: 700; font-size: 13px; color: #0369a1; display: block; margin-bottom: 4px; }
   .form-input { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #bae6fd; font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; background: #fff; }
-  .form-input:focus { border-color: #0ea5e9; }
   textarea.form-input { resize: vertical; }
-
-  /* DETAIL */
   .detail-card { background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(14,165,233,.08); border: 1.5px solid #e0f2fe; }
   .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .detail-lbl { font-size: 11px; color: #64748b; font-weight: 600; }
@@ -95,130 +65,89 @@
   .history-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
   .history-date { font-size: 11px; color: #64748b; white-space: nowrap; margin-top: 2px; }
   .history-action { font-size: 13px; font-weight: 600; }
-
-  /* CONFIRM DELETE */
   .confirm-delete { background: #fff1f2; border: 1.5px solid #fca5a5; border-radius: 14px; padding: 14px; text-align: center; }
   .confirm-btns { display: flex; gap: 8px; margin-top: 10px; }
-
-  /* EMPTY STATE */
   .empty { text-align: center; padding: 40px 0; color: #64748b; }
   .empty-icon { font-size: 48px; margin-bottom: 8px; }
-  .empty-title { font-weight: 700; }
-  .empty-sub { font-size: 13px; margin-top: 4px; }
-
-  /* LOADING */
-  .loading { text-align: center; padding: 30px; color: #0ea5e9; }
   .spinner { width: 36px; height: 36px; border: 3px solid #bae6fd; border-top-color: #0ea5e9; border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 10px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* TOAST */
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #0c1a2e; color: #fff; padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 13px; z-index: 999; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; }
-
-  /* SETUP SCREEN */
   .setup { max-width: 480px; margin: 0 auto; padding: 24px 16px; }
   .setup-card { background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 20px rgba(14,165,233,.1); border: 1.5px solid #e0f2fe; }
   .setup-title { font-weight: 900; font-size: 20px; margin-bottom: 6px; }
-  .setup-sub { color: #64748b; font-size: 14px; margin-bottom: 20px; }
-  .setup-step { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
-  .step-num { width: 28px; height: 28px; border-radius: 50%; background: #0ea5e9; color: #fff; font-weight: 900; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-  .step-text { font-size: 14px; line-height: 1.5; }
-  .step-text a { color: #0ea5e9; font-weight: 700; }
-  .step-text code { background: #f0f9ff; padding: 2px 6px; border-radius: 6px; font-size: 12px; color: #0369a1; font-weight: 700; }
+  .setup-sub { color: #64748b; font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
 </style>
 </head>
 <body>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
-
-<!-- APP -->
 <div id="app"></div>
-
 <script>
-// ============================================================
-//  ESTADO GLOBAL
-// ============================================================
 const STATE = {
-  view: 'setup',      // setup | lista | nuevo | detalle | editar
-  clients: [],
-  selected: null,
-  search: '',
-  filter: 'todos',
-  loading: false,
-  scriptUrl: localStorage.getItem('aguacontrol_url') || '',
-  showConfirmDelete: false,
-  form: emptyForm(),
-  syncing: false,
+  view: 'setup', clients: [], selected: null, search: '', filter: 'todos',
+  loading: false, scriptUrl: localStorage.getItem('aguacontrol_url') || '',
+  showConfirmDelete: false, form: emptyForm(), syncing: false,
 };
 
-function emptyForm() {
-  return { nombre:'', telefono:'', direccion:'', barrio:'', fechaInicio: today(), bidones: 6, notas:'' };
-}
-
-// ============================================================
-//  UTILS
-// ============================================================
-function today() {
-  return new Date().toISOString().split('T')[0];
-}
-function addMonths(dateStr, n) {
-  const d = new Date(dateStr);
-  d.setMonth(d.getMonth() + n);
-  return d.toISOString().split('T')[0];
-}
-function daysUntil(dateStr) {
-  const diff = new Date(dateStr) - new Date(today());
-  return Math.ceil(diff / (1000*60*60*24));
-}
-function fmtDate(dateStr) {
-  if (!dateStr) return '—';
-  const [y,m,d] = dateStr.split('-');
-  return `${d}/${m}/${y}`;
-}
+function emptyForm() { return { nombre:'', telefono:'', direccion:'', barrio:'', fechaInicio: today(), bidones: 6, notas:'' }; }
+function today() { return new Date().toISOString().split('T')[0]; }
+function addMonths(dateStr, n) { const d = new Date(dateStr); d.setMonth(d.getMonth() + n); return d.toISOString().split('T')[0]; }
+function daysUntil(dateStr) { return Math.ceil((new Date(dateStr) - new Date(today())) / (1000*60*60*24)); }
+function fmtDate(dateStr) { if (!dateStr) return '—'; const [y,m,d] = dateStr.split('-'); return `${d}/${m}/${y}`; }
 function badgeHtml(days) {
-  if (days < 0)  return `<span class="badge badge-overdue">Vencido hace ${Math.abs(days)}d</span>`;
+  if (days < 0) return `<span class="badge badge-overdue">Vencido hace ${Math.abs(days)}d</span>`;
   if (days === 0) return `<span class="badge badge-today">¡Hoy!</span>`;
-  if (days <= 5)  return `<span class="badge badge-urgent">En ${days}d</span>`;
+  if (days <= 5) return `<span class="badge badge-urgent">En ${days}d</span>`;
   if (days <= 10) return `<span class="badge badge-warn">En ${days}d</span>`;
   return `<span class="badge badge-ok">En ${days}d</span>`;
 }
-function cardClass(days) {
-  if (days < 0) return 'client-card overdue';
-  if (days <= 5) return 'client-card urgent';
-  return 'client-card';
-}
-function deliveryClass(days) {
-  if (days < 0) return 'delivery-card overdue';
-  if (days <= 5) return 'delivery-card urgent';
-  return 'delivery-card ok';
-}
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
 }
 function stats() {
-  const vencidos = STATE.clients.filter(c => daysUntil(c.proximaEntrega) < 0).length;
-  const urgentes = STATE.clients.filter(c => { const d=daysUntil(c.proximaEntrega); return d>=0&&d<=5; }).length;
-  const ok = STATE.clients.filter(c => daysUntil(c.proximaEntrega) > 5).length;
-  return { vencidos, urgentes, ok, total: STATE.clients.length };
+  const v = STATE.clients.filter(c => daysUntil(c.proximaEntrega) < 0).length;
+  const u = STATE.clients.filter(c => { const d=daysUntil(c.proximaEntrega); return d>=0&&d<=5; }).length;
+  const o = STATE.clients.filter(c => daysUntil(c.proximaEntrega) > 5).length;
+  return { vencidos:v, urgentes:u, ok:o, total:STATE.clients.length };
 }
 
-// ============================================================
-//  GOOGLE SHEETS API
-// ============================================================
+// JSONP universal - sirve tanto para GET como para guardar
+function jsonpCall(url) {
+  return new Promise((resolve, reject) => {
+    const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
+    const script = document.createElement('script');
+    const timeout = setTimeout(() => {
+      delete window[cbName];
+      if (script.parentNode) document.body.removeChild(script);
+      reject(new Error('Timeout'));
+    }, 15000);
+    window[cbName] = (data) => {
+      clearTimeout(timeout);
+      delete window[cbName];
+      if (script.parentNode) document.body.removeChild(script);
+      resolve(data);
+    };
+    script.src = url + '&callback=' + cbName;
+    script.onerror = () => {
+      clearTimeout(timeout);
+      if (script.parentNode) document.body.removeChild(script);
+      reject(new Error('Error de red'));
+    };
+    document.body.appendChild(script);
+  });
+}
+
 async function fetchClients() {
   if (!STATE.scriptUrl) return;
   STATE.loading = true; render();
   try {
-    const res = await fetch(STATE.scriptUrl + '?action=getAll');
-    const data = await res.json();
+    const data = await jsonpCall(STATE.scriptUrl + '?action=getAll');
     if (data.success) STATE.clients = data.clients;
-    else showToast('⚠️ Error al cargar datos');
+    else showToast('⚠️ ' + (data.error || 'Error al cargar'));
   } catch(e) {
-    showToast('⚠️ Sin conexión');
+    showToast('⚠️ Error: ' + e.message);
   }
   STATE.loading = false; render();
 }
@@ -227,77 +156,57 @@ async function saveClients() {
   if (!STATE.scriptUrl) return;
   STATE.syncing = true; render();
   try {
-    await fetch(STATE.scriptUrl, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'save', clients: STATE.clients })
-    });
-    showToast('✅ Guardado en la nube');
+    const encoded = encodeURIComponent(JSON.stringify(STATE.clients));
+    const url = STATE.scriptUrl + '?action=save&data=' + encoded;
+    const data = await jsonpCall(url);
+    if (data.success) showToast('✅ Guardado en la nube');
+    else showToast('⚠️ Error al guardar');
   } catch(e) {
-    showToast('⚠️ Error al guardar');
+    showToast('⚠️ Error al guardar: ' + e.message);
   }
   STATE.syncing = false; render();
 }
 
-// ============================================================
-//  ACCIONES
-// ============================================================
 function saveForm() {
   const f = STATE.form;
   if (!f.nombre.trim() || !f.direccion.trim()) { showToast('⚠️ Completá nombre y dirección'); return; }
   const proximaEntrega = addMonths(f.fechaInicio, 1);
   if (STATE.view === 'nuevo') {
-    const c = { id: Date.now(), ...f, proximaEntrega,
-      historial: [{ fecha: f.fechaInicio, accion: `Alta — Dispenser + ${f.bidones} bidones entregados` }] };
-    STATE.clients.push(c);
+    STATE.clients.push({ id: Date.now(), ...f, proximaEntrega, historial: [{ fecha: f.fechaInicio, accion: `Alta — Dispenser + ${f.bidones} bidones` }] });
   } else {
     const idx = STATE.clients.findIndex(c => c.id === STATE.selected.id);
     if (idx >= 0) STATE.clients[idx] = { ...STATE.clients[idx], ...f, proximaEntrega };
   }
-  saveClients();
-  STATE.view = 'lista'; STATE.form = emptyForm(); STATE.selected = null;
-  render();
+  saveClients(); STATE.view = 'lista'; STATE.form = emptyForm(); STATE.selected = null; render();
 }
 
 function registrarEntrega(id) {
-  const idx = STATE.clients.findIndex(c => c.id === id);
-  if (idx < 0) return;
+  const idx = STATE.clients.findIndex(c => c.id === id); if (idx < 0) return;
   const c = STATE.clients[idx];
-  STATE.clients[idx] = { ...c,
-    proximaEntrega: addMonths(today(), 1),
-    historial: [{ fecha: today(), accion: `Entrega realizada — ${c.bidones} bidones` }, ...(c.historial||[])]
-  };
+  STATE.clients[idx] = { ...c, proximaEntrega: addMonths(today(), 1), historial: [{ fecha: today(), accion: `Entrega — ${c.bidones} bidones` }, ...(c.historial||[])] };
   if (STATE.selected?.id === id) STATE.selected = STATE.clients[idx];
   saveClients(); render();
 }
 
 function deleteClient(id) {
   STATE.clients = STATE.clients.filter(c => c.id !== id);
-  STATE.showConfirmDelete = false;
-  STATE.view = 'lista'; STATE.selected = null;
+  STATE.showConfirmDelete = false; STATE.view = 'lista'; STATE.selected = null;
   saveClients(); render();
 }
 
 function filtered() {
   let list = [...STATE.clients];
-  if (STATE.search.trim())
-    list = list.filter(c =>
-      c.nombre.toLowerCase().includes(STATE.search.toLowerCase()) ||
-      c.direccion.toLowerCase().includes(STATE.search.toLowerCase()) ||
-      (c.barrio||'').toLowerCase().includes(STATE.search.toLowerCase())
-    );
+  if (STATE.search.trim()) list = list.filter(c =>
+    c.nombre.toLowerCase().includes(STATE.search.toLowerCase()) ||
+    c.direccion.toLowerCase().includes(STATE.search.toLowerCase()) ||
+    (c.barrio||'').toLowerCase().includes(STATE.search.toLowerCase()));
   if (STATE.filter === 'urgente') list = list.filter(c => { const d=daysUntil(c.proximaEntrega); return d>=0&&d<=5; });
   if (STATE.filter === 'vencido') list = list.filter(c => daysUntil(c.proximaEntrega) < 0);
   list.sort((a,b) => new Date(a.proximaEntrega) - new Date(b.proximaEntrega));
   return list;
 }
 
-// ============================================================
-//  RENDER
-// ============================================================
-function render() {
-  document.getElementById('app').innerHTML = buildApp();
-  bindEvents();
-}
+function render() { document.getElementById('app').innerHTML = buildApp(); bindEvents(); }
 
 function buildApp() {
   if (STATE.view === 'setup') return buildSetup();
@@ -305,307 +214,141 @@ function buildApp() {
   return `
     <div class="header">
       <div class="header-top">
-        <span class="header-logo">💧</span>
-        <div>
-          <div class="header-title">AguaControl</div>
-          <div class="header-sub">Gestión de clientes y repartos</div>
-        </div>
+        <span style="font-size:28px">💧</span>
+        <div><div style="font-weight:900;font-size:20px">AguaControl</div><div style="font-size:12px;opacity:.7">Gestión de clientes</div></div>
         ${STATE.syncing ? '<span style="margin-left:auto;font-size:12px;opacity:.7">☁️ Guardando...</span>' : ''}
       </div>
       <div class="stats">
-        ${[
-          {l:'Total',v:s.total,c:'#38bdf8',bg:'rgba(56,189,248,.15)'},
-          {l:'Urgentes',v:s.urgentes,c:'#fb923c',bg:'rgba(251,146,60,.15)'},
-          {l:'Vencidos',v:s.vencidos,c:'#f87171',bg:'rgba(248,113,113,.15)'},
-          {l:'Al día',v:s.ok,c:'#4ade80',bg:'rgba(74,222,128,.15)'},
-        ].map(s=>`
-          <div class="stat-card" style="background:${s.bg};border-color:${s.c}33">
-            <div class="stat-val" style="color:${s.c}">${s.v}</div>
-            <div class="stat-lbl">${s.l}</div>
-          </div>`).join('')}
+        ${[{l:'Total',v:s.total,c:'#38bdf8',bg:'rgba(56,189,248,.15)'},{l:'Urgentes',v:s.urgentes,c:'#fb923c',bg:'rgba(251,146,60,.15)'},{l:'Vencidos',v:s.vencidos,c:'#f87171',bg:'rgba(248,113,113,.15)'},{l:'Al día',v:s.ok,c:'#4ade80',bg:'rgba(74,222,128,.15)'}]
+          .map(s=>`<div class="stat-card" style="background:${s.bg};border-color:${s.c}33"><div class="stat-val" style="color:${s.c}">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('')}
       </div>
     </div>
     <div class="main">
-      ${STATE.view === 'lista' ? buildLista() : ''}
-      ${STATE.view === 'nuevo' || STATE.view === 'editar' ? buildForm() : ''}
-      ${STATE.view === 'detalle' ? buildDetalle() : ''}
+      ${STATE.view==='lista'?buildLista():''}
+      ${STATE.view==='nuevo'||STATE.view==='editar'?buildForm():''}
+      ${STATE.view==='detalle'?buildDetalle():''}
     </div>
-    ${STATE.view === 'lista' ? '<button class="fab" id="fabBtn">+</button>' : ''}
-  `;
+    ${STATE.view==='lista'?'<button class="fab" id="fabBtn">+</button>':''}`;
 }
 
 function buildSetup() {
   return `
-    <div class="header">
-      <div class="header-top">
-        <span class="header-logo">💧</span>
-        <div>
-          <div class="header-title">AguaControl</div>
-          <div class="header-sub">Configuración inicial</div>
-        </div>
+    <div class="header"><div class="header-top"><span style="font-size:28px">💧</span><div><div style="font-weight:900;font-size:20px">AguaControl</div><div style="font-size:12px;opacity:.7">Configuración</div></div></div></div>
+    <div class="setup"><div class="setup-card">
+      <div class="setup-title">⚙️ Conectar Google Sheets</div>
+      <div class="setup-sub">Pegá la URL de tu Google Apps Script.</div>
+      <div class="form-group">
+        <label class="form-label">URL de Google Apps Script</label>
+        <input class="form-input" id="urlInput" type="url" placeholder="https://script.google.com/macros/s/..." value="${STATE.scriptUrl}" style="font-size:12px">
       </div>
-    </div>
-    <div class="setup">
-      <div class="setup-card">
-        <div class="setup-title">⚙️ Conectar con Google Sheets</div>
-        <div class="setup-sub">Hacé esto una sola vez para que los datos queden guardados en la nube y compartidos con tu equipo.</div>
-
-        <div class="setup-step">
-          <div class="step-num">1</div>
-          <div class="step-text">Abrí <a href="https://script.google.com" target="_blank">script.google.com</a> y creá un proyecto nuevo.</div>
-        </div>
-        <div class="setup-step">
-          <div class="step-num">2</div>
-          <div class="step-text">Borrá el código que aparece y pegá el contenido del archivo <code>google-apps-script.js</code> que te descargué.</div>
-        </div>
-        <div class="setup-step">
-          <div class="step-num">3</div>
-          <div class="step-text">Hacé clic en <strong>Implementar → Nueva implementación</strong>. Elegí tipo <strong>Aplicación web</strong>. En "Quién puede acceder" elegí <strong>Cualquier persona</strong>. Copiá la URL que te da.</div>
-        </div>
-        <div class="setup-step">
-          <div class="step-num">4</div>
-          <div class="step-text">Pegá esa URL acá abajo y tocá <strong>Conectar</strong>.</div>
-        </div>
-
-        <div class="form-group" style="margin-top:8px">
-          <label class="form-label">URL de Google Apps Script</label>
-          <input class="form-input" id="urlInput" type="url" placeholder="https://script.google.com/macros/s/..." value="${STATE.scriptUrl}">
-        </div>
-        <button class="btn btn-primary btn-block" id="connectBtn">🔗 Conectar y abrir app</button>
-        ${STATE.scriptUrl ? `<button class="btn btn-outline btn-block" id="skipBtn" style="margin-top:8px">Continuar sin reconectar</button>` : ''}
-      </div>
-    </div>
-  `;
+      <button class="btn btn-primary btn-block" id="connectBtn">🔗 Conectar y abrir app</button>
+      ${STATE.scriptUrl?`<button class="btn btn-outline btn-block" id="skipBtn" style="margin-top:8px">Continuar</button>`:''}
+    </div></div>`;
 }
 
 function buildLista() {
   const list = filtered();
   return `
-    <div class="search-bar">
-      <input class="form-input" id="searchInput" placeholder="🔍 Buscar cliente..." value="${STATE.search}">
-    </div>
+    <div class="search-bar"><input class="form-input" id="searchInput" placeholder="🔍 Buscar cliente..." value="${STATE.search}"></div>
     <div class="filters">
-      ${[['todos','Todos'],['urgente','⚠️ Urgentes'],['vencido','🔴 Vencidos']].map(([k,l])=>
-        `<button class="filter-btn ${STATE.filter===k?'active':''}" data-filter="${k}">${l}</button>`
-      ).join('')}
+      ${[['todos','Todos'],['urgente','⚠️ Urgentes'],['vencido','🔴 Vencidos']].map(([k,l])=>`<button class="filter-btn ${STATE.filter===k?'active':''}" data-filter="${k}">${l}</button>`).join('')}
       <button class="filter-btn" id="refreshBtn" style="margin-left:auto">🔄</button>
     </div>
-    ${STATE.loading ? '<div class="loading"><div class="spinner"></div><div>Cargando...</div></div>' : ''}
-    ${!STATE.loading && list.length === 0 ? `
-      <div class="empty">
-        <div class="empty-icon">📋</div>
-        <div class="empty-title">${STATE.clients.length===0?'Sin clientes aún':'Sin resultados'}</div>
-        <div class="empty-sub">${STATE.clients.length===0?'Tocá + para agregar tu primer cliente':'Probá otro filtro'}</div>
-      </div>` : ''}
-    ${list.map(c => {
-      const d = daysUntil(c.proximaEntrega);
-      return `
-        <div class="${cardClass(d)}" data-id="${c.id}" data-action="open">
-          <div class="card-top">
-            <div>
-              <div class="card-name">${c.nombre}</div>
-              <div class="card-addr">📍 ${c.direccion}${c.barrio?' — '+c.barrio:''}</div>
-              ${c.telefono?`<div class="card-addr">📞 ${c.telefono}</div>`:''}
-            </div>
-            ${badgeHtml(d)}
-          </div>
-          <div class="card-bottom">
-            <div class="card-info">🚿 ${c.bidones} bidones &nbsp;|&nbsp; 📅 ${fmtDate(c.proximaEntrega)}</div>
-            <button class="btn btn-primary btn-sm" data-id="${c.id}" data-action="entregar">✓ Entregué</button>
-          </div>
-        </div>`;
-    }).join('')}
-  `;
+    ${STATE.loading?'<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="color:#0ea5e9;font-weight:700">Cargando...</div></div>':''}
+    ${!STATE.loading&&list.length===0?`<div class="empty"><div class="empty-icon">📋</div><div style="font-weight:700">${STATE.clients.length===0?'Sin clientes aún':'Sin resultados'}</div><div style="font-size:13px;margin-top:4px">${STATE.clients.length===0?'Tocá + para agregar tu primer cliente':'Probá otro filtro'}</div></div>`:''}
+    ${list.map(c=>{const d=daysUntil(c.proximaEntrega);return`
+      <div class="client-card ${d<0?'overdue':d<=5?'urgent':''}" data-id="${c.id}" data-action="open">
+        <div class="card-top"><div><div class="card-name">${c.nombre}</div><div class="card-addr">📍 ${c.direccion}${c.barrio?' — '+c.barrio:''}</div>${c.telefono?`<div class="card-addr">📞 ${c.telefono}</div>`:''}</div>${badgeHtml(d)}</div>
+        <div class="card-bottom"><div class="card-info">🚿 ${c.bidones} bidones &nbsp;|&nbsp; 📅 ${fmtDate(c.proximaEntrega)}</div><button class="btn btn-primary btn-sm" data-id="${c.id}" data-action="entregar">✓ Entregué</button></div>
+      </div>`;}).join('')}`;
 }
 
 function buildForm() {
-  const f = STATE.form;
-  const isNew = STATE.view === 'nuevo';
+  const f = STATE.form; const isNew = STATE.view==='nuevo';
   return `
-    <div class="page-header">
-      <button class="back-btn" id="backBtn">←</button>
-      <div class="page-title">${isNew?'Nuevo Cliente':'Editar Cliente'}</div>
-    </div>
-    ${[
-      {l:'Nombre completo *',k:'nombre',t:'text',p:'Ej: Juan García'},
-      {l:'Teléfono',k:'telefono',t:'tel',p:'Ej: 11 5555-1234'},
-      {l:'Dirección *',k:'direccion',t:'text',p:'Ej: Av. San Martín 1234'},
-      {l:'Barrio / Zona',k:'barrio',t:'text',p:'Ej: Centro, Villa Urquiza...'},
-    ].map(fi=>`
-      <div class="form-group">
-        <label class="form-label">${fi.l}</label>
-        <input class="form-input" data-field="${fi.k}" type="${fi.t}" placeholder="${fi.p}" value="${f[fi.k]||''}">
-      </div>`).join('')}
-    <div class="form-group">
-      <label class="form-label">Fecha primera entrega *</label>
-      <input class="form-input" data-field="fechaInicio" type="date" value="${f.fechaInicio}">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Bidones por entrega</label>
-      <input class="form-input" data-field="bidones" type="number" min="1" max="20" value="${f.bidones}">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Notas adicionales</label>
-      <textarea class="form-input" data-field="notas" rows="3" placeholder="Horarios, referencias, observaciones...">${f.notas||''}</textarea>
-    </div>
-    <button class="btn btn-primary btn-block" id="saveBtn">${isNew?'💧 Agregar cliente':'✏️ Guardar cambios'}</button>
-  `;
+    <div class="page-header"><button class="back-btn" id="backBtn">←</button><div class="page-title">${isNew?'Nuevo Cliente':'Editar Cliente'}</div></div>
+    ${[{l:'Nombre completo *',k:'nombre',t:'text',p:'Ej: Juan García'},{l:'Teléfono',k:'telefono',t:'tel',p:'Ej: 11 5555-1234'},{l:'Dirección *',k:'direccion',t:'text',p:'Ej: Av. San Martín 1234'},{l:'Barrio / Zona',k:'barrio',t:'text',p:'Ej: Centro...'}]
+      .map(fi=>`<div class="form-group"><label class="form-label">${fi.l}</label><input class="form-input" data-field="${fi.k}" type="${fi.t}" placeholder="${fi.p}" value="${f[fi.k]||''}"></div>`).join('')}
+    <div class="form-group"><label class="form-label">Fecha primera entrega *</label><input class="form-input" data-field="fechaInicio" type="date" value="${f.fechaInicio}"></div>
+    <div class="form-group"><label class="form-label">Bidones por entrega</label><input class="form-input" data-field="bidones" type="number" min="1" max="20" value="${f.bidones}"></div>
+    <div class="form-group"><label class="form-label">Notas</label><textarea class="form-input" data-field="notas" rows="3" placeholder="Horarios, referencias...">${f.notas||''}</textarea></div>
+    <button class="btn btn-primary btn-block" id="saveBtn">${isNew?'💧 Agregar cliente':'✏️ Guardar cambios'}</button>`;
 }
 
 function buildDetalle() {
-  const c = STATE.clients.find(x=>x.id===STATE.selected?.id) || STATE.selected;
-  if (!c) return '';
+  const c = STATE.clients.find(x=>x.id===STATE.selected?.id)||STATE.selected; if (!c) return '';
   const d = daysUntil(c.proximaEntrega);
   return `
-    <div class="page-header">
-      <button class="back-btn" id="backBtn">←</button>
-      <div class="page-title">${c.nombre}</div>
-      <button class="btn btn-outline" style="padding:6px 12px;font-size:12px" id="editBtn">✏️ Editar</button>
-    </div>
-    <div class="detail-card">
-      <div class="detail-grid">
-        ${[
-          {i:'📍',l:'Dirección',v:c.direccion},
-          {i:'🏘️',l:'Barrio',v:c.barrio||'—'},
-          {i:'📞',l:'Teléfono',v:c.telefono||'—'},
-          {i:'🚿',l:'Bidones',v:`${c.bidones} por mes`},
-        ].map(x=>`<div><div class="detail-lbl">${x.i} ${x.l}</div><div class="detail-val">${x.v}</div></div>`).join('')}
-      </div>
-      ${c.notas?`<div style="margin-top:12px;padding:8px 12px;background:#f0f9ff;border-radius:10px;font-size:13px;color:#0369a1">📝 ${c.notas}</div>`:''}
-    </div>
-
-    <div class="${deliveryClass(d)}">
+    <div class="page-header"><button class="back-btn" id="backBtn">←</button><div class="page-title">${c.nombre}</div><button class="btn btn-outline" style="padding:6px 12px;font-size:12px" id="editBtn">✏️ Editar</button></div>
+    <div class="detail-card"><div class="detail-grid">
+      ${[{i:'📍',l:'Dirección',v:c.direccion},{i:'🏘️',l:'Barrio',v:c.barrio||'—'},{i:'📞',l:'Teléfono',v:c.telefono||'—'},{i:'🚿',l:'Bidones',v:`${c.bidones} por mes`}]
+        .map(x=>`<div><div class="detail-lbl">${x.i} ${x.l}</div><div class="detail-val">${x.v}</div></div>`).join('')}
+    </div>${c.notas?`<div style="margin-top:12px;padding:8px 12px;background:#f0f9ff;border-radius:10px;font-size:13px;color:#0369a1">📝 ${c.notas}</div>`:''}</div>
+    <div class="delivery-card ${d<0?'overdue':d<=5?'urgent':'ok'}">
       <div style="font-weight:800;font-size:15px;margin-bottom:6px">📅 Próxima entrega</div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:20px;font-weight:900">${fmtDate(c.proximaEntrega)}</div>
-        ${badgeHtml(d)}
-      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:20px;font-weight:900">${fmtDate(c.proximaEntrega)}</div>${badgeHtml(d)}</div>
       <button class="btn btn-primary btn-block" id="entregarBtn" style="margin-top:12px">✓ Registrar entrega de hoy</button>
     </div>
-
     <div class="detail-card">
       <div style="font-weight:800;font-size:15px;margin-bottom:10px">📋 Historial</div>
-      ${(c.historial||[]).length===0
-        ? '<div style="font-size:13px;color:#94a3b8">Sin historial aún</div>'
-        : (c.historial||[]).map(h=>`
-          <div class="history-item">
-            <div class="history-date">${fmtDate(h.fecha)}</div>
-            <div class="history-action">${h.accion}</div>
-          </div>`).join('')}
+      ${(c.historial||[]).length===0?'<div style="font-size:13px;color:#94a3b8">Sin historial aún</div>':(c.historial||[]).map(h=>`<div class="history-item"><div class="history-date">${fmtDate(h.fecha)}</div><div class="history-action">${h.accion}</div></div>`).join('')}
     </div>
-
-    ${STATE.showConfirmDelete ? `
-      <div class="confirm-delete">
-        <div style="font-weight:700">¿Eliminar a ${c.nombre}?</div>
-        <div class="confirm-btns">
-          <button class="btn btn-outline" style="flex:1" id="cancelDeleteBtn">Cancelar</button>
-          <button class="btn btn-primary" style="flex:1;background:#dc2626" id="confirmDeleteBtn">Sí, eliminar</button>
-        </div>
-      </div>` : `
-      <button class="btn btn-danger btn-block" id="deleteBtn">🗑️ Eliminar cliente</button>`}
-  `;
+    ${STATE.showConfirmDelete?`<div class="confirm-delete"><div style="font-weight:700">¿Eliminar a ${c.nombre}?</div><div class="confirm-btns"><button class="btn btn-outline" style="flex:1" id="cancelDeleteBtn">Cancelar</button><button class="btn btn-primary" style="flex:1;background:#dc2626" id="confirmDeleteBtn">Sí, eliminar</button></div></div>`
+    :`<button class="btn btn-danger btn-block" id="deleteBtn">🗑️ Eliminar cliente</button>`}`;
 }
 
-// ============================================================
-//  BIND EVENTS
-// ============================================================
 function bindEvents() {
-  // Setup
   const connectBtn = document.getElementById('connectBtn');
-  if (connectBtn) {
-    connectBtn.onclick = () => {
-      const url = document.getElementById('urlInput').value.trim();
-      if (!url) { showToast('⚠️ Ingresá la URL'); return; }
-      STATE.scriptUrl = url;
-      localStorage.setItem('aguacontrol_url', url);
-      STATE.view = 'lista';
-      fetchClients();
-    };
-  }
+  if (connectBtn) connectBtn.onclick = () => {
+    const url = document.getElementById('urlInput').value.trim();
+    if (!url) { showToast('⚠️ Ingresá la URL'); return; }
+    STATE.scriptUrl = url; localStorage.setItem('aguacontrol_url', url);
+    STATE.view = 'lista'; fetchClients();
+  };
   const skipBtn = document.getElementById('skipBtn');
   if (skipBtn) skipBtn.onclick = () => { STATE.view = 'lista'; fetchClients(); };
-
-  // FAB
   const fab = document.getElementById('fabBtn');
   if (fab) fab.onclick = () => { STATE.form = emptyForm(); STATE.view = 'nuevo'; render(); };
-
-  // Search
   const si = document.getElementById('searchInput');
   if (si) si.oninput = e => { STATE.search = e.target.value; render(); };
-
-  // Filters
-  document.querySelectorAll('[data-filter]').forEach(btn => {
-    btn.onclick = () => { STATE.filter = btn.dataset.filter; render(); };
-  });
-
-  // Refresh
+  document.querySelectorAll('[data-filter]').forEach(btn => { btn.onclick = () => { STATE.filter = btn.dataset.filter; render(); }; });
   const rb = document.getElementById('refreshBtn');
   if (rb) rb.onclick = fetchClients;
-
-  // Client cards
   document.querySelectorAll('[data-action="open"]').forEach(card => {
     card.onclick = e => {
       if (e.target.closest('[data-action="entregar"]')) return;
-      const id = parseInt(card.dataset.id);
-      STATE.selected = STATE.clients.find(c=>c.id===id);
-      STATE.showConfirmDelete = false;
-      STATE.view = 'detalle'; render();
+      STATE.selected = STATE.clients.find(c=>c.id===parseInt(card.dataset.id));
+      STATE.showConfirmDelete = false; STATE.view = 'detalle'; render();
     };
   });
   document.querySelectorAll('[data-action="entregar"]').forEach(btn => {
     btn.onclick = e => { e.stopPropagation(); registrarEntrega(parseInt(btn.dataset.id)); };
   });
-
-  // Form fields
   document.querySelectorAll('[data-field]').forEach(input => {
-    input.oninput = e => {
-      const k = input.dataset.field;
-      STATE.form[k] = k==='bidones' ? (parseInt(e.target.value)||6) : e.target.value;
-    };
+    input.oninput = e => { const k=input.dataset.field; STATE.form[k]=k==='bidones'?(parseInt(e.target.value)||6):e.target.value; };
   });
-
-  // Save
   const saveBtn = document.getElementById('saveBtn');
   if (saveBtn) saveBtn.onclick = saveForm;
-
-  // Back
   const backBtn = document.getElementById('backBtn');
-  if (backBtn) backBtn.onclick = () => {
-    STATE.view = 'lista'; STATE.selected = null; STATE.form = emptyForm(); render();
-  };
-
-  // Edit
+  if (backBtn) backBtn.onclick = () => { STATE.view='lista'; STATE.selected=null; STATE.form=emptyForm(); render(); };
   const editBtn = document.getElementById('editBtn');
   if (editBtn) editBtn.onclick = () => {
-    const c = STATE.selected;
-    STATE.form = { nombre:c.nombre, telefono:c.telefono||'', direccion:c.direccion, barrio:c.barrio||'',
-      fechaInicio: addMonths(c.proximaEntrega,-1), bidones:c.bidones, notas:c.notas||'' };
-    STATE.view = 'editar'; render();
+    const c=STATE.selected;
+    STATE.form={nombre:c.nombre,telefono:c.telefono||'',direccion:c.direccion,barrio:c.barrio||'',fechaInicio:addMonths(c.proximaEntrega,-1),bidones:c.bidones,notas:c.notas||''};
+    STATE.view='editar'; render();
   };
-
-  // Entregar (detalle)
   const entBtn = document.getElementById('entregarBtn');
   if (entBtn) entBtn.onclick = () => registrarEntrega(STATE.selected.id);
-
-  // Delete
   const delBtn = document.getElementById('deleteBtn');
-  if (delBtn) delBtn.onclick = () => { STATE.showConfirmDelete = true; render(); };
+  if (delBtn) delBtn.onclick = () => { STATE.showConfirmDelete=true; render(); };
   const cancelDel = document.getElementById('cancelDeleteBtn');
-  if (cancelDel) cancelDel.onclick = () => { STATE.showConfirmDelete = false; render(); };
+  if (cancelDel) cancelDel.onclick = () => { STATE.showConfirmDelete=false; render(); };
   const confirmDel = document.getElementById('confirmDeleteBtn');
   if (confirmDel) confirmDel.onclick = () => deleteClient(STATE.selected.id);
 }
 
-// ============================================================
-//  INIT
-// ============================================================
-if (STATE.scriptUrl) {
-  STATE.view = 'lista';
-  render();
-  fetchClients();
-} else {
-  render();
-}
+if (STATE.scriptUrl) { STATE.view='lista'; render(); fetchClients(); }
+else render();
 </script>
 </body>
 </html>
