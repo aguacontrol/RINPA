@@ -832,3 +832,138 @@ if(S.scriptUrl){S.view='lista';render();fetchAll();}else render();
 </script>
 </body>
 </html>
+
+// ============================================================
+//  AGUACONTROL v5 — Google Apps Script Backend
+// ============================================================
+
+function doGet(e) {
+  var callback = e.parameter.callback;
+  var action = e.parameter.action;
+  var result;
+  try {
+    if (action === "getAll") {
+      result = { success: true, clients: getClientes(), pagos: getPagos(), stock: getStock(), entregas: getEntregas() };
+    } else if (action === "saveClients") {
+      result = saveClientes(JSON.parse(decodeURIComponent(e.parameter.data)));
+    } else if (action === "savePago") {
+      result = savePago(JSON.parse(decodeURIComponent(e.parameter.data)));
+    } else if (action === "saveStock") {
+      result = saveStock(JSON.parse(decodeURIComponent(e.parameter.data)));
+    } else if (action === "saveEntrega") {
+      result = saveEntrega(JSON.parse(decodeURIComponent(e.parameter.data)));
+    } else {
+      result = { success: false, error: "Acción desconocida: " + action };
+    }
+  } catch (err) {
+    result = { success: false, error: err.toString() };
+  }
+  var output = JSON.stringify(result);
+  if (callback) return ContentService.createTextOutput(callback + "(" + output + ")").setMimeType(ContentService.MimeType.JAVASCRIPT);
+  return ContentService.createTextOutput(output).setMimeType(ContentService.MimeType.JSON);
+}
+
+function getOrCreateSheet(name, headers) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(name);
+  if (!sheet) { sheet = ss.insertSheet(name); sheet.appendRow(headers); }
+  return sheet;
+}
+
+// CLIENTES
+function getClientes() {
+  var sheet = getOrCreateSheet("Clientes", ["id","nombre","telefono","direccion","barrio","bidones","fechaInicio","proximaEntrega","notas","historial","precioPorEntrega","fotoUrl","dispenserFrioCalor","dispenserNatural","activo"]);
+  var data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return [];
+  var clients = [];
+  for (var i = 1; i < data.length; i++) {
+    var r = data[i]; if (!r[0]) continue;
+    clients.push({ id: r[0], nombre: r[1], telefono: r[2], direccion: r[3], barrio: r[4], bidones: r[5],
+      fechaInicio: r[6], proximaEntrega: r[7], notas: r[8], historial: r[9] ? JSON.parse(r[9]) : [],
+      precioPorEntrega: r[10] || 40000, fotoUrl: r[11] || "", dispenserFrioCalor: r[12] || 0,
+      dispenserNatural: r[13] || 0, activo: r[14] !== false && r[14] !== "false" });
+  }
+  return clients;
+}
+
+function saveClientes(clients) {
+  var sheet = getOrCreateSheet("Clientes", ["id","nombre","telefono","direccion","barrio","bidones","fechaInicio","proximaEntrega","notas","historial","precioPorEntrega","fotoUrl","dispenserFrioCalor","dispenserNatural","activo"]);
+  var last = sheet.getLastRow(); if (last > 1) sheet.deleteRows(2, last - 1);
+  for (var i = 0; i < clients.length; i++) {
+    var c = clients[i];
+    sheet.appendRow([c.id, c.nombre, c.telefono||"", c.direccion, c.barrio||"", c.bidones, c.fechaInicio||"",
+      c.proximaEntrega, c.notas||"", JSON.stringify(c.historial||[]), c.precioPorEntrega||40000, c.fotoUrl||"",
+      c.dispenserFrioCalor||0, c.dispenserNatural||0, c.activo !== false]);
+  }
+  return { success: true };
+}
+
+// ENTREGAS (registro completo)
+function getEntregas() {
+  var sheet = getOrCreateSheet("Entregas", ["id","clienteId","clienteNombre","fecha","bidones","dispenserFCEntregados","dispenserFCRetirados","dispenserNatVendidos","notas","cobrado","monto"]);
+  var data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return [];
+  var entregas = [];
+  for (var i = 1; i < data.length; i++) {
+    var r = data[i]; if (!r[0]) continue;
+    entregas.push({ id: r[0], clienteId: r[1], clienteNombre: r[2], fecha: r[3], bidones: r[4],
+      dispenserFCEntregados: r[5]||0, dispenserFCRetirados: r[6]||0, dispenserNatVendidos: r[7]||0,
+      notas: r[8]||"", cobrado: r[9]||false, monto: r[10]||0 });
+  }
+  return entregas;
+}
+
+function saveEntrega(entrega) {
+  var sheet = getOrCreateSheet("Entregas", ["id","clienteId","clienteNombre","fecha","bidones","dispenserFCEntregados","dispenserFCRetirados","dispenserNatVendidos","notas","cobrado","monto"]);
+  sheet.appendRow([entrega.id, entrega.clienteId, entrega.clienteNombre, entrega.fecha, entrega.bidones,
+    entrega.dispenserFCEntregados||0, entrega.dispenserFCRetirados||0, entrega.dispenserNatVendidos||0,
+    entrega.notas||"", entrega.cobrado||false, entrega.monto||0]);
+  return { success: true };
+}
+
+// PAGOS
+function getPagos() {
+  var sheet = getOrCreateSheet("Pagos", ["id","clienteId","clienteNombre","fecha","monto","concepto","estado"]);
+  var data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return [];
+  var pagos = [];
+  for (var i = 1; i < data.length; i++) {
+    var r = data[i]; if (!r[0]) continue;
+    pagos.push({ id: r[0], clienteId: r[1], clienteNombre: r[2], fecha: r[3], monto: r[4], concepto: r[5], estado: r[6] });
+  }
+  return pagos;
+}
+
+function savePago(pago) {
+  var sheet = getOrCreateSheet("Pagos", ["id","clienteId","clienteNombre","fecha","monto","concepto","estado"]);
+  if (pago.updateId) {
+    var data = sheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      if (data[i][0] == pago.updateId) { sheet.getRange(i+1,7).setValue("pagado"); return { success: true }; }
+    }
+  } else {
+    sheet.appendRow([pago.id, pago.clienteId, pago.clienteNombre, pago.fecha, pago.monto, pago.concepto, pago.estado]);
+  }
+  return { success: true };
+}
+
+// STOCK
+function getStock() {
+  var sheet = getOrCreateSheet("Stock", ["fecha","fcDisponibles","fcEnCasas","fcReparacion","natDisponibles","bidonesLlenos","bidonesVacios","nota"]);
+  var data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return { fcDisponibles:0, fcEnCasas:0, fcReparacion:0, natDisponibles:0, bidonesLlenos:0, bidonesVacios:0, historial:[] };
+  var last = data[data.length-1];
+  var historial = [];
+  for (var i = 1; i < data.length; i++) {
+    historial.push({ fecha: data[i][0], fcDisponibles: data[i][1], fcEnCasas: data[i][2], fcReparacion: data[i][3],
+      natDisponibles: data[i][4], bidonesLlenos: data[i][5], bidonesVacios: data[i][6], nota: data[i][7] });
+  }
+  return { fcDisponibles: last[1], fcEnCasas: last[2], fcReparacion: last[3], natDisponibles: last[4],
+    bidonesLlenos: last[5], bidonesVacios: last[6], historial: historial };
+}
+
+function saveStock(s) {
+  var sheet = getOrCreateSheet("Stock", ["fecha","fcDisponibles","fcEnCasas","fcReparacion","natDisponibles","bidonesLlenos","bidonesVacios","nota"]);
+  sheet.appendRow([s.fecha, s.fcDisponibles||0, s.fcEnCasas||0, s.fcReparacion||0, s.natDisponibles||0, s.bidonesLlenos||0, s.bidonesVacios||0, s.nota||""]);
+  return { success: true };
+}
