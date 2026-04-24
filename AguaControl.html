@@ -11,100 +11,122 @@
 <title>AguaControl 💧</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--primary:#0ea5e9;--primary-dark:#0284c7;--dark:#0c1a2e;--success:#22c55e;--warn:#f59e0b;--danger:#ef4444;--bg:#f0f7ff;--card:#fff;--border:#e0f2fe;--text:#0c1a2e;--muted:#64748b;}
+:root{--p:#0ea5e9;--pd:#0284c7;--dark:#0c1a2e;--ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;--bg:#f0f7ff;--card:#fff;--border:#e0f2fe;--text:#0c1a2e;--muted:#64748b;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.header{background:linear-gradient(135deg,#0c1a2e 0%,#0e3460 60%,#0ea5e9 100%);padding:16px 16px 12px;color:#fff;position:sticky;top:0;z-index:100}
-.header-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.header-title{font-weight:900;font-size:20px;flex:1}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.stat-card{border-radius:10px;padding:6px 4px;text-align:center;border:1px solid}
-.stat-val{font-weight:900;font-size:18px}
-.stat-lbl{font-size:9px;color:#cce4f7;font-weight:700}
+.header{background:linear-gradient(135deg,#0c1a2e 0%,#0e3460 60%,#0ea5e9 100%);padding:14px 16px 10px;color:#fff;position:sticky;top:0;z-index:100}
+.header-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.header-title{font-weight:900;font-size:19px;flex:1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.sc{border-radius:10px;padding:5px 3px;text-align:center;border:1px solid}
+.sv{font-weight:900;font-size:16px}
+.sl{font-size:8px;color:#cce4f7;font-weight:700}
 .nav{display:flex;background:var(--dark);border-top:1px solid #1e3a5f;position:fixed;bottom:0;left:0;right:0;z-index:100}
-.nav-btn{flex:1;padding:10px 4px 8px;background:none;border:none;color:rgba(255,255,255,.5);font-size:9px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px}
-.nav-btn.active{color:var(--primary)}
-.nav-icon{font-size:18px}
-.main{max-width:480px;margin:0 auto;padding:14px 12px 80px}
-.card{background:var(--card);border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 8px rgba(14,165,233,.08);border:1.5px solid var(--border)}
-.card.urgent{border-color:#fdba74}
-.card.overdue{border-color:#fca5a5;background:#fff9f9}
-.card.success-card{border-color:#86efac;background:#f0fdf4}
-.card.warn-card{border-color:#fde68a;background:#fffbeb}
-.badge{padding:2px 10px;border-radius:999px;font-weight:700;font-size:11px;white-space:nowrap}
-.badge-ok{background:#dcfce7;color:#15803d}
-.badge-warn{background:#fef9c3;color:#a16207}
-.badge-urgent{background:#ffedd5;color:#ea580c}
-.badge-overdue{background:#fee2e2;color:#dc2626}
-.badge-today{background:#fef9c3;color:#b45309}
-.badge-paid{background:#dcfce7;color:#15803d}
-.badge-pending{background:#fee2e2;color:#dc2626}
-.badge-fc{background:#dbeafe;color:#1d4ed8}
-.badge-nat{background:#dcfce7;color:#15803d}
-.btn{padding:10px 16px;border-radius:12px;border:none;font-weight:800;font-size:14px;cursor:pointer;font-family:'Nunito',sans-serif;transition:opacity .15s}
-.btn:active{opacity:.8}
-.btn-primary{background:linear-gradient(90deg,#0ea5e9,#0284c7);color:#fff}
-.btn-success{background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff}
-.btn-sm{padding:5px 12px;font-size:11px;border-radius:999px}
-.btn-outline{background:#fff;border:1.5px solid var(--border);color:var(--primary)}
+.nb{flex:1;padding:8px 2px 6px;background:none;border:none;color:rgba(255,255,255,.45);font-size:8px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;flex-direction:column;align-items:center;gap:2px}
+.nb.active{color:var(--p)}
+.ni{font-size:17px}
+.main{max-width:480px;margin:0 auto;padding:12px 12px 75px}
+.card{background:var(--card);border-radius:14px;padding:12px 14px;margin-bottom:9px;box-shadow:0 2px 8px rgba(14,165,233,.07);border:1.5px solid var(--border)}
+.card.urg{border-color:#fdba74}
+.card.ovd{border-color:#fca5a5;background:#fff9f9}
+.card.ok-c{border-color:#86efac;background:#f0fdf4}
+.card.wn-c{border-color:#fde68a;background:#fffbeb}
+.card.paused{opacity:.6;border-color:#cbd5e1}
+.badge{padding:2px 9px;border-radius:999px;font-weight:700;font-size:10px;white-space:nowrap}
+.b-ok{background:#dcfce7;color:#15803d}
+.b-warn{background:#fef9c3;color:#a16207}
+.b-urg{background:#ffedd5;color:#ea580c}
+.b-ovd{background:#fee2e2;color:#dc2626}
+.b-today{background:#fef9c3;color:#b45309}
+.b-paid{background:#dcfce7;color:#15803d}
+.b-pend{background:#fee2e2;color:#dc2626}
+.b-fc{background:#dbeafe;color:#1d4ed8}
+.b-nat{background:#dcfce7;color:#15803d}
+.b-paused{background:#f1f5f9;color:#64748b}
+.btn{padding:9px 14px;border-radius:11px;border:none;font-weight:800;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;transition:opacity .15s}
+.btn:active{opacity:.75}
+.bp{background:linear-gradient(90deg,#0ea5e9,#0284c7);color:#fff}
+.bs{background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff}
+.bo{background:linear-gradient(90deg,#f59e0b,#d97706);color:#fff}
+.btn-sm{padding:4px 10px;font-size:10px;border-radius:999px}
+.btn-out{background:#fff;border:1.5px solid var(--border);color:var(--p)}
 .btn-danger{background:#fff;border:1.5px solid #fca5a5;color:#dc2626}
-.btn-block{width:100%;padding:13px;border-radius:16px;font-size:15px;margin-bottom:8px}
-.btn-gray{background:#f1f5f9;border:none;color:var(--muted)}
-.fab{position:fixed;bottom:72px;right:20px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border:none;font-size:26px;cursor:pointer;box-shadow:0 4px 20px rgba(14,165,233,.5);display:flex;align-items:center;justify-content:center;z-index:50}
-.page-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.back-btn{background:none;border:none;font-size:24px;cursor:pointer;padding:4px}
-.page-title{font-weight:900;font-size:18px;flex:1}
-.form-group{margin-bottom:11px}
-.form-label{font-weight:700;font-size:12px;color:var(--primary);display:block;margin-bottom:3px}
-.form-input{width:100%;padding:9px 13px;border-radius:12px;border:1.5px solid var(--border);font-size:14px;font-family:'Nunito',sans-serif;outline:none;background:#fff}
-.form-input:focus{border-color:var(--primary)}
-textarea.form-input{resize:vertical}
-select.form-input{appearance:none}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
-.detail-item .lbl{font-size:11px;color:var(--muted);font-weight:600}
-.detail-item .val{font-weight:800;font-size:14px;margin-top:1px}
-.foto-preview{width:100%;height:150px;border-radius:12px;object-fit:cover;margin-bottom:10px}
-.history-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f5f9}
-.history-item:last-child{border-bottom:none}
-.history-date{font-size:11px;color:var(--muted);white-space:nowrap;margin-top:2px;min-width:56px}
-.history-text{font-size:13px;font-weight:600;flex:1}
-.pago-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f1f5f9}
-.pago-row:last-child{border-bottom:none}
-.pago-nombre{font-weight:700;font-size:13px}
-.pago-fecha{font-size:11px;color:var(--muted)}
-.pago-monto{font-weight:900;font-size:15px;color:var(--success)}
-.entrega-card{border-left:3px solid var(--primary);padding:10px 12px;background:#f8faff;border-radius:0 10px 10px 0;margin-bottom:8px}
-.entrega-fecha{font-weight:900;font-size:14px;color:var(--dark)}
-.entrega-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
-.progress-bar{background:#e0f2fe;border-radius:999px;height:8px;overflow:hidden;margin-top:4px}
-.progress-fill{height:100%;border-radius:999px;transition:width .5s}
-.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
-.confirm-box{background:#fff1f2;border:1.5px solid #fca5a5;border-radius:14px;padding:14px;text-align:center;margin-top:10px}
-.confirm-btns{display:flex;gap:8px;margin-top:10px}
-.empty{text-align:center;padding:40px 0;color:var(--muted)}
-.empty-icon{font-size:46px;margin-bottom:8px}
-.spinner{width:34px;height:34px;border:3px solid #bae6fd;border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;margin:20px auto}
-@keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:92vw;text-align:center}
+.btn-blk{width:100%;padding:12px;border-radius:14px;font-size:14px;margin-bottom:7px}
+.btn-gr{background:#f1f5f9;border:none;color:var(--muted)}
+.fab{position:fixed;bottom:68px;right:18px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 18px rgba(14,165,233,.5);display:flex;align-items:center;justify-content:center;z-index:50}
+.ph{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.bb{background:none;border:none;font-size:22px;cursor:pointer;padding:4px}
+.pt{font-weight:900;font-size:17px;flex:1}
+.fg{margin-bottom:10px}
+.fl{font-weight:700;font-size:11px;color:var(--p);display:block;margin-bottom:3px}
+.fi{width:100%;padding:8px 12px;border-radius:11px;border:1.5px solid var(--border);font-size:13px;font-family:'Nunito',sans-serif;outline:none;background:#fff}
+.fi:focus{border-color:var(--p)}
+textarea.fi{resize:vertical}
+select.fi{appearance:none}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.di .dl{font-size:10px;color:var(--muted);font-weight:600}
+.di .dv{font-weight:800;font-size:13px;margin-top:1px}
+.fp{width:100%;height:140px;border-radius:11px;object-fit:cover;margin-bottom:8px}
+.hi{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #f1f5f9}
+.hi:last-child{border-bottom:none}
+.hd{font-size:10px;color:var(--muted);white-space:nowrap;margin-top:2px;min-width:52px}
+.ht{font-size:12px;font-weight:700;flex:1}
+.pr{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9}
+.pr:last-child{border-bottom:none}
+.pn{font-weight:700;font-size:12px}
+.pf{font-size:10px;color:var(--muted)}
+.pm{font-weight:900;font-size:14px;color:var(--ok)}
+.ec{border-left:3px solid var(--p);padding:9px 11px;background:#f8faff;border-radius:0 10px 10px 0;margin-bottom:7px}
+.ef{font-weight:900;font-size:13px}
+.chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.chip{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700}
+.pb{background:#e0f2fe;border-radius:999px;height:7px;overflow:hidden;margin-top:3px}
+.pf2{height:100%;border-radius:999px;transition:width .5s}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f1f5f9;font-size:12px}
+.sr:last-child{border-bottom:none}
+.sk{color:var(--muted);font-weight:600}
+.sv2{font-weight:800}
+.sb{margin-bottom:9px}
+.sb input{width:100%;padding:9px 13px;border-radius:11px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Nunito',sans-serif;background:#fff}
+.fls{display:flex;gap:5px;margin-bottom:10px;overflow-x:auto;padding-bottom:3px}
+.fb{padding:4px 12px;border-radius:999px;border:1.5px solid var(--border);background:#fff;color:#0369a1;font-weight:700;font-size:11px;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap;flex-shrink:0}
+.fb.active{background:var(--p);color:#fff;border-color:var(--p)}
+.tabs{display:flex;background:#f0f9ff;border-radius:11px;padding:3px;margin-bottom:11px}
+.tab{flex:1;padding:6px;border-radius:9px;border:none;font-weight:700;font-size:11px;cursor:pointer;font-family:'Nunito',sans-serif;background:none;color:var(--muted)}
+.tab.active{background:#fff;color:var(--p);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:flex;align-items:flex-end}
+.md{background:#fff;border-radius:20px 20px 0 0;padding:18px 16px 30px;width:100%;max-height:92vh;overflow-y:auto}
+.mt{font-weight:900;font-size:17px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:9px 18px;border-radius:999px;font-weight:700;font-size:12px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:92vw;text-align:center}
 .toast.show{opacity:1}
-.section-title{font-weight:900;font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
-.tabs{display:flex;background:#f0f9ff;border-radius:12px;padding:3px;margin-bottom:12px}
-.tab{flex:1;padding:7px;border-radius:10px;border:none;font-weight:700;font-size:12px;cursor:pointer;font-family:'Nunito',sans-serif;background:none;color:var(--muted)}
-.tab.active{background:#fff;color:var(--primary);box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
-.summary-row:last-child{border-bottom:none}
-.summary-key{color:var(--muted);font-weight:600}
-.summary-val{font-weight:800}
-.search-bar{margin-bottom:10px}
-.search-bar input{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);font-size:14px;outline:none;font-family:'Nunito',sans-serif;background:#fff}
-.filters{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px}
-.filter-btn{padding:5px 14px;border-radius:999px;border:1.5px solid var(--border);background:#fff;color:#0369a1;font-weight:700;font-size:12px;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap;flex-shrink:0}
-.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end}
-.modal{background:#fff;border-radius:20px 20px 0 0;padding:20px 16px 32px;width:100%;max-height:90vh;overflow-y:auto}
-.modal-title{font-weight:900;font-size:18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-.map-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;background:#f0f9ff;border-radius:12px;border:1.5px solid var(--border);color:var(--primary);font-weight:700;font-size:13px;text-decoration:none;flex:1}
+.st{font-weight:900;font-size:14px;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.spinner{width:32px;height:32px;border:3px solid #bae6fd;border-top-color:var(--p);border-radius:50%;animation:spin .7s linear infinite;margin:18px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:36px 0;color:var(--muted)}
+.map-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 12px;background:#f0f9ff;border-radius:11px;border:1.5px solid var(--border);color:var(--p);font-weight:700;font-size:12px;text-decoration:none;flex:1}
+.confirm-box{background:#fff1f2;border:1.5px solid #fca5a5;border-radius:13px;padding:13px;text-align:center;margin-top:10px}
+.cb2{display:flex;gap:7px;margin-top:9px}
+
+/* ZONA TAG */
+.zona-tag{display:inline-block;padding:1px 7px;border-radius:999px;font-size:9px;font-weight:700;background:#e0f2fe;color:#0369a1;margin-left:4px}
+
+/* AGENDA HOY */
+.hoy-card{background:linear-gradient(135deg,#0e3460,#0ea5e9);color:#fff;border-radius:14px;padding:14px;margin-bottom:10px}
+.hoy-title{font-weight:900;font-size:16px;margin-bottom:3px}
+.hoy-sub{font-size:11px;opacity:.8;margin-bottom:12px}
+.hoy-item{background:rgba(255,255,255,.15);border-radius:10px;padding:9px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.hoy-nombre{font-weight:800;font-size:13px}
+.hoy-dir{font-size:10px;opacity:.8;margin-top:2px}
+
+/* NRO CLIENTE */
+.nro{display:inline-block;background:#f0f9ff;color:var(--p);font-weight:900;font-size:10px;padding:1px 7px;border-radius:999px;margin-right:4px}
+
+/* QUICK ACTIONS */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.qa-btn{border-radius:12px;padding:11px 8px;border:none;font-weight:800;font-size:12px;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px}
+.qa-icon{font-size:22px}
 </style>
 </head>
 <body>
@@ -113,261 +135,179 @@ select.form-input{appearance:none}
 <div id="modal"></div>
 <script>
 const S={
-  view:'setup',tab:'clientes',
-  clients:[],pagos:[],
-  stock:{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]},
-  entregas:[],
-  selected:null,search:'',filter:'todos',
-  loading:false,syncing:false,
+  view:'setup', tab:'hoy',
+  clients:[], pagos:[], stock:{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]}, entregas:[],
+  selected:null, search:'', filter:'todos', ordenar:'proxima',
+  loading:false, syncing:false,
   scriptUrl:localStorage.getItem('aguacontrol_url')||'',
-  showConfirmDelete:false,
-  form:emptyForm(),
-  pagoForm:emptyPagoForm(),
-  detailTab:'info',
-  modal:null,
-  entregaForm:emptyEntregaForm(),
+  showConfirmDelete:false, form:emptyForm(), detailTab:'info',
+  modal:null, entregaForm:emptyEF(),
 };
 
-function emptyForm(){return{nombre:'',telefono:'',direccion:'',barrio:'',fechaInicio:today(),bidones:6,notas:'',precioPorEntrega:40000,fotoUrl:'',dispenserFrioCalor:1,dispenserNatural:0};}
-function emptyPagoForm(){return{clienteId:'',monto:'',concepto:'Entrega mensual',fecha:today(),estado:'pagado'};}
-function emptyEntregaForm(){return{bidones:6,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0};}
+function emptyForm(){return{nroCliente:'',nombre:'',telefono:'',direccion:'',barrio:'',zona:'',bidones:6,notas:'',precioPorEntrega:40000,fotoUrl:'',dispenserFrioCalor:1,dispenserNatural:0,fechaInicio:today(),estado:'activo'};}
+function emptyEF(){return{bidones:6,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0,rapida:false};}
 
-function today(){
-  const d=new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-}
-function addMonths(ds,n){
-  // ds puede ser "2026-05-15" o "2026-05-15T03:00:00.000Z"
-  const clean=String(ds).substring(0,10);
-  const parts=clean.split('-');
-  const d=new Date(parseInt(parts[0]),parseInt(parts[1])-1+n,parseInt(parts[2]));
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-}
-function cleanDate(ds){
-  // Limpiar fechas con formato ISO largo
-  if(!ds)return'';
-  return String(ds).substring(0,10);
-}
-function daysUntil(ds){
-  const clean=cleanDate(ds);
-  if(!clean)return 999;
-  const parts=clean.split('-');
-  const fecha=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
-  const hoy=new Date();hoy.setHours(0,0,0,0);
-  return Math.ceil((fecha-hoy)/864e5);
-}
-function fmtDate(ds){
-  const clean=cleanDate(ds);
-  if(!clean)return'—';
-  const[y,m,d]=clean.split('-');
-  return`${d}/${m}/${y}`;
-}
-function fmtDateLong(ds){
-  const clean=cleanDate(ds);
-  if(!clean)return'—';
-  const parts=clean.split('-');
-  const d=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
-  return d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-}
+function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function addMonths(ds,n){const c=String(ds).substring(0,10).split('-');const d=new Date(+c[0],+c[1]-1+n,+c[2]);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function cleanDate(ds){return ds?String(ds).substring(0,10):'';}
+function daysUntil(ds){const c=cleanDate(ds);if(!c)return 999;const p=c.split('-');const f=new Date(+p[0],+p[1]-1,+p[2]);const h=new Date();h.setHours(0,0,0,0);return Math.ceil((f-h)/864e5);}
+function fmtDate(ds){const c=cleanDate(ds);if(!c)return'—';const[y,m,d]=c.split('-');return`${d}/${m}/${y}`;}
+function fmtDateLong(ds){const c=cleanDate(ds);if(!c)return'—';const p=c.split('-');const d=new Date(+p[0],+p[1]-1,+p[2]);return d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});}
 function fmtMoney(n){return'$'+Number(n||0).toLocaleString('es-AR');}
+function fmtDateNow(){const d=new Date();return d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});}
 
-function badgeHtml(days){
-  if(days<0)return`<span class="badge badge-overdue">Vencido ${Math.abs(days)}d</span>`;
-  if(days===0)return`<span class="badge badge-today">¡Hoy!</span>`;
-  if(days<=5)return`<span class="badge badge-urgent">En ${days}d</span>`;
-  if(days<=10)return`<span class="badge badge-warn">En ${days}d</span>`;
-  return`<span class="badge badge-ok">En ${days}d</span>`;
+function badgeD(days){
+  if(days<0)return`<span class="badge b-ovd">Vencido ${Math.abs(days)}d</span>`;
+  if(days===0)return`<span class="badge b-today">¡Hoy!</span>`;
+  if(days<=5)return`<span class="badge b-urg">En ${days}d</span>`;
+  if(days<=10)return`<span class="badge b-warn">En ${days}d</span>`;
+  return`<span class="badge b-ok">En ${days}d</span>`;
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
 function stats(){
-  const v=S.clients.filter(c=>daysUntil(c.proximaEntrega)<0).length;
-  const u=S.clients.filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=5;}).length;
-  const ok=S.clients.filter(c=>daysUntil(c.proximaEntrega)>5).length;
-  return{vencidos:v,urgentes:u,ok,total:S.clients.length};
+  const ac=S.clients.filter(c=>c.estado==='activo');
+  const v=ac.filter(c=>daysUntil(c.proximaEntrega)<0).length;
+  const u=ac.filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=5;}).length;
+  return{vencidos:v,urgentes:u,total:ac.length,hoy:ac.filter(c=>daysUntil(c.proximaEntrega)===0).length};
 }
-function clienteDeuda(id){return S.pagos.filter(p=>p.clienteId==id&&p.estado==='pendiente').reduce((a,p)=>a+Number(p.monto),0);}
-function totalDeuda(){return S.clients.reduce((a,c)=>a+clienteDeuda(c.id),0);}
+function cDeuda(id){return S.pagos.filter(p=>p.clienteId==id&&p.estado==='pendiente').reduce((a,p)=>a+Number(p.monto),0);}
+function totalDeuda(){return S.clients.reduce((a,c)=>a+cDeuda(c.id),0);}
 function totalCobrado(){return S.pagos.filter(p=>p.estado==='pagado').reduce((a,p)=>a+Number(p.monto),0);}
-function entregasCliente(id){return S.entregas.filter(e=>e.clienteId==id).sort((a,b)=>new Date(cleanDate(b.fecha))-new Date(cleanDate(a.fecha)));}
+function entsCli(id){return S.entregas.filter(e=>e.clienteId==id).sort((a,b)=>new Date(cleanDate(b.fecha))-new Date(cleanDate(a.fecha)));}
+function nextNro(){return S.clients.length>0?Math.max(...S.clients.map(c=>parseInt(c.nroCliente)||0))+1:1;}
 
 // API
 function jsonpCall(url){
   return new Promise((resolve,reject)=>{
     const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*9999);
     const script=document.createElement('script');
-    const timeout=setTimeout(()=>{delete window[cb];if(script.parentNode)document.body.removeChild(script);reject(new Error('Timeout'));},15000);
-    window[cb]=(data)=>{clearTimeout(timeout);delete window[cb];if(script.parentNode)document.body.removeChild(script);resolve(data);};
+    const to=setTimeout(()=>{delete window[cb];if(script.parentNode)document.body.removeChild(script);reject(new Error('Timeout'));},15000);
+    window[cb]=(data)=>{clearTimeout(to);delete window[cb];if(script.parentNode)document.body.removeChild(script);resolve(data);};
     script.src=url+'&callback='+cb;
-    script.onerror=()=>{clearTimeout(timeout);if(script.parentNode)document.body.removeChild(script);reject(new Error('Error de red'));};
+    script.onerror=()=>{clearTimeout(to);if(script.parentNode)document.body.removeChild(script);reject(new Error('Error de red'));};
     document.body.appendChild(script);
   });
 }
-async function apiCall(action,data){
-  let url=S.scriptUrl+'?action='+action;
-  if(data)url+='&data='+encodeURIComponent(JSON.stringify(data));
-  return jsonpCall(url);
-}
+async function api(action,data){let url=S.scriptUrl+'?action='+action;if(data)url+='&data='+encodeURIComponent(JSON.stringify(data));return jsonpCall(url);}
 async function fetchAll(){
-  if(!S.scriptUrl)return;
-  S.loading=true;render();
-  try{
-    const res=await apiCall('getAll');
-    if(res.success){
-      S.clients=res.clients||[];
-      S.pagos=res.pagos||[];
-      S.stock=res.stock||{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]};
-      S.entregas=res.entregas||[];
-    }else showToast('⚠️ '+(res.error||'Error'));
-  }catch(e){showToast('⚠️ '+e.message);}
+  if(!S.scriptUrl)return;S.loading=true;render();
+  try{const r=await api('getAll');if(r.success){S.clients=r.clients||[];S.pagos=r.pagos||[];S.stock=r.stock||{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]};S.entregas=r.entregas||[];}else showToast('⚠️ '+r.error);}
+  catch(e){showToast('⚠️ '+e.message);}
   S.loading=false;render();
 }
-async function saveClients(){
-  S.syncing=true;render();
-  try{await apiCall('saveClients',S.clients);}catch(e){showToast('⚠️ '+e.message);}
-  S.syncing=false;render();
-}
-async function savePagoApi(pago){try{await apiCall('savePago',pago);}catch(e){showToast('⚠️ '+e.message);}}
-async function saveStockApi(data){try{await apiCall('saveStock',data);}catch(e){showToast('⚠️ '+e.message);}}
-async function saveEntregaApi(e){try{await apiCall('saveEntrega',e);}catch(ex){showToast('⚠️ '+ex.message);}}
+async function saveClients(){S.syncing=true;render();try{await api('saveClients',S.clients);}catch(e){showToast('⚠️ '+e.message);}S.syncing=false;render();}
+async function savePagoApi(p){try{await api('savePago',p);}catch(e){showToast('⚠️ '+e.message);}}
+async function saveStockApi(d){try{await api('saveStock',d);}catch(e){showToast('⚠️ '+e.message);}}
+async function saveEntregaApi(e){try{await api('saveEntrega',e);}catch(e){showToast('⚠️ '+e.message);}}
 
 // ACCIONES
 function saveForm(){
-  const f=S.form;
-  if(!f.nombre.trim()||!f.direccion.trim()){showToast('⚠️ Completá nombre y dirección');return;}
-  const proximaEntrega=addMonths(f.fechaInicio,1);
+  const f=S.form;if(!f.nombre.trim()||!f.direccion.trim()){showToast('⚠️ Completá nombre y dirección');return;}
+  const prox=addMonths(f.fechaInicio,1);
+  const fc=parseInt(f.dispenserFrioCalor)||0,nat=parseInt(f.dispenserNatural)||0;
   if(S.view==='nuevo'){
-    const fc=parseInt(f.dispenserFrioCalor)||0;
-    const nat=parseInt(f.dispenserNatural)||0;
-    S.clients.push({id:Date.now(),...f,bidones:parseInt(f.bidones)||6,precioPorEntrega:parseFloat(f.precioPorEntrega)||40000,
-      dispenserFrioCalor:fc,dispenserNatural:nat,proximaEntrega,
-      historial:[{fecha:f.fechaInicio,accion:`Alta — ${fc} disp. F/C + ${nat} disp. Natural + ${f.bidones} bidones`}]});
+    const nro=f.nroCliente||nextNro();
+    S.clients.push({id:Date.now(),nroCliente:nro,...f,bidones:parseInt(f.bidones)||6,precioPorEntrega:parseFloat(f.precioPorEntrega)||40000,dispenserFrioCalor:fc,dispenserNatural:nat,proximaEntrega:prox,historial:[{fecha:f.fechaInicio,accion:`Alta #${nro} — ${fc} F/C + ${nat} Nat. + ${f.bidones} bid.`}]});
     const st={...S.stock,fcDisponibles:Math.max(0,(S.stock.fcDisponibles||0)-fc),fcEnCasas:(S.stock.fcEnCasas||0)+fc,natDisponibles:Math.max(0,(S.stock.natDisponibles||0)-nat)};
-    S.stock=st;saveStockApi({...st,fecha:today(),nota:`Alta cliente ${f.nombre}`});
+    S.stock=st;saveStockApi({...st,fecha:today(),nota:`Alta ${f.nombre}`});
   }else{
     const idx=S.clients.findIndex(c=>c.id===S.selected.id);
-    if(idx>=0)S.clients[idx]={...S.clients[idx],...f,bidones:parseInt(f.bidones)||6,precioPorEntrega:parseFloat(f.precioPorEntrega)||40000,dispenserFrioCalor:parseInt(f.dispenserFrioCalor)||0,dispenserNatural:parseInt(f.dispenserNatural)||0,proximaEntrega};
+    if(idx>=0)S.clients[idx]={...S.clients[idx],...f,bidones:parseInt(f.bidones)||6,precioPorEntrega:parseFloat(f.precioPorEntrega)||40000,dispenserFrioCalor:fc,dispenserNatural:nat,proximaEntrega:prox};
   }
-  saveClients();S.view='lista';S.form=emptyForm();S.selected=null;render();
+  saveClients();S.view='lista';S.tab='clientes';S.form=emptyForm();S.selected=null;render();
 }
 
-function registrarEntregaConModal(){
-  const c=S.clients.find(x=>x.id===S.selected?.id)||S.selected;if(!c)return;
-  S.entregaForm={bidones:c.bidones,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:c.precioPorEntrega||0};
+function abrirModalEntrega(clienteId, rapida){
+  const c=S.clients.find(x=>x.id===clienteId);if(!c)return;
+  S.selected=c;
+  const ult=entsCli(c.id)[0];
+  S.entregaForm={
+    bidones: ult?ult.bidones:c.bidones,
+    dispenserFCEntregados: ult?ult.dispenserFCEntregados:0,
+    dispenserFCRetirados: ult?ult.dispenserFCRetirados:0,
+    dispenserNatVendidos: ult?ult.dispenserNatVendidos:0,
+    notas:'', cobrado:false, monto:c.precioPorEntrega||0, rapida:!!rapida
+  };
   S.modal='entrega';render();
 }
 
 function confirmarEntrega(){
   const c=S.clients.find(x=>x.id===S.selected?.id)||S.selected;if(!c)return;
   const f=S.entregaForm;
-  const bidones=parseInt(f.bidones)||0;
-  const fcEnt=parseInt(f.dispenserFCEntregados)||0;
-  const fcRet=parseInt(f.dispenserFCRetirados)||0;
-  const natVend=parseInt(f.dispenserNatVendidos)||0;
-  const monto=parseFloat(f.monto)||0;
+  const bid=parseInt(f.bidones)||0,fcE=parseInt(f.dispenserFCEntregados)||0,fcR=parseInt(f.dispenserFCRetirados)||0,natV=parseInt(f.dispenserNatVendidos)||0,monto=parseFloat(f.monto)||0;
   const fechaHoy=today();
-
-  const entrega={id:Date.now(),clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,bidones,
-    dispenserFCEntregados:fcEnt,dispenserFCRetirados:fcRet,dispenserNatVendidos:natVend,notas:f.notas,cobrado:f.cobrado,monto};
+  const entrega={id:Date.now(),clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,bidones:bid,dispenserFCEntregados:fcE,dispenserFCRetirados:fcR,dispenserNatVendidos:natV,notas:f.notas,cobrado:f.cobrado,monto};
   S.entregas.push(entrega);saveEntregaApi(entrega);
-
-  let histAccion=`Entrega — ${bidones} bidones`;
-  if(fcEnt>0)histAccion+=` | +${fcEnt} disp. F/C`;
-  if(fcRet>0)histAccion+=` | -${fcRet} disp. F/C retirados`;
-  if(natVend>0)histAccion+=` | ${natVend} disp. Natural vendidos`;
-  if(monto>0)histAccion+=` | ${f.cobrado?'Cobrado':'Pendiente'}: ${fmtMoney(monto)}`;
-
+  let ha=`Entrega — ${bid} bid.`;
+  if(fcE>0)ha+=` | +${fcE} F/C`;if(fcR>0)ha+=` | -${fcR} F/C ret.`;if(natV>0)ha+=` | ${natV} Nat.`;if(monto>0)ha+=` | ${f.cobrado?'✅':'⏳'} ${fmtMoney(monto)}`;
   const idx=S.clients.findIndex(x=>x.id===c.id);
-  S.clients[idx]={...c,proximaEntrega:addMonths(fechaHoy,1),
-    dispenserFrioCalor:Math.max(0,(c.dispenserFrioCalor||0)+fcEnt-fcRet),
-    historial:[{fecha:fechaHoy,accion:histAccion},...(c.historial||[])]};
+  S.clients[idx]={...c,proximaEntrega:addMonths(fechaHoy,1),dispenserFrioCalor:Math.max(0,(c.dispenserFrioCalor||0)+fcE-fcR),historial:[{fecha:fechaHoy,accion:ha},...(c.historial||[])]};
   S.selected=S.clients[idx];
-
-  if(monto>0){
-    const pago={id:Date.now()+1,clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,monto,concepto:`Entrega ${fmtDate(fechaHoy)}`,estado:f.cobrado?'pagado':'pendiente'};
-    S.pagos.push(pago);savePagoApi(pago);
-  }
-
-  const st={...S.stock};
-  st.bidonesLlenos=Math.max(0,(st.bidonesLlenos||0)-bidones);
-  st.bidonesVacios=(st.bidonesVacios||0)+bidones;
-  st.fcDisponibles=Math.max(0,(st.fcDisponibles||0)-fcEnt+fcRet);
-  st.fcEnCasas=Math.max(0,(st.fcEnCasas||0)+fcEnt-fcRet);
-  st.natDisponibles=Math.max(0,(st.natDisponibles||0)-natVend);
-  S.stock=st;saveStockApi({...st,fecha:fechaHoy,nota:`Entrega a ${c.nombre}`});
-
-  saveClients();S.modal=null;S.entregaForm=emptyEntregaForm();
-  showToast('✅ Entrega registrada');render();
+  if(monto>0){const pago={id:Date.now()+1,clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,monto,concepto:`Entrega ${fmtDate(fechaHoy)}`,estado:f.cobrado?'pagado':'pendiente'};S.pagos.push(pago);savePagoApi(pago);}
+  const st={...S.stock};st.bidonesLlenos=Math.max(0,(st.bidonesLlenos||0)-bid);st.bidonesVacios=(st.bidonesVacios||0)+bid;st.fcDisponibles=Math.max(0,(st.fcDisponibles||0)-fcE+fcR);st.fcEnCasas=Math.max(0,(st.fcEnCasas||0)+fcE-fcR);st.natDisponibles=Math.max(0,(st.natDisponibles||0)-natV);
+  S.stock=st;saveStockApi({...st,fecha:fechaHoy,nota:`Entrega ${c.nombre}`});
+  saveClients();S.modal=null;S.entregaForm=emptyEF();showToast('✅ Entrega registrada');render();
 }
 
-function marcarPagado(pagoId){
-  const idx=S.pagos.findIndex(p=>p.id===pagoId);if(idx<0)return;
-  S.pagos[idx].estado='pagado';savePagoApi({updateId:pagoId});
-  showToast('✅ Cobro registrado');render();
-}
-
-function agregarPagoManual(form){
+function marcarPagado(id){const idx=S.pagos.findIndex(p=>p.id===id);if(idx<0)return;S.pagos[idx].estado='pagado';savePagoApi({updateId:id});showToast('✅ Cobro registrado');render();}
+function agregarPago(form){
   if(!form.clienteId||!form.monto){showToast('⚠️ Completá cliente y monto');return;}
   const c=S.clients.find(x=>x.id==form.clienteId);
-  const pago={id:Date.now(),clienteId:parseInt(form.clienteId),clienteNombre:c?.nombre||'',fecha:form.fecha||today(),monto:parseFloat(form.monto),concepto:form.concepto,estado:form.estado};
-  S.pagos.push(pago);savePagoApi(pago);showToast('✅ Pago agregado');render();
+  const p={id:Date.now(),clienteId:parseInt(form.clienteId),clienteNombre:c?.nombre||'',fecha:form.fecha||today(),monto:parseFloat(form.monto),concepto:form.concepto||'Entrega mensual',estado:form.estado||'pagado'};
+  S.pagos.push(p);savePagoApi(p);showToast('✅ Pago agregado');render();
 }
-
 function actualizarStock(form){
-  const st={fcDisponibles:parseInt(form.fcDisponibles)||0,fcEnCasas:S.stock.fcEnCasas||0,fcReparacion:parseInt(form.fcReparacion)||0,natDisponibles:parseInt(form.natDisponibles)||0,bidonesLlenos:parseInt(form.bidonesLlenos)||0,bidonesVacios:parseInt(form.bidonesVacios)||0};
-  S.stock={...S.stock,...st};saveStockApi({...st,fecha:today(),nota:form.nota||'Actualización manual'});
-  showToast('✅ Stock actualizado');render();
+  const st={fcDisponibles:parseInt(form.fcD)||0,fcEnCasas:S.stock.fcEnCasas||0,fcReparacion:parseInt(form.fcR)||0,natDisponibles:parseInt(form.natD)||0,bidonesLlenos:parseInt(form.bL)||0,bidonesVacios:parseInt(form.bV)||0};
+  S.stock={...S.stock,...st};saveStockApi({...st,fecha:today(),nota:form.nota||'Actualización manual'});showToast('✅ Stock actualizado');render();
 }
-
-function deleteClient(id){
-  S.clients=S.clients.filter(c=>c.id!==id);S.showConfirmDelete=false;S.view='lista';S.selected=null;saveClients();render();
-}
+function deleteClient(id){S.clients=S.clients.filter(c=>c.id!==id);S.showConfirmDelete=false;S.view='lista';S.selected=null;saveClients();render();}
+function cambiarEstado(id,estado){const idx=S.clients.findIndex(c=>c.id===id);if(idx>=0){S.clients[idx].estado=estado;saveClients();showToast(`✅ Cliente ${estado==='activo'?'activado':'pausado'}`);render();}}
 
 function filteredClients(){
   let list=[...S.clients];
-  if(S.search.trim())list=list.filter(c=>c.nombre.toLowerCase().includes(S.search.toLowerCase())||c.direccion.toLowerCase().includes(S.search.toLowerCase())||(c.barrio||'').toLowerCase().includes(S.search.toLowerCase()));
-  if(S.filter==='urgente')list=list.filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=5;});
-  if(S.filter==='vencido')list=list.filter(c=>daysUntil(c.proximaEntrega)<0);
-  if(S.filter==='deuda')list=list.filter(c=>clienteDeuda(c.id)>0);
-  list.sort((a,b)=>{const da=cleanDate(a.proximaEntrega),db=cleanDate(b.proximaEntrega);return new Date(da)-new Date(db);});
+  if(S.filter!=='todos'&&S.filter!=='pausados')list=list.filter(c=>c.estado==='activo');
+  if(S.filter==='pausados')list=list.filter(c=>c.estado==='pausado');
+  if(S.search.trim()){const q=S.search.toLowerCase();list=list.filter(c=>c.nombre.toLowerCase().includes(q)||c.direccion.toLowerCase().includes(q)||(c.barrio||'').toLowerCase().includes(q)||(c.zona||'').toLowerCase().includes(q)||String(c.nroCliente).includes(q));}
+  if(S.filter==='urg')list=list.filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=5;});
+  if(S.filter==='ovd')list=list.filter(c=>daysUntil(c.proximaEntrega)<0);
+  if(S.filter==='deuda')list=list.filter(c=>cDeuda(c.id)>0);
+  // Ordenar
+  if(S.ordenar==='proxima')list.sort((a,b)=>new Date(cleanDate(a.proximaEntrega))-new Date(cleanDate(b.proximaEntrega)));
+  if(S.ordenar==='nombre')list.sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  if(S.ordenar==='nro')list.sort((a,b)=>(parseInt(a.nroCliente)||0)-(parseInt(b.nroCliente)||0));
+  if(S.ordenar==='barrio')list.sort((a,b)=>(a.barrio||'').localeCompare(b.barrio||''));
+  if(S.ordenar==='zona')list.sort((a,b)=>(a.zona||'').localeCompare(b.zona||''));
   return list;
 }
 
-// RENDER
+// ============================================================ RENDER
 function render(){document.getElementById('app').innerHTML=buildApp();renderModal();bindEvents();}
 
 function renderModal(){
   const m=document.getElementById('modal');
   if(S.modal==='entrega'&&S.selected){
-    const c=S.clients.find(x=>x.id===S.selected?.id)||S.selected;
-    const f=S.entregaForm;
-    m.innerHTML=`<div class="modal-overlay" id="modalOverlay">
-      <div class="modal">
-        <div class="modal-title">📦 Registrar entrega<button style="background:none;border:none;font-size:22px;cursor:pointer" id="closeModal">✕</button></div>
-        <div style="font-weight:700;font-size:14px;color:var(--primary);margin-bottom:4px">👤 ${c.nombre}</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:14px">📅 ${fmtDateLong(today())}</div>
-        <div class="form-group"><label class="form-label">🫙 Bidones entregados</label>
-          <input class="form-input" id="efBidones" type="number" min="0" value="${f.bidones}"></div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">❄️🔥 Disp. F/C entregados</label>
-            <input class="form-input" id="efFCEnt" type="number" min="0" value="${f.dispenserFCEntregados}"></div>
-          <div class="form-group"><label class="form-label">↩️ Disp. F/C retirados</label>
-            <input class="form-input" id="efFCRet" type="number" min="0" value="${f.dispenserFCRetirados}"></div>
+    const c=S.selected,f=S.entregaForm;
+    m.innerHTML=`<div class="mo" id="mOv">
+      <div class="md">
+        <div class="mt">📦 Registrar entrega<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:10px;background:#f0f9ff;border-radius:10px">
+          <span class="nro">#${c.nroCliente}</span>
+          <div><div style="font-weight:800;font-size:14px">${c.nombre}</div><div style="font-size:11px;color:var(--muted)">${fmtDateLong(today())}</div></div>
         </div>
-        <div class="form-group"><label class="form-label">💧 Disp. Natural vendidos</label>
-          <input class="form-input" id="efNatVend" type="number" min="0" value="${f.dispenserNatVendidos}"></div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">💲 Monto a cobrar</label>
-            <input class="form-input" id="efMonto" type="number" min="0" value="${f.monto}"></div>
-          <div class="form-group"><label class="form-label">Estado cobro</label>
-            <select class="form-input" id="efCobrado">
-              <option value="false">⏳ Pendiente</option>
-              <option value="true">✅ Cobrado</option>
-            </select></div>
+        <div class="fg"><label class="fl">🫙 Bidones entregados</label><input class="fi" id="efB" type="number" min="0" value="${f.bidones}" style="font-size:18px;font-weight:900;text-align:center"></div>
+        <div class="fr">
+          <div class="fg"><label class="fl">❄️🔥 Disp. F/C entregados</label><input class="fi" id="efFCE" type="number" min="0" value="${f.dispenserFCEntregados}"></div>
+          <div class="fg"><label class="fl">↩️ Disp. F/C retirados</label><input class="fi" id="efFCR" type="number" min="0" value="${f.dispenserFCRetirados}"></div>
         </div>
-        <div class="form-group"><label class="form-label">📝 Notas</label>
-          <input class="form-input" id="efNotas" type="text" placeholder="Observaciones..." value="${f.notas}"></div>
-        <button class="btn btn-primary btn-block" id="confirmEntregaBtn">✅ Confirmar entrega</button>
-        <button class="btn btn-gray btn-block" id="closeModal2">Cancelar</button>
+        <div class="fg"><label class="fl">💧 Disp. Natural vendidos</label><input class="fi" id="efNat" type="number" min="0" value="${f.dispenserNatVendidos}"></div>
+        <div class="fr">
+          <div class="fg"><label class="fl">💲 Monto</label><input class="fi" id="efM" type="number" min="0" value="${f.monto}"></div>
+          <div class="fg"><label class="fl">Estado cobro</label><select class="fi" id="efCob"><option value="false">⏳ Pendiente</option><option value="true">✅ Cobrado</option></select></div>
+        </div>
+        <div class="fg"><label class="fl">📝 Notas</label><input class="fi" id="efN" type="text" placeholder="Observaciones..." value="${f.notas}"></div>
+        <button class="btn bp btn-blk" id="cfBtn">✅ Confirmar entrega</button>
+        <button class="btn btn-gr btn-blk" id="mClose2">Cancelar</button>
       </div></div>`;
   }else{m.innerHTML='';}
 }
@@ -375,17 +315,19 @@ function renderModal(){
 function buildApp(){
   if(S.view==='setup')return buildSetup();
   const s=stats();
+  const fechaHoy=fmtDateNow();
   return`<div class="header">
     <div class="header-top">
-      <span style="font-size:24px">💧</span>
-      <div><div class="header-title">AguaControl</div><div style="font-size:11px;opacity:.7">Gestión de clientes</div></div>
-      ${S.syncing?'<span style="margin-left:auto;font-size:11px;opacity:.7">☁️ Guardando...</span>':''}
+      <span style="font-size:22px">💧</span>
+      <div><div class="header-title">AguaControl</div><div style="font-size:10px;opacity:.7;text-transform:capitalize">${fechaHoy}</div></div>
+      ${S.syncing?'<span style="margin-left:auto;font-size:10px;opacity:.7">☁️...</span>':''}
     </div>
     <div class="stats">
-      ${[{l:'Clientes',v:s.total,c:'#38bdf8',bg:'rgba(56,189,248,.15)'},{l:'Urgentes',v:s.urgentes,c:'#fb923c',bg:'rgba(251,146,60,.15)'},{l:'Vencidos',v:s.vencidos,c:'#f87171',bg:'rgba(248,113,113,.15)'},{l:'Deuda',v:fmtMoney(totalDeuda()),c:'#a78bfa',bg:'rgba(167,139,250,.15)'}]
-        .map(x=>`<div class="stat-card" style="background:${x.bg};border-color:${x.c}33"><div class="stat-val" style="color:${x.c};font-size:${x.l==='Deuda'?'11px':'18px'}">${x.v}</div><div class="stat-lbl">${x.l}</div></div>`).join('')}
+      ${[{l:'Clientes',v:s.total,c:'#38bdf8',bg:'rgba(56,189,248,.15)'},{l:'Hoy',v:s.hoy,c:'#4ade80',bg:'rgba(74,222,128,.15)'},{l:'Urgentes',v:s.urgentes,c:'#fb923c',bg:'rgba(251,146,60,.15)'},{l:'Deuda',v:fmtMoney(totalDeuda()),c:'#a78bfa',bg:'rgba(167,139,250,.15)'}]
+        .map(x=>`<div class="sc" style="background:${x.bg};border-color:${x.c}33"><div class="sv" style="color:${x.c};font-size:${x.l==='Deuda'?'10px':'16px'}">${x.v}</div><div class="sl">${x.l}</div></div>`).join('')}
     </div></div>
   <div class="main">
+    ${S.tab==='hoy'?buildHoy():''}
     ${S.tab==='clientes'&&S.view==='lista'?buildLista():''}
     ${S.tab==='clientes'&&(S.view==='nuevo'||S.view==='editar')?buildForm():''}
     ${S.tab==='clientes'&&S.view==='detalle'?buildDetalle():''}
@@ -395,377 +337,458 @@ function buildApp(){
   </div>
   ${S.tab==='clientes'&&S.view==='lista'?'<button class="fab" id="fabBtn">+</button>':''}
   <nav class="nav">
-    ${[['clientes','📋','Clientes'],['pagos','💰','Pagos'],['stock','📦','Stock'],['reporte','📊','Reporte']]
-      .map(([k,i,l])=>`<button class="nav-btn ${S.tab===k?'active':''}" data-tab="${k}"><span class="nav-icon">${i}</span>${l}</button>`).join('')}
+    ${[['hoy','🏠','Inicio'],['clientes','👥','Clientes'],['pagos','💰','Pagos'],['stock','📦','Stock'],['reporte','📊','Reporte']]
+      .map(([k,i,l])=>`<button class="nb ${S.tab===k?'active':''}" data-tab="${k}"><span class="ni">${i}</span>${l}</button>`).join('')}
   </nav>`;
 }
 
 function buildSetup(){
-  return`<div class="header"><div class="header-top"><span style="font-size:24px">💧</span><div><div class="header-title">AguaControl</div><div style="font-size:11px;opacity:.7">Configuración</div></div></div></div>
-  <div style="max-width:480px;margin:0 auto;padding:24px 16px"><div class="card">
-    <div style="font-weight:900;font-size:20px;margin-bottom:6px">⚙️ Conectar Google Sheets</div>
-    <div style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.5">Pegá la URL de tu Google Apps Script.</div>
-    <div class="form-group"><label class="form-label">URL</label>
-      <input class="form-input" id="urlInput" type="url" placeholder="https://script.google.com/macros/s/..." value="${S.scriptUrl}" style="font-size:12px"></div>
-    <button class="btn btn-primary btn-block" id="connectBtn">🔗 Conectar</button>
-    ${S.scriptUrl?`<button class="btn btn-outline btn-block" id="skipBtn">Continuar</button>`:''}
+  return`<div class="header"><div class="header-top"><span style="font-size:22px">💧</span><div><div class="header-title">AguaControl</div><div style="font-size:10px;opacity:.7">Configuración inicial</div></div></div></div>
+  <div style="max-width:480px;margin:0 auto;padding:20px 16px"><div class="card">
+    <div style="font-weight:900;font-size:18px;margin-bottom:5px">⚙️ Conectar Google Sheets</div>
+    <div style="color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.5">Pegá la URL de tu Google Apps Script para guardar todo en la nube.</div>
+    <div class="fg"><label class="fl">URL de Google Apps Script</label>
+      <input class="fi" id="urlInput" type="url" placeholder="https://script.google.com/macros/s/..." value="${S.scriptUrl}" style="font-size:11px"></div>
+    <button class="btn bp btn-blk" id="connectBtn">🔗 Conectar</button>
+    ${S.scriptUrl?`<button class="btn btn-out btn-blk" id="skipBtn">Continuar sin cambios</button>`:''}
   </div></div>`;
 }
 
+// INICIO / HOY
+function buildHoy(){
+  const hoy=S.clients.filter(c=>c.estado==='activo'&&daysUntil(c.proximaEntrega)===0);
+  const esta_semana=S.clients.filter(c=>c.estado==='activo'&&daysUntil(c.proximaEntrega)>0&&daysUntil(c.proximaEntrega)<=7).sort((a,b)=>daysUntil(a.proximaEntrega)-daysUntil(b.proximaEntrega));
+  const vencidos=S.clients.filter(c=>c.estado==='activo'&&daysUntil(c.proximaEntrega)<0);
+  const pendientes=S.pagos.filter(p=>p.estado==='pendiente');
+  return`${S.loading?'<div class="spinner"></div>':''}
+  ${!S.loading?`
+  <div class="qa">
+    <button class="qa-btn" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff" id="qaNewClient">
+      <span class="qa-icon">👤</span>Nuevo cliente
+    </button>
+    <button class="qa-btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff" id="qaRefresh">
+      <span class="qa-icon">🔄</span>Actualizar
+    </button>
+  </div>
+
+  ${hoy.length>0?`<div class="hoy-card">
+    <div class="hoy-title">🔔 Entregas de HOY (${hoy.length})</div>
+    <div class="hoy-sub">${fmtDateLong(today())}</div>
+    ${hoy.map(c=>`<div class="hoy-item">
+      <div><div class="hoy-nombre"><span class="nro" style="background:rgba(255,255,255,.2);color:#fff">#${c.nroCliente}</span>${c.nombre}</div>
+      <div class="hoy-dir">📍 ${c.barrio||c.direccion}${c.zona?' · '+c.zona:''} | 🫙 ${c.bidones} bid.</div></div>
+      <button class="btn bs btn-sm" data-cid="${c.id}" data-action="entregar">📦</button>
+    </div>`).join('')}
+  </div>`:`<div class="card ok-c" style="text-align:center;padding:16px"><div style="font-size:28px">✅</div><div style="font-weight:800;margin-top:4px">Sin entregas pendientes hoy</div></div>`}
+
+  ${vencidos.length>0?`<div class="card" style="border-color:#fca5a5;background:#fff9f9">
+    <div class="st">🔴 Vencidos (${vencidos.length})</div>
+    ${vencidos.map(c=>`<div class="sr"><span class="sk"><span class="nro">#${c.nroCliente}</span>${c.nombre}</span>
+      <div style="display:flex;align-items:center;gap:6px">${badgeD(daysUntil(c.proximaEntrega))}<button class="btn bp btn-sm" data-cid="${c.id}" data-action="entregar">📦</button></div>
+    </div>`).join('')}
+  </div>`:''}
+
+  ${esta_semana.length>0?`<div class="card">
+    <div class="st">📅 Esta semana</div>
+    ${esta_semana.map(c=>`<div class="sr"><span class="sk"><span class="nro">#${c.nroCliente}</span>${c.nombre}<span class="zona-tag">${c.barrio||''}</span></span>
+      <div style="display:flex;align-items:center;gap:5px">${badgeD(daysUntil(c.proximaEntrega))}<button class="btn bp btn-sm" data-cid="${c.id}" data-action="entregar">📦</button></div>
+    </div>`).join('')}
+  </div>`:''}
+
+  ${pendientes.length>0?`<div class="card wn-c">
+    <div class="st">💰 Cobros pendientes (${pendientes.length})</div>
+    ${pendientes.slice(0,5).map(p=>`<div class="pr">
+      <div><div class="pn">${p.clienteNombre}</div><div class="pf">${p.concepto} — ${fmtDate(p.fecha)}</div></div>
+      <div style="display:flex;align-items:center;gap:6px"><div class="pm">${fmtMoney(p.monto)}</div><button class="btn bs btn-sm" data-pagoid="${p.id}">✓</button></div>
+    </div>`).join('')}
+    ${pendientes.length>5?`<div style="text-align:center;font-size:12px;color:var(--muted);margin-top:6px">y ${pendientes.length-5} más...</div>`:''}
+  </div>`:''}
+
+  <div class="card">
+    <div class="st">📊 Resumen rápido</div>
+    ${[['👥 Clientes activos',S.clients.filter(c=>c.estado==='activo').length],['❄️🔥 Disp. F/C en casas',S.clients.reduce((a,c)=>a+(c.dispenserFrioCalor||0),0)],['🫙 Bidones llenos',S.stock.bidonesLlenos||0],['💰 Cobrado total',fmtMoney(totalCobrado())],['💸 Deuda total',fmtMoney(totalDeuda())]]
+      .map(([k,v])=>`<div class="sr"><span class="sk">${k}</span><span class="sv2">${v}</span></div>`).join('')}
+  </div>`:''}`;
+}
+
+// LISTA CLIENTES
 function buildLista(){
   const list=filteredClients();
-  return`<div class="search-bar"><input class="form-input" id="searchInput" placeholder="🔍 Buscar cliente..." value="${S.search}"></div>
-  <div class="filters">
-    ${[['todos','Todos'],['urgente','⚠️ Urgentes'],['vencido','🔴 Vencidos'],['deuda','💰 Con deuda']]
-      .map(([k,l])=>`<button class="filter-btn ${S.filter===k?'active':''}" data-filter="${k}">${l}</button>`).join('')}
-    <button class="filter-btn" id="refreshBtn">🔄</button>
+  const zonas=[...new Set(S.clients.map(c=>c.zona).filter(Boolean))];
+  return`<div class="sb"><input class="fi" id="srch" placeholder="🔍 Buscar por nombre, #, barrio, zona..." value="${S.search}"></div>
+  <div class="fls">
+    ${[['todos','Todos'],['urg','⚠️ Urgentes'],['ovd','🔴 Vencidos'],['deuda','💰 Deuda'],['pausados','⏸️ Pausados']]
+      .map(([k,l])=>`<button class="fb ${S.filter===k?'active':''}" data-filter="${k}">${l}</button>`).join('')}
+    <button class="fb" id="refreshBtn">🔄</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+    <span style="font-size:11px;color:var(--muted);font-weight:700">Ordenar:</span>
+    <select class="fi" id="ordenSelect" style="flex:1;padding:5px 10px;font-size:11px">
+      <option value="proxima" ${S.ordenar==='proxima'?'selected':''}>📅 Próxima entrega</option>
+      <option value="nombre" ${S.ordenar==='nombre'?'selected':''}>🔤 Nombre A-Z</option>
+      <option value="nro" ${S.ordenar==='nro'?'selected':''}>🔢 Número cliente</option>
+      <option value="barrio" ${S.ordenar==='barrio'?'selected':''}>🏘️ Barrio</option>
+      <option value="zona" ${S.ordenar==='zona'?'selected':''}>📍 Zona</option>
+    </select>
   </div>
   ${S.loading?'<div class="spinner"></div>':''}
-  ${!S.loading&&list.length===0?`<div class="empty"><div class="empty-icon">📋</div><div style="font-weight:700">${S.clients.length===0?'Sin clientes aún':'Sin resultados'}</div><div style="font-size:13px;margin-top:4px">${S.clients.length===0?'Tocá + para agregar':'Probá otro filtro'}</div></div>`:''}
+  ${!S.loading&&list.length===0?`<div class="empty"><div style="font-size:44px">📋</div><div style="font-weight:700;margin-top:8px">${S.clients.length===0?'Sin clientes aún':'Sin resultados'}</div><div style="font-size:12px;margin-top:4px">${S.clients.length===0?'Tocá + para agregar tu primer cliente':'Probá otro filtro'}</div></div>`:''}
   ${list.map(c=>{
-    const d=daysUntil(c.proximaEntrega);const deuda=clienteDeuda(c.id);
-    const ultEnt=entregasCliente(c.id)[0];
-    return`<div class="card ${d<0?'overdue':d<=5?'urgent':''}" data-id="${c.id}" data-action="open" style="cursor:pointer">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+    const d=daysUntil(c.proximaEntrega),deuda=cDeuda(c.id),ult=entsCli(c.id)[0];
+    return`<div class="card ${c.estado==='pausado'?'paused':d<0?'ovd':d<=5?'urg':''}" data-id="${c.id}" data-action="open" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px">
         <div style="flex:1;min-width:0">
-          <div style="font-weight:800;font-size:15px">${c.nombre}</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px">📍 ${c.direccion}${c.barrio?' — '+c.barrio:''}</div>
-          ${c.telefono?`<div style="font-size:12px;color:var(--muted)">📞 ${c.telefono}</div>`:''}
-          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">
-            ${c.dispenserFrioCalor>0?`<span class="chip badge-fc">❄️🔥 ${c.dispenserFrioCalor} F/C</span>`:''}
-            ${c.dispenserNatural>0?`<span class="chip badge-nat">💧 ${c.dispenserNatural} Nat.</span>`:''}
-            ${deuda>0?`<span class="chip badge-pending">Debe ${fmtMoney(deuda)}</span>`:''}
+          <div style="font-weight:800;font-size:14px"><span class="nro">#${c.nroCliente}</span>${c.nombre}${c.estado==='pausado'?'<span class="badge b-paused" style="margin-left:4px">Pausado</span>':''}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">📍 ${c.direccion}${c.barrio?' — '+c.barrio:''}${c.zona?` <span class="zona-tag">${c.zona}</span>`:''}</div>
+          ${c.telefono?`<div style="font-size:11px;color:var(--muted)">📞 ${c.telefono}</div>`:''}
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
+            ${c.dispenserFrioCalor>0?`<span class="chip b-fc">❄️🔥 ${c.dispenserFrioCalor}</span>`:''}
+            ${c.dispenserNatural>0?`<span class="chip b-nat">💧 ${c.dispenserNatural}</span>`:''}
+            ${deuda>0?`<span class="chip b-pend">Debe ${fmtMoney(deuda)}</span>`:''}
           </div>
         </div>
-        <div style="flex-shrink:0">${badgeHtml(d)}</div>
+        <div style="flex-shrink:0">${badgeD(d)}</div>
       </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
-        <div style="font-size:11px;color:var(--primary);font-weight:700">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+        <div style="font-size:10px;color:var(--p);font-weight:700">
           🫙 ${c.bidones} bid. | 📅 ${fmtDate(c.proximaEntrega)}
-          ${ultEnt?`<br>Última entrega: ${fmtDate(ultEnt.fecha)}`:''}
+          ${ult?`<br>Última: ${fmtDate(ult.fecha)}`:''}
         </div>
-        <button class="btn btn-primary btn-sm" data-id="${c.id}" data-action="entregar">📦 Entregar</button>
+        ${c.estado==='activo'?`<button class="btn bp btn-sm" data-cid="${c.id}" data-action="entregar">📦 Entregar</button>`:''}
       </div>
     </div>`;}).join('')}`;
 }
 
+// FORM
 function buildForm(){
-  const f=S.form;const isNew=S.view==='nuevo';
-  return`<div class="page-header"><button class="back-btn" id="backBtn">←</button><div class="page-title">${isNew?'Nuevo Cliente':'Editar Cliente'}</div></div>
-  ${f.fotoUrl?`<img src="${f.fotoUrl}" class="foto-preview" alt="foto">`:''}
-  <div class="form-group"><label class="form-label">📷 URL de foto (opcional)</label>
-    <input class="form-input" data-field="fotoUrl" type="url" placeholder="https://..." value="${f.fotoUrl||''}"></div>
-  <div class="form-row">
-    <div class="form-group"><label class="form-label">Nombre *</label><input class="form-input" data-field="nombre" type="text" placeholder="Juan García" value="${f.nombre||''}"></div>
-    <div class="form-group"><label class="form-label">Teléfono</label><input class="form-input" data-field="telefono" type="tel" placeholder="11 5555-1234" value="${f.telefono||''}"></div>
+  const f=S.form,isNew=S.view==='nuevo';
+  return`<div class="ph"><button class="bb" id="backBtn">←</button><div class="pt">${isNew?'Nuevo Cliente':'Editar Cliente'}</div></div>
+  ${f.fotoUrl?`<img src="${f.fotoUrl}" class="fp" alt="foto">`:''}
+  <div class="fr">
+    <div class="fg"><label class="fl"># Nro. Cliente</label><input class="fi" data-field="nroCliente" type="number" placeholder="${nextNro()}" value="${f.nroCliente||''}"></div>
+    <div class="fg"><label class="fl">Estado</label><select class="fi" data-field="estado"><option value="activo" ${f.estado==='activo'?'selected':''}>✅ Activo</option><option value="pausado" ${f.estado==='pausado'?'selected':''}>⏸️ Pausado</option></select></div>
   </div>
-  <div class="form-group"><label class="form-label">Dirección *</label><input class="form-input" data-field="direccion" type="text" placeholder="Av. San Martín 1234" value="${f.direccion||''}"></div>
-  <div class="form-row">
-    <div class="form-group"><label class="form-label">Barrio/Zona</label><input class="form-input" data-field="barrio" type="text" placeholder="Centro..." value="${f.barrio||''}"></div>
-    <div class="form-group"><label class="form-label">Bidones/mes</label><input class="form-input" data-field="bidones" type="number" min="1" max="99" value="${f.bidones||6}"></div>
+  <div class="fr">
+    <div class="fg"><label class="fl">Nombre *</label><input class="fi" data-field="nombre" type="text" placeholder="Juan García" value="${f.nombre||''}"></div>
+    <div class="fg"><label class="fl">Teléfono</label><input class="fi" data-field="telefono" type="tel" placeholder="2664 77-0000" value="${f.telefono||''}"></div>
   </div>
-  <div style="background:#f0f9ff;border-radius:12px;padding:12px;margin-bottom:12px">
-    <div style="font-weight:800;font-size:13px;color:var(--primary);margin-bottom:8px">🫙 Dispensers</div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">❄️🔥 Frío/Calor</label><input class="form-input" data-field="dispenserFrioCalor" type="number" min="0" value="${f.dispenserFrioCalor||0}"></div>
-      <div class="form-group"><label class="form-label">💧 Natural (venta)</label><input class="form-input" data-field="dispenserNatural" type="number" min="0" value="${f.dispenserNatural||0}"></div>
+  <div class="fg"><label class="fl">Dirección *</label><input class="fi" data-field="direccion" type="text" placeholder="Av. San Martín 1234" value="${f.direccion||''}"></div>
+  <div class="fr">
+    <div class="fg"><label class="fl">Barrio</label><input class="fi" data-field="barrio" type="text" placeholder="Centro..." value="${f.barrio||''}"></div>
+    <div class="fg"><label class="fl">Zona de reparto</label><input class="fi" data-field="zona" type="text" placeholder="Zona Norte..." value="${f.zona||''}"></div>
+  </div>
+  <div style="background:#f0f9ff;border-radius:11px;padding:11px;margin-bottom:10px">
+    <div style="font-weight:800;font-size:12px;color:var(--p);margin-bottom:7px">🫙 Dispensers y bidones</div>
+    <div class="fr3">
+      <div class="fg"><label class="fl">❄️🔥 F/C</label><input class="fi" data-field="dispenserFrioCalor" type="number" min="0" value="${f.dispenserFrioCalor||0}"></div>
+      <div class="fg"><label class="fl">💧 Natural</label><input class="fi" data-field="dispenserNatural" type="number" min="0" value="${f.dispenserNatural||0}"></div>
+      <div class="fg"><label class="fl">🫙 Bidones/mes</label><input class="fi" data-field="bidones" type="number" min="1" value="${f.bidones||6}"></div>
     </div>
   </div>
-  <div class="form-row">
-    <div class="form-group"><label class="form-label">Primera entrega</label><input class="form-input" data-field="fechaInicio" type="date" value="${f.fechaInicio}"></div>
-    <div class="form-group"><label class="form-label">💲 Precio/mes</label><input class="form-input" data-field="precioPorEntrega" type="number" min="0" value="${f.precioPorEntrega||40000}"></div>
+  <div class="fr">
+    <div class="fg"><label class="fl">Primera entrega</label><input class="fi" data-field="fechaInicio" type="date" value="${f.fechaInicio}"></div>
+    <div class="fg"><label class="fl">💲 Precio/mes</label><input class="fi" data-field="precioPorEntrega" type="number" value="${f.precioPorEntrega||40000}"></div>
   </div>
-  <div class="form-group"><label class="form-label">Notas</label><textarea class="form-input" data-field="notas" rows="2" placeholder="Horarios, referencias...">${f.notas||''}</textarea></div>
-  <button class="btn btn-primary btn-block" id="saveBtn">${isNew?'💧 Agregar cliente':'✏️ Guardar cambios'}</button>`;
+  <div class="fg"><label class="fl">📷 URL foto (opcional)</label><input class="fi" data-field="fotoUrl" type="url" placeholder="https://..." value="${f.fotoUrl||''}"></div>
+  <div class="fg"><label class="fl">Notas</label><textarea class="fi" data-field="notas" rows="2" placeholder="Horarios, referencias, observaciones...">${f.notas||''}</textarea></div>
+  <button class="btn bp btn-blk" id="saveBtn">${isNew?'💧 Agregar cliente':'✏️ Guardar cambios'}</button>`;
 }
 
+// DETALLE
 function buildDetalle(){
   const c=S.clients.find(x=>x.id===S.selected?.id)||S.selected;if(!c)return'';
-  const d=daysUntil(c.proximaEntrega);
-  const deuda=clienteDeuda(c.id);
+  const d=daysUntil(c.proximaEntrega),deuda=cDeuda(c.id);
   const pagosCli=S.pagos.filter(p=>p.clienteId==c.id).sort((a,b)=>new Date(cleanDate(b.fecha))-new Date(cleanDate(a.fecha)));
-  const entsCli=entregasCliente(c.id);
+  const ents=entsCli(c.id);
   const mapsUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.direccion+' '+(c.barrio||''))}`;
   const waUrl=c.telefono?`https://wa.me/54${c.telefono.replace(/\D/g,'')}`:null;
-  const totalBidones=entsCli.reduce((a,e)=>a+Number(e.bidones),0);
 
-  return`<div class="page-header">
-    <button class="back-btn" id="backBtn">←</button>
-    <div class="page-title" style="font-size:15px">${c.nombre}</div>
-    <button class="btn btn-outline" style="padding:6px 10px;font-size:12px" id="editBtn">✏️</button>
+  return`<div class="ph">
+    <button class="bb" id="backBtn">←</button>
+    <div class="pt" style="font-size:14px"><span class="nro">#${c.nroCliente}</span>${c.nombre}</div>
+    <button class="btn btn-out" style="padding:5px 9px;font-size:11px" id="editBtn">✏️</button>
   </div>
-  ${c.fotoUrl?`<img src="${c.fotoUrl}" class="foto-preview" alt="foto">`:''}
+  ${c.fotoUrl?`<img src="${c.fotoUrl}" class="fp" alt="foto">`:''}
   <div class="tabs">
     <button class="tab ${S.detailTab==='info'?'active':''}" data-dtab="info">📋 Info</button>
-    <button class="tab ${S.detailTab==='entregas'?'active':''}" data-dtab="entregas">📦 Entregas</button>
+    <button class="tab ${S.detailTab==='ents'?'active':''}" data-dtab="ents">📦 Entregas (${ents.length})</button>
     <button class="tab ${S.detailTab==='pagos'?'active':''}" data-dtab="pagos">💰 Pagos${deuda>0?' 🔴':''}</button>
   </div>
 
   ${S.detailTab==='info'?`
     <div class="card">
-      <div class="detail-grid">
-        ${[{i:'📍',l:'Dirección',v:c.direccion},{i:'🏘️',l:'Barrio',v:c.barrio||'—'},{i:'📞',l:'Teléfono',v:c.telefono||'—'},{i:'🫙',l:'Bidones/mes',v:c.bidones},{i:'💲',l:'Precio/mes',v:fmtMoney(c.precioPorEntrega)},{i:'📅',l:'Próxima entrega',v:fmtDate(c.proximaEntrega)}]
-          .map(x=>`<div class="detail-item"><div class="lbl">${x.i} ${x.l}</div><div class="val">${x.v}</div></div>`).join('')}
+      <div class="dg">
+        ${[{i:'📍',l:'Dirección',v:c.direccion},{i:'🏘️',l:'Barrio',v:c.barrio||'—'},{i:'📍',l:'Zona',v:c.zona||'—'},{i:'📞',l:'Teléfono',v:c.telefono||'—'},{i:'🫙',l:'Bidones/mes',v:c.bidones},{i:'💲',l:'Precio/mes',v:fmtMoney(c.precioPorEntrega)}]
+          .map(x=>`<div class="di"><div class="dl">${x.i} ${x.l}</div><div class="dv">${x.v}</div></div>`).join('')}
       </div>
-      <div style="background:#f0f9ff;border-radius:10px;padding:10px;margin-top:8px">
-        <div style="font-size:11px;font-weight:800;color:var(--primary);margin-bottom:8px">🫙 DISPENSERS Y ESTADÍSTICAS</div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-          ${[{l:'F/C',v:c.dispenserFrioCalor||0},{l:'Natural',v:c.dispenserNatural||0},{l:'Entregas',v:entsCli.length},{l:'Bidones total',v:totalBidones}]
-            .map(x=>`<div style="text-align:center"><div style="font-weight:900;font-size:18px">${x.v}</div><div style="font-size:9px;color:var(--muted);font-weight:700">${x.l}</div></div>`).join('')}
+      <div style="background:#f0f9ff;border-radius:9px;padding:9px;margin-top:6px">
+        <div style="font-size:10px;font-weight:800;color:var(--p);margin-bottom:6px">🫙 DISPENSERS Y ESTADÍSTICAS</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+          ${[{l:'F/C',v:c.dispenserFrioCalor||0},{l:'Natural',v:c.dispenserNatural||0},{l:'Entregas',v:ents.length},{l:'Bid. totales',v:ents.reduce((a,e)=>a+Number(e.bidones),0)}]
+            .map(x=>`<div style="text-align:center"><div style="font-weight:900;font-size:17px">${x.v}</div><div style="font-size:8px;color:var(--muted);font-weight:700">${x.l}</div></div>`).join('')}
         </div>
       </div>
-      ${c.notas?`<div style="margin-top:8px;padding:8px 12px;background:#f0f9ff;border-radius:10px;font-size:13px;color:#0369a1">📝 ${c.notas}</div>`:''}
-      <div style="display:flex;gap:8px;margin-top:10px">
+      ${c.notas?`<div style="margin-top:8px;padding:7px 11px;background:#f0f9ff;border-radius:9px;font-size:12px;color:#0369a1">📝 ${c.notas}</div>`:''}
+      <div style="display:flex;gap:7px;margin-top:9px">
         <a href="${mapsUrl}" target="_blank" class="map-btn">🗺️ Mapa</a>
         ${waUrl?`<a href="${waUrl}" target="_blank" class="map-btn" style="background:#dcfce7;border-color:#86efac;color:#15803d">💬 WhatsApp</a>`:''}
       </div>
     </div>
-    <div class="card ${d<0?'overdue':d<=5?'urgent':'success-card'}">
-      <div style="font-weight:800;font-size:14px;margin-bottom:8px">📅 Próxima entrega</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <div>
-          <div style="font-size:22px;font-weight:900">${fmtDate(c.proximaEntrega)}</div>
-          <div style="font-size:12px;color:var(--muted)">${fmtDateLong(c.proximaEntrega)}</div>
-        </div>
-        ${badgeHtml(d)}
+    <div class="card ${d<0?'ovd':d<=5?'urg':'ok-c'}">
+      <div style="font-weight:800;font-size:13px;margin-bottom:6px">📅 Próxima entrega</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div><div style="font-size:20px;font-weight:900">${fmtDate(c.proximaEntrega)}</div><div style="font-size:11px;color:var(--muted)">${fmtDateLong(c.proximaEntrega)}</div></div>
+        ${badgeD(d)}
       </div>
-      <button class="btn btn-primary btn-block" id="entregarBtn">📦 Registrar entrega</button>
+      <button class="btn bp btn-blk" id="entBtn">📦 Registrar entrega</button>
     </div>
-    ${S.showConfirmDelete?`<div class="confirm-box"><div style="font-weight:700">¿Eliminar a ${c.nombre}?</div>
-      <div class="confirm-btns"><button class="btn btn-gray" style="flex:1" id="cancelDeleteBtn">Cancelar</button>
-      <button class="btn" style="flex:1;background:#dc2626;color:#fff" id="confirmDeleteBtn">Eliminar</button></div></div>`
-    :`<button class="btn btn-danger btn-block" id="deleteBtn">🗑️ Eliminar cliente</button>`}
+    <div class="card">
+      <div class="st">⚙️ Acciones</div>
+      ${c.estado==='activo'
+        ?`<button class="btn btn-blk" style="background:#f1f5f9;color:var(--muted)" id="pausarBtn">⏸️ Pausar cliente</button>`
+        :`<button class="btn bs btn-blk" id="activarBtn">✅ Activar cliente</button>`}
+      ${S.showConfirmDelete?`<div class="confirm-box"><div style="font-weight:700">¿Eliminar a ${c.nombre}?</div>
+        <div class="cb2"><button class="btn btn-gr" style="flex:1" id="cancelDel">Cancelar</button><button class="btn" style="flex:1;background:#dc2626;color:#fff" id="confirmDel">Eliminar</button></div></div>`
+        :`<button class="btn btn-danger btn-blk" id="deleteBtn">🗑️ Eliminar cliente</button>`}
+    </div>
   `:''}
 
-  ${S.detailTab==='entregas'?`
+  ${S.detailTab==='ents'?`
     <div class="card">
-      <div class="section-title">📦 Historial de entregas (${entsCli.length})</div>
-      ${entsCli.length===0?'<div style="color:var(--muted);font-size:13px">Sin entregas registradas aún</div>':
-        entsCli.map(e=>`<div class="entrega-card">
-          <div class="entrega-fecha">📅 ${fmtDate(e.fecha)}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:1px">${fmtDateLong(e.fecha)}</div>
-          <div class="entrega-chips" style="margin-top:6px">
-            <span class="chip" style="background:#dbeafe;color:#1d4ed8">🫙 ${e.bidones} bidones</span>
-            ${e.dispenserFCEntregados>0?`<span class="chip badge-fc">❄️🔥 +${e.dispenserFCEntregados}</span>`:''}
+      <div class="st">📦 Historial de entregas</div>
+      ${ents.length===0?'<div style="color:var(--muted);font-size:12px">Sin entregas registradas aún</div>':
+        ents.map(e=>`<div class="ec">
+          <div class="ef">📅 ${fmtDate(e.fecha)}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:1px">${fmtDateLong(e.fecha)}</div>
+          <div class="chips" style="margin-top:5px">
+            <span class="chip" style="background:#dbeafe;color:#1d4ed8">🫙 ${e.bidones} bid.</span>
+            ${e.dispenserFCEntregados>0?`<span class="chip b-fc">❄️🔥 +${e.dispenserFCEntregados}</span>`:''}
             ${e.dispenserFCRetirados>0?`<span class="chip" style="background:#fce7f3;color:#be185d">↩️ -${e.dispenserFCRetirados}</span>`:''}
-            ${e.dispenserNatVendidos>0?`<span class="chip badge-nat">💧 ${e.dispenserNatVendidos} vendidos</span>`:''}
-            ${e.monto>0?`<span class="chip ${e.cobrado?'badge-paid':'badge-pending'}">${e.cobrado?'✅':'⏳'} ${fmtMoney(e.monto)}</span>`:''}
+            ${e.dispenserNatVendidos>0?`<span class="chip b-nat">💧 ${e.dispenserNatVendidos}</span>`:''}
+            ${e.monto>0?`<span class="chip ${e.cobrado?'b-paid':'b-pend'}">${e.cobrado?'✅':'⏳'} ${fmtMoney(e.monto)}</span>`:''}
           </div>
-          ${e.notas?`<div style="font-size:11px;color:var(--muted);margin-top:4px">📝 ${e.notas}</div>`:''}
+          ${e.notas?`<div style="font-size:10px;color:var(--muted);margin-top:3px">📝 ${e.notas}</div>`:''}
         </div>`).join('')}
     </div>
-    <div style="text-align:center;margin-top:4px">
-      <button class="btn btn-primary btn-sm" id="entregarBtn2">📦 Nueva entrega</button>
-    </div>
+    <div style="text-align:center"><button class="btn bp btn-sm" id="entBtn2">📦 Nueva entrega</button></div>
   `:''}
 
   ${S.detailTab==='pagos'?`
-    ${deuda>0?`<div class="card warn-card"><div style="font-weight:800">💰 Deuda: ${fmtMoney(deuda)}</div></div>`:`<div class="card success-card"><div style="font-weight:800">✅ Sin deudas pendientes</div></div>`}
+    ${deuda>0?`<div class="card wn-c"><div style="font-weight:800">💰 Deuda: ${fmtMoney(deuda)}</div></div>`:`<div class="card ok-c"><div style="font-weight:800">✅ Sin deudas</div></div>`}
     <div class="card">
-      <div class="section-title">📋 Pagos</div>
-      ${pagosCli.length===0?'<div style="color:var(--muted);font-size:13px">Sin pagos</div>':
-        pagosCli.map(p=>`<div class="pago-row">
-          <div><div class="pago-nombre">${p.concepto}</div><div class="pago-fecha">${fmtDate(p.fecha)}</div></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="pago-monto">${fmtMoney(p.monto)}</div>
-            ${p.estado==='pendiente'?`<button class="btn btn-success btn-sm" data-pagoid="${p.id}">✓</button>`:`<span class="badge badge-paid">✅</span>`}
+      <div class="st">📋 Pagos</div>
+      ${pagosCli.length===0?'<div style="color:var(--muted);font-size:12px">Sin pagos</div>':
+        pagosCli.map(p=>`<div class="pr">
+          <div><div class="pn">${p.concepto}</div><div class="pf">${fmtDate(p.fecha)}</div></div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div class="pm">${fmtMoney(p.monto)}</div>
+            ${p.estado==='pendiente'?`<button class="btn bs btn-sm" data-pagoid="${p.id}">✓</button>`:`<span class="badge b-paid">✅</span>`}
           </div>
         </div>`).join('')}
     </div>
     <div class="card">
-      <div class="section-title">➕ Agregar pago</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Monto</label><input class="form-input" id="detPagoMonto" type="number" placeholder="0"></div>
-        <div class="form-group"><label class="form-label">Estado</label><select class="form-input" id="detPagoEstado"><option value="pagado">Pagado</option><option value="pendiente">Pendiente</option></select></div>
+      <div class="st">➕ Agregar pago</div>
+      <div class="fr">
+        <div class="fg"><label class="fl">Monto</label><input class="fi" id="dPM" type="number" placeholder="0"></div>
+        <div class="fg"><label class="fl">Estado</label><select class="fi" id="dPE"><option value="pagado">Pagado</option><option value="pendiente">Pendiente</option></select></div>
       </div>
-      <div class="form-group"><label class="form-label">Concepto</label><input class="form-input" id="detPagoConcepto" type="text" value="Entrega mensual"></div>
-      <button class="btn btn-primary btn-block" id="addDetPagoBtn">💰 Agregar</button>
+      <div class="fg"><label class="fl">Concepto</label><input class="fi" id="dPC" type="text" value="Entrega mensual"></div>
+      <button class="btn bp btn-blk" id="addDetPago">💰 Agregar</button>
     </div>
   `:''}`;
 }
 
+// PAGOS
 function buildPagos(){
-  const pendientes=S.pagos.filter(p=>p.estado==='pendiente').sort((a,b)=>new Date(cleanDate(a.fecha))-new Date(cleanDate(b.fecha)));
-  const recientes=S.pagos.filter(p=>p.estado==='pagado').sort((a,b)=>new Date(cleanDate(b.fecha))-new Date(cleanDate(a.fecha))).slice(0,15);
-  return`<div class="section-title">💰 Pagos y cobros</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-    <div class="card success-card" style="text-align:center">
-      <div style="font-size:10px;color:var(--muted);font-weight:700">COBRADO TOTAL</div>
-      <div style="font-weight:900;font-size:18px;color:var(--success)">${fmtMoney(totalCobrado())}</div>
-    </div>
-    <div class="card" style="text-align:center;border-color:#fca5a5;background:#fff9f9">
-      <div style="font-size:10px;color:var(--muted);font-weight:700">PENDIENTE</div>
-      <div style="font-weight:900;font-size:18px;color:var(--danger)">${fmtMoney(totalDeuda())}</div>
-    </div>
+  const pend=S.pagos.filter(p=>p.estado==='pendiente').sort((a,b)=>new Date(cleanDate(a.fecha))-new Date(cleanDate(b.fecha)));
+  const rec=S.pagos.filter(p=>p.estado==='pagado').sort((a,b)=>new Date(cleanDate(b.fecha))-new Date(cleanDate(a.fecha))).slice(0,15);
+  return`<div class="st">💰 Pagos y cobros</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+    <div class="card ok-c" style="text-align:center"><div style="font-size:9px;color:var(--muted);font-weight:700">COBRADO TOTAL</div><div style="font-weight:900;font-size:17px;color:var(--ok)">${fmtMoney(totalCobrado())}</div></div>
+    <div class="card" style="text-align:center;border-color:#fca5a5;background:#fff9f9"><div style="font-size:9px;color:var(--muted);font-weight:700">PENDIENTE</div><div style="font-weight:900;font-size:17px;color:var(--danger)">${fmtMoney(totalDeuda())}</div></div>
   </div>
-  ${pendientes.length>0?`<div class="card">
-    <div class="section-title">🔴 Cobros pendientes (${pendientes.length})</div>
-    ${pendientes.map(p=>`<div class="pago-row">
-      <div><div class="pago-nombre">${p.clienteNombre}</div><div class="pago-fecha">${p.concepto} — ${fmtDate(p.fecha)}</div></div>
-      <div style="display:flex;align-items:center;gap:8px"><div class="pago-monto">${fmtMoney(p.monto)}</div>
-      <button class="btn btn-success btn-sm" data-pagoid="${p.id}">✓</button></div>
+  ${pend.length>0?`<div class="card">
+    <div class="st">🔴 Pendientes (${pend.length})</div>
+    ${pend.map(p=>`<div class="pr">
+      <div><div class="pn">${p.clienteNombre}</div><div class="pf">${p.concepto} — ${fmtDate(p.fecha)}</div></div>
+      <div style="display:flex;align-items:center;gap:6px"><div class="pm">${fmtMoney(p.monto)}</div><button class="btn bs btn-sm" data-pagoid="${p.id}">✓</button></div>
     </div>`).join('')}
   </div>`:''}
   <div class="card">
-    <div class="section-title">✅ Últimos cobros</div>
-    ${recientes.length===0?'<div style="color:var(--muted);font-size:13px">Sin cobros aún</div>':
-      recientes.map(p=>`<div class="pago-row">
-        <div><div class="pago-nombre">${p.clienteNombre}</div><div class="pago-fecha">${p.concepto} — ${fmtDate(p.fecha)}</div></div>
-        <div class="pago-monto">${fmtMoney(p.monto)}</div>
-      </div>`).join('')}
+    <div class="st">✅ Últimos cobros</div>
+    ${rec.length===0?'<div style="color:var(--muted);font-size:12px">Sin cobros aún</div>':
+      rec.map(p=>`<div class="pr"><div><div class="pn">${p.clienteNombre}</div><div class="pf">${p.concepto} — ${fmtDate(p.fecha)}</div></div><div class="pm">${fmtMoney(p.monto)}</div></div>`).join('')}
   </div>
   <div class="card">
-    <div class="section-title">➕ Registrar cobro</div>
-    <div class="form-group"><label class="form-label">Cliente</label>
-      <select class="form-input" id="gPagoCliente"><option value="">Seleccioná...</option>
-        ${S.clients.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}
-      </select></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Monto</label><input class="form-input" id="gPagoMonto" type="number" placeholder="0"></div>
-      <div class="form-group"><label class="form-label">Estado</label><select class="form-input" id="gPagoEstado"><option value="pagado">Pagado</option><option value="pendiente">Pendiente</option></select></div>
+    <div class="st">➕ Registrar cobro</div>
+    <div class="fg"><label class="fl">Cliente</label><select class="fi" id="gPC"><option value="">Seleccioná...</option>${S.clients.filter(c=>c.estado==='activo').sort((a,b)=>a.nombre.localeCompare(b.nombre)).map(c=>`<option value="${c.id}">#${c.nroCliente} ${c.nombre}</option>`).join('')}</select></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Monto</label><input class="fi" id="gPM" type="number" placeholder="0"></div>
+      <div class="fg"><label class="fl">Estado</label><select class="fi" id="gPE"><option value="pagado">Pagado</option><option value="pendiente">Pendiente</option></select></div>
     </div>
-    <div class="form-group"><label class="form-label">Concepto</label><input class="form-input" id="gPagoConcepto" type="text" value="Entrega mensual"></div>
-    <button class="btn btn-primary btn-block" id="gAddPagoBtn">💰 Registrar</button>
+    <div class="fg"><label class="fl">Concepto</label><input class="fi" id="gPCon" type="text" value="Entrega mensual"></div>
+    <button class="btn bp btn-blk" id="gAddPago">💰 Registrar</button>
   </div>`;
 }
 
+// STOCK
 function buildStock(){
   const st=S.stock;
-  const totalFC=(st.fcDisponibles||0)+(st.fcEnCasas||0)+(st.fcReparacion||0);
-  const fcEnCasasReal=S.clients.reduce((a,c)=>a+(c.dispenserFrioCalor||0),0);
+  const fcEnCasas=S.clients.filter(c=>c.estado==='activo').reduce((a,c)=>a+(c.dispenserFrioCalor||0),0);
+  const totalFC=(st.fcDisponibles||0)+fcEnCasas+(st.fcReparacion||0);
   const totalBid=(st.bidonesLlenos||0)+(st.bidonesVacios||0);
   const pctFC=totalFC>0?Math.round(((st.fcDisponibles||0)/totalFC)*100):0;
   const pctBid=totalBid>0?Math.round(((st.bidonesLlenos||0)/totalBid)*100):0;
-  return`<div class="section-title">📦 Stock</div>
-  <div class="card" style="margin-bottom:10px">
-    <div style="font-weight:800;font-size:14px;margin-bottom:10px">❄️🔥 Dispensers Frío/Calor</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px">
-      ${[{l:'Disponibles',v:st.fcDisponibles||0,c:'#22c55e',bg:'#dcfce7'},{l:'En casas',v:fcEnCasasReal,c:'#3b82f6',bg:'#dbeafe'},{l:'Reparación',v:st.fcReparacion||0,c:'#f59e0b',bg:'#fef3c7'}]
-        .map(x=>`<div style="background:${x.bg};border-radius:10px;padding:8px;text-align:center"><div style="font-weight:900;font-size:22px;color:${x.c}">${x.v}</div><div style="font-size:9px;font-weight:700;color:var(--muted)">${x.l}</div></div>`).join('')}
+  return`<div class="st">📦 Stock</div>
+  <div class="card" style="margin-bottom:9px">
+    <div style="font-weight:800;font-size:13px;margin-bottom:8px">❄️🔥 Dispensers Frío/Calor</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:7px">
+      ${[{l:'Disponibles',v:st.fcDisponibles||0,c:'#22c55e',bg:'#dcfce7'},{l:'En casas',v:fcEnCasas,c:'#3b82f6',bg:'#dbeafe'},{l:'Reparación',v:st.fcReparacion||0,c:'#f59e0b',bg:'#fef3c7'}]
+        .map(x=>`<div style="background:${x.bg};border-radius:9px;padding:7px;text-align:center"><div style="font-weight:900;font-size:20px;color:${x.c}">${x.v}</div><div style="font-size:8px;font-weight:700;color:var(--muted)">${x.l}</div></div>`).join('')}
     </div>
-    <div class="progress-bar"><div class="progress-fill" style="width:${pctFC}%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">Total: ${totalFC} | ${pctFC}% disponibles</div>
+    <div class="pb"><div class="pf2" style="width:${pctFC}%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:3px">Total: ${totalFC} | ${pctFC}% disponibles</div>
   </div>
-  <div class="card" style="margin-bottom:10px">
-    <div style="font-weight:800;font-size:14px;margin-bottom:8px">💧 Dispensers Natural</div>
-    <div style="text-align:center"><div style="font-weight:900;font-size:42px;color:#0ea5e9">${st.natDisponibles||0}</div>
-    <div style="font-size:13px;color:var(--muted);font-weight:600">disponibles para vender</div></div>
+  <div class="card" style="margin-bottom:9px">
+    <div style="font-weight:800;font-size:13px;margin-bottom:6px">💧 Dispensers Natural</div>
+    <div style="text-align:center"><div style="font-weight:900;font-size:38px;color:#0ea5e9">${st.natDisponibles||0}</div>
+    <div style="font-size:12px;color:var(--muted);font-weight:600">disponibles para vender</div></div>
   </div>
-  <div class="card" style="margin-bottom:10px">
-    <div style="font-weight:800;font-size:14px;margin-bottom:8px">🫙 Bidones</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px">
-      <div style="background:#dcfce7;border-radius:10px;padding:10px;text-align:center"><div style="font-weight:900;font-size:28px;color:#15803d">${st.bidonesLlenos||0}</div><div style="font-size:10px;font-weight:700;color:var(--muted)">🫙 LLENOS</div></div>
-      <div style="background:#fee2e2;border-radius:10px;padding:10px;text-align:center"><div style="font-weight:900;font-size:28px;color:#dc2626">${st.bidonesVacios||0}</div><div style="font-size:10px;font-weight:700;color:var(--muted)">🪣 VACÍOS</div></div>
+  <div class="card" style="margin-bottom:9px">
+    <div style="font-weight:800;font-size:13px;margin-bottom:7px">🫙 Bidones</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:6px">
+      <div style="background:#dcfce7;border-radius:9px;padding:9px;text-align:center"><div style="font-weight:900;font-size:26px;color:#15803d">${st.bidonesLlenos||0}</div><div style="font-size:9px;font-weight:700;color:var(--muted)">🫙 LLENOS</div></div>
+      <div style="background:#fee2e2;border-radius:9px;padding:9px;text-align:center"><div style="font-weight:900;font-size:26px;color:#dc2626">${st.bidonesVacios||0}</div><div style="font-size:9px;font-weight:700;color:var(--muted)">🪣 VACÍOS</div></div>
     </div>
-    <div class="progress-bar"><div class="progress-fill" style="width:${pctBid}%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">${pctBid}% llenos de ${totalBid} totales</div>
+    <div class="pb"><div class="pf2" style="width:${pctBid}%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:3px">${pctBid}% llenos de ${totalBid} totales</div>
   </div>
   <div class="card">
-    <div class="section-title">📝 Actualizar stock</div>
-    <div style="background:#f0f9ff;border-radius:10px;padding:10px;margin-bottom:10px">
-      <div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:8px">❄️🔥 Dispensers F/C</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Disponibles</label><input class="form-input" id="sFCDisp" type="number" min="0" value="${st.fcDisponibles||0}"></div>
-        <div class="form-group"><label class="form-label">En reparación</label><input class="form-input" id="sFCRep" type="number" min="0" value="${st.fcReparacion||0}"></div>
+    <div class="st">📝 Actualizar stock</div>
+    <div style="background:#f0f9ff;border-radius:9px;padding:9px;margin-bottom:9px">
+      <div style="font-size:11px;font-weight:700;color:var(--p);margin-bottom:7px">❄️🔥 Dispensers F/C</div>
+      <div class="fr">
+        <div class="fg"><label class="fl">Disponibles</label><input class="fi" id="sFCd" type="number" min="0" value="${st.fcDisponibles||0}"></div>
+        <div class="fg"><label class="fl">En reparación</label><input class="fi" id="sFCr" type="number" min="0" value="${st.fcReparacion||0}"></div>
       </div>
     </div>
-    <div class="form-group"><label class="form-label">💧 Dispensers Natural disponibles</label><input class="form-input" id="sNatDisp" type="number" min="0" value="${st.natDisponibles||0}"></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">🫙 Bidones llenos</label><input class="form-input" id="sBidLlenos" type="number" min="0" value="${st.bidonesLlenos||0}"></div>
-      <div class="form-group"><label class="form-label">🪣 Bidones vacíos</label><input class="form-input" id="sBidVacios" type="number" min="0" value="${st.bidonesVacios||0}"></div>
+    <div class="fg"><label class="fl">💧 Dispensers Natural disponibles</label><input class="fi" id="sNat" type="number" min="0" value="${st.natDisponibles||0}"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">🫙 Bidones llenos</label><input class="fi" id="sBL" type="number" min="0" value="${st.bidonesLlenos||0}"></div>
+      <div class="fg"><label class="fl">🪣 Bidones vacíos</label><input class="fi" id="sBV" type="number" min="0" value="${st.bidonesVacios||0}"></div>
     </div>
-    <div class="form-group"><label class="form-label">Nota</label><input class="form-input" id="sNota" type="text" placeholder="Ej: Recibí 50 bidones llenos..."></div>
-    <button class="btn btn-primary btn-block" id="saveStockBtn">📦 Guardar stock</button>
+    <div class="fg"><label class="fl">Nota</label><input class="fi" id="sNota" type="text" placeholder="Ej: Recibí 50 bidones llenos..."></div>
+    <button class="btn bp btn-blk" id="saveStockBtn">📦 Guardar stock</button>
   </div>`;
 }
 
+// REPORTE
 function buildReporte(){
   const mes=today().slice(0,7);
-  const entsMes=S.entregas.filter(e=>cleanDate(e.fecha).startsWith(mes));
-  const bidMes=entsMes.reduce((a,e)=>a+Number(e.bidones),0);
-  const fcMes=entsMes.reduce((a,e)=>a+Number(e.dispenserFCEntregados||0),0);
-  const natMes=entsMes.reduce((a,e)=>a+Number(e.dispenserNatVendidos||0),0);
-  const ingMes=S.pagos.filter(p=>p.estado==='pagado'&&cleanDate(p.fecha).startsWith(mes)).reduce((a,p)=>a+Number(p.monto),0);
-  const conDeuda=S.clients.filter(c=>clienteDeuda(c.id)>0);
-  const proximos=filteredClients().filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=7;});
-  const hoy=S.clients.filter(c=>daysUntil(c.proximaEntrega)===0);
-  const mesNombre=new Date().toLocaleString('es-AR',{month:'long',year:'numeric'});
-  return`<div class="section-title">📊 Reporte</div>
+  const eM=S.entregas.filter(e=>cleanDate(e.fecha).startsWith(mes));
+  const bidM=eM.reduce((a,e)=>a+Number(e.bidones),0);
+  const fcM=eM.reduce((a,e)=>a+Number(e.dispenserFCEntregados||0),0);
+  const natM=eM.reduce((a,e)=>a+Number(e.dispenserNatVendidos||0),0);
+  const ingM=S.pagos.filter(p=>p.estado==='pagado'&&cleanDate(p.fecha).startsWith(mes)).reduce((a,p)=>a+Number(p.monto),0);
+  const conDeuda=S.clients.filter(c=>cDeuda(c.id)>0);
+  const prox=S.clients.filter(c=>c.estado==='activo').filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=7;}).sort((a,b)=>daysUntil(a.proximaEntrega)-daysUntil(b.proximaEntrega));
+  const mesN=new Date().toLocaleString('es-AR',{month:'long',year:'numeric'});
+  // Agrupar por zona
+  const zonas={};S.clients.filter(c=>c.estado==='activo').forEach(c=>{const z=c.zona||c.barrio||'Sin zona';if(!zonas[z])zonas[z]=0;zonas[z]++;});
+
+  return`<div class="st">📊 Reporte</div>
   <div class="card">
-    <div class="section-title" style="font-size:13px;text-transform:capitalize">📅 ${mesNombre}</div>
-    ${[['🚚 Entregas',entsMes.length],['🫙 Bidones entregados',bidMes],['❄️🔥 Disp. F/C entregados',fcMes],['💧 Disp. Natural vendidos',natMes],['💰 Cobrado este mes',fmtMoney(ingMes)],['🔴 Con deuda',conDeuda.length],['💸 Deuda total',fmtMoney(totalDeuda())],['👥 Total clientes',S.clients.length]]
-      .map(([k,v])=>`<div class="summary-row"><span class="summary-key">${k}</span><span class="summary-val">${v}</span></div>`).join('')}
+    <div class="st" style="font-size:12px;text-transform:capitalize">📅 ${mesN}</div>
+    ${[['🚚 Entregas',eM.length],['🫙 Bidones entregados',bidM],['❄️🔥 Disp. F/C entregados',fcM],['💧 Disp. Natural vendidos',natM],['💰 Cobrado este mes',fmtMoney(ingM)],['🔴 Clientes con deuda',conDeuda.length],['💸 Deuda total',fmtMoney(totalDeuda())],['👥 Clientes activos',S.clients.filter(c=>c.estado==='activo').length],['⏸️ Clientes pausados',S.clients.filter(c=>c.estado==='pausado').length]]
+      .map(([k,v])=>`<div class="sr"><span class="sk">${k}</span><span class="sv2">${v}</span></div>`).join('')}
   </div>
-  ${hoy.length>0?`<div class="card warn-card">
-    <div class="section-title">🔔 Entregas de HOY</div>
-    ${hoy.map(c=>`<div class="summary-row"><span class="summary-key">${c.nombre}</span><span style="font-size:12px;color:var(--muted)">${c.bidones} bid. — ${c.barrio||c.direccion}</span></div>`).join('')}
-  </div>`:''}
-  ${proximos.length>0?`<div class="card">
-    <div class="section-title">📅 Próximos 7 días</div>
-    ${proximos.map(c=>`<div class="summary-row">
-      <span class="summary-key">${c.nombre}</span>
-      <div style="display:flex;align-items:center;gap:6px">${badgeHtml(daysUntil(c.proximaEntrega))}<span style="font-size:11px;color:var(--muted)">${fmtDate(c.proximaEntrega)}</span></div>
+  ${prox.length>0?`<div class="card">
+    <div class="st">📅 Próximos 7 días</div>
+    ${prox.map(c=>`<div class="sr"><span class="sk"><span class="nro">#${c.nroCliente}</span>${c.nombre}<span class="zona-tag">${c.barrio||''}</span></span>
+      <div style="display:flex;align-items:center;gap:5px">${badgeD(daysUntil(c.proximaEntrega))}<span style="font-size:10px;color:var(--muted)">${fmtDate(c.proximaEntrega)}</span></div>
     </div>`).join('')}
   </div>`:''}
+  ${Object.keys(zonas).length>0?`<div class="card">
+    <div class="st">📍 Clientes por zona</div>
+    ${Object.entries(zonas).sort((a,b)=>b[1]-a[1]).map(([z,n])=>`<div class="sr"><span class="sk">${z}</span><span class="sv2">${n} clientes</span></div>`).join('')}
+  </div>`:''}
   ${conDeuda.length>0?`<div class="card">
-    <div class="section-title">💰 Clientes con deuda</div>
-    ${conDeuda.map(c=>`<div class="summary-row"><span class="summary-key">${c.nombre}</span><span class="summary-val" style="color:var(--danger)">${fmtMoney(clienteDeuda(c.id))}</span></div>`).join('')}
+    <div class="st">💰 Clientes con deuda</div>
+    ${conDeuda.map(c=>`<div class="sr"><span class="sk"><span class="nro">#${c.nroCliente}</span>${c.nombre}</span><span class="sv2" style="color:var(--danger)">${fmtMoney(cDeuda(c.id))}</span></div>`).join('')}
   </div>`:''}`;
 }
 
 // BIND EVENTS
 function bindEvents(){
-  document.querySelectorAll('[data-tab]').forEach(btn=>{btn.onclick=()=>{S.tab=btn.dataset.tab;if(S.tab!=='clientes')S.view='lista';render();};});
-  const connectBtn=document.getElementById('connectBtn');
-  if(connectBtn)connectBtn.onclick=()=>{const url=document.getElementById('urlInput').value.trim();if(!url){showToast('⚠️ Ingresá la URL');return;}S.scriptUrl=url;localStorage.setItem('aguacontrol_url',url);S.view='lista';fetchAll();};
-  const skipBtn=document.getElementById('skipBtn');if(skipBtn)skipBtn.onclick=()=>{S.view='lista';fetchAll();};
+  document.querySelectorAll('[data-tab]').forEach(b=>{b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab!=='clientes')S.view='lista';render();};});
+  const conn=document.getElementById('connectBtn');
+  if(conn)conn.onclick=()=>{const url=document.getElementById('urlInput').value.trim();if(!url){showToast('⚠️ Ingresá la URL');return;}S.scriptUrl=url;localStorage.setItem('aguacontrol_url',url);S.view='lista';fetchAll();};
+  const skip=document.getElementById('skipBtn');if(skip)skip.onclick=()=>{S.view='lista';fetchAll();};
   const fab=document.getElementById('fabBtn');if(fab)fab.onclick=()=>{S.form=emptyForm();S.view='nuevo';render();};
-  const si=document.getElementById('searchInput');if(si)si.oninput=e=>{S.search=e.target.value;render();};
-  document.querySelectorAll('[data-filter]').forEach(btn=>{btn.onclick=()=>{S.filter=btn.dataset.filter;render();};});
+  // Quick actions inicio
+  const qaNC=document.getElementById('qaNewClient');if(qaNC)qaNC.onclick=()=>{S.tab='clientes';S.form=emptyForm();S.view='nuevo';render();};
+  const qaR=document.getElementById('qaRefresh');if(qaR)qaR.onclick=fetchAll;
+  // Search & filter
+  const srch=document.getElementById('srch');if(srch)srch.oninput=e=>{S.search=e.target.value;render();};
+  document.querySelectorAll('[data-filter]').forEach(b=>{b.onclick=()=>{S.filter=b.dataset.filter;render();};});
   const rb=document.getElementById('refreshBtn');if(rb)rb.onclick=fetchAll;
+  const ord=document.getElementById('ordenSelect');if(ord)ord.onchange=e=>{S.ordenar=e.target.value;render();};
+  // Client cards
   document.querySelectorAll('[data-action="open"]').forEach(card=>{
     card.onclick=e=>{if(e.target.closest('[data-action="entregar"]'))return;
       S.selected=S.clients.find(c=>c.id===parseInt(card.dataset.id));
       S.showConfirmDelete=false;S.detailTab='info';S.view='detalle';render();};
   });
-  document.querySelectorAll('[data-action="entregar"]').forEach(btn=>{
-    btn.onclick=e=>{e.stopPropagation();S.selected=S.clients.find(c=>c.id===parseInt(btn.dataset.id));registrarEntregaConModal();};
+  document.querySelectorAll('[data-action="entregar"],[data-cid]').forEach(b=>{
+    if(b.dataset.action==='entregar'||b.dataset.cid){
+      b.onclick=e=>{e.stopPropagation();const id=parseInt(b.dataset.cid||b.dataset.id);abrirModalEntrega(id);};
+    }
   });
-  document.querySelectorAll('[data-field]').forEach(input=>{
-    input.oninput=e=>{const k=input.dataset.field;
-      if(['bidones','dispenserFrioCalor','dispenserNatural'].includes(k))S.form[k]=parseInt(e.target.value)||0;
+  // Form fields
+  document.querySelectorAll('[data-field]').forEach(inp=>{
+    inp.oninput=e=>{const k=inp.dataset.field;
+      if(['bidones','dispenserFrioCalor','dispenserNatural','nroCliente'].includes(k))S.form[k]=parseInt(e.target.value)||0;
       else if(k==='precioPorEntrega')S.form[k]=parseFloat(e.target.value)||0;
       else S.form[k]=e.target.value;};
+    inp.onchange=e=>{const k=inp.dataset.field;S.form[k]=e.target.value;};
   });
   const saveBtn=document.getElementById('saveBtn');if(saveBtn)saveBtn.onclick=saveForm;
   const backBtn=document.getElementById('backBtn');if(backBtn)backBtn.onclick=()=>{S.view='lista';S.selected=null;S.form=emptyForm();render();};
   const editBtn=document.getElementById('editBtn');
-  if(editBtn)editBtn.onclick=()=>{const c=S.selected;S.form={nombre:c.nombre,telefono:c.telefono||'',direccion:c.direccion,barrio:c.barrio||'',fechaInicio:addMonths(c.proximaEntrega,-1),bidones:c.bidones,notas:c.notas||'',precioPorEntrega:c.precioPorEntrega||40000,fotoUrl:c.fotoUrl||'',dispenserFrioCalor:c.dispenserFrioCalor||0,dispenserNatural:c.dispenserNatural||0};S.view='editar';render();};
-  document.querySelectorAll('[data-dtab]').forEach(btn=>{btn.onclick=()=>{S.detailTab=btn.dataset.dtab;render();};});
-  const entBtn=document.getElementById('entregarBtn');if(entBtn)entBtn.onclick=registrarEntregaConModal;
-  const entBtn2=document.getElementById('entregarBtn2');if(entBtn2)entBtn2.onclick=registrarEntregaConModal;
-  document.querySelectorAll('[data-pagoid]').forEach(btn=>{btn.onclick=()=>marcarPagado(parseInt(btn.dataset.pagoid));});
-  const addDetPagoBtn=document.getElementById('addDetPagoBtn');
-  if(addDetPagoBtn)addDetPagoBtn.onclick=()=>agregarPagoManual({clienteId:S.selected.id,monto:document.getElementById('detPagoMonto').value,estado:document.getElementById('detPagoEstado').value,concepto:document.getElementById('detPagoConcepto').value,fecha:today()});
-  const gAddPagoBtn=document.getElementById('gAddPagoBtn');
-  if(gAddPagoBtn)gAddPagoBtn.onclick=()=>agregarPagoManual({clienteId:document.getElementById('gPagoCliente').value,monto:document.getElementById('gPagoMonto').value,estado:document.getElementById('gPagoEstado').value,concepto:document.getElementById('gPagoConcepto').value,fecha:today()});
-  const saveStockBtn=document.getElementById('saveStockBtn');
-  if(saveStockBtn)saveStockBtn.onclick=()=>actualizarStock({fcDisponibles:document.getElementById('sFCDisp').value,fcReparacion:document.getElementById('sFCRep').value,natDisponibles:document.getElementById('sNatDisp').value,bidonesLlenos:document.getElementById('sBidLlenos').value,bidonesVacios:document.getElementById('sBidVacios').value,nota:document.getElementById('sNota').value});
+  if(editBtn)editBtn.onclick=()=>{const c=S.selected;S.form={nroCliente:c.nroCliente,nombre:c.nombre,telefono:c.telefono||'',direccion:c.direccion,barrio:c.barrio||'',zona:c.zona||'',fechaInicio:addMonths(c.proximaEntrega,-1),bidones:c.bidones,notas:c.notas||'',precioPorEntrega:c.precioPorEntrega||40000,fotoUrl:c.fotoUrl||'',dispenserFrioCalor:c.dispenserFrioCalor||0,dispenserNatural:c.dispenserNatural||0,estado:c.estado||'activo'};S.view='editar';render();};
+  // Detail tabs
+  document.querySelectorAll('[data-dtab]').forEach(b=>{b.onclick=()=>{S.detailTab=b.dataset.dtab;render();};});
+  const entBtn=document.getElementById('entBtn');if(entBtn)entBtn.onclick=()=>abrirModalEntrega(S.selected.id);
+  const entBtn2=document.getElementById('entBtn2');if(entBtn2)entBtn2.onclick=()=>abrirModalEntrega(S.selected.id);
+  // Pagos
+  document.querySelectorAll('[data-pagoid]').forEach(b=>{b.onclick=()=>marcarPagado(parseInt(b.dataset.pagoid));});
+  const addDetPago=document.getElementById('addDetPago');
+  if(addDetPago)addDetPago.onclick=()=>agregarPago({clienteId:S.selected.id,monto:document.getElementById('dPM').value,estado:document.getElementById('dPE').value,concepto:document.getElementById('dPC').value});
+  const gAddPago=document.getElementById('gAddPago');
+  if(gAddPago)gAddPago.onclick=()=>agregarPago({clienteId:document.getElementById('gPC').value,monto:document.getElementById('gPM').value,estado:document.getElementById('gPE').value,concepto:document.getElementById('gPCon').value});
+  // Stock
+  const sStock=document.getElementById('saveStockBtn');
+  if(sStock)sStock.onclick=()=>actualizarStock({fcD:document.getElementById('sFCd').value,fcR:document.getElementById('sFCr').value,natD:document.getElementById('sNat').value,bL:document.getElementById('sBL').value,bV:document.getElementById('sBV').value,nota:document.getElementById('sNota').value});
+  // Estado cliente
+  const pausarBtn=document.getElementById('pausarBtn');if(pausarBtn)pausarBtn.onclick=()=>cambiarEstado(S.selected.id,'pausado');
+  const activarBtn=document.getElementById('activarBtn');if(activarBtn)activarBtn.onclick=()=>cambiarEstado(S.selected.id,'activo');
+  // Delete
   const delBtn=document.getElementById('deleteBtn');if(delBtn)delBtn.onclick=()=>{S.showConfirmDelete=true;render();};
-  const cancelDel=document.getElementById('cancelDeleteBtn');if(cancelDel)cancelDel.onclick=()=>{S.showConfirmDelete=false;render();};
-  const confirmDel=document.getElementById('confirmDeleteBtn');if(confirmDel)confirmDel.onclick=()=>deleteClient(S.selected.id);
-  const closeModal=document.getElementById('closeModal');if(closeModal)closeModal.onclick=()=>{S.modal=null;render();};
-  const closeModal2=document.getElementById('closeModal2');if(closeModal2)closeModal2.onclick=()=>{S.modal=null;render();};
-  const modalOverlay=document.getElementById('modalOverlay');if(modalOverlay)modalOverlay.onclick=e=>{if(e.target===modalOverlay){S.modal=null;render();}};
-  const confirmEntregaBtn=document.getElementById('confirmEntregaBtn');
-  if(confirmEntregaBtn)confirmEntregaBtn.onclick=()=>{
-    S.entregaForm.bidones=document.getElementById('efBidones').value;
-    S.entregaForm.dispenserFCEntregados=document.getElementById('efFCEnt').value;
-    S.entregaForm.dispenserFCRetirados=document.getElementById('efFCRet').value;
-    S.entregaForm.dispenserNatVendidos=document.getElementById('efNatVend').value;
-    S.entregaForm.monto=document.getElementById('efMonto').value;
-    S.entregaForm.cobrado=document.getElementById('efCobrado').value==='true';
-    S.entregaForm.notas=document.getElementById('efNotas').value;
+  const cancelDel=document.getElementById('cancelDel');if(cancelDel)cancelDel.onclick=()=>{S.showConfirmDelete=false;render();};
+  const confirmDel=document.getElementById('confirmDel');if(confirmDel)confirmDel.onclick=()=>deleteClient(S.selected.id);
+  // Modal
+  const mClose=document.getElementById('mClose');if(mClose)mClose.onclick=()=>{S.modal=null;render();};
+  const mClose2=document.getElementById('mClose2');if(mClose2)mClose2.onclick=()=>{S.modal=null;render();};
+  const mOv=document.getElementById('mOv');if(mOv)mOv.onclick=e=>{if(e.target===mOv){S.modal=null;render();}};
+  const cfBtn=document.getElementById('cfBtn');
+  if(cfBtn)cfBtn.onclick=()=>{
+    S.entregaForm.bidones=document.getElementById('efB').value;
+    S.entregaForm.dispenserFCEntregados=document.getElementById('efFCE').value;
+    S.entregaForm.dispenserFCRetirados=document.getElementById('efFCR').value;
+    S.entregaForm.dispenserNatVendidos=document.getElementById('efNat').value;
+    S.entregaForm.monto=document.getElementById('efM').value;
+    S.entregaForm.cobrado=document.getElementById('efCob').value==='true';
+    S.entregaForm.notas=document.getElementById('efN').value;
     confirmarEntrega();
   };
 }
