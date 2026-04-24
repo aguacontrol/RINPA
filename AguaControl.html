@@ -11,15 +11,19 @@
 <title>AguaControl 💧</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--p:#0ea5e9;--pd:#0284c7;--dark:#0c1a2e;--ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;--bg:#f0f7ff;--card:#fff;--border:#e0f2fe;--text:#0c1a2e;--muted:#64748b;}
+:root{--p:#0ea5e9;--pd:#0284c7;--dark:#0c1a2e;--ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;--bg:#f0f7ff;--card:#fff;--border:#e0f2fe;--text:#0c1a2e;--muted:#64748b;--lorenzo:#8b5cf6;--renato:#f97316;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.header{background:linear-gradient(135deg,#0c1a2e 0%,#0e3460 60%,#0ea5e9 100%);padding:14px 16px 10px;color:#fff;position:sticky;top:0;z-index:100}
+.header{background:linear-gradient(135deg,#0c1a2e 0%,#0e3460 60%,#0ea5e9 100%);padding:12px 14px 10px;color:#fff;position:sticky;top:0;z-index:100}
 .header-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.header-title{font-weight:900;font-size:19px;flex:1}
+.header-title{font-weight:900;font-size:18px;flex:1}
+.user-selector{display:flex;gap:4px;margin-bottom:8px}
+.user-btn{flex:1;padding:6px 10px;border-radius:10px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);font-weight:700;font-size:11px;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:4px}
+.user-btn.active{background:#fff;color:var(--dark);border-color:#fff}
+.user-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
 .sc{border-radius:10px;padding:5px 3px;text-align:center;border:1px solid}
-.sv{font-weight:900;font-size:16px}
+.sv{font-weight:900;font-size:15px}
 .sl{font-size:8px;color:#cce4f7;font-weight:700}
 .nav{display:flex;background:var(--dark);border-top:1px solid #1e3a5f;position:fixed;bottom:0;left:0;right:0;z-index:100}
 .nb{flex:1;padding:8px 2px 6px;background:none;border:none;color:rgba(255,255,255,.45);font-size:8px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;flex-direction:column;align-items:center;gap:2px}
@@ -43,6 +47,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .b-fc{background:#dbeafe;color:#1d4ed8}
 .b-nat{background:#dcfce7;color:#15803d}
 .b-paused{background:#f1f5f9;color:#64748b}
+.b-lorenzo{background:#ede9fe;color:#6d28d9}
+.b-renato{background:#ffedd5;color:#c2410c}
+.b-efectivo{background:#dcfce7;color:#15803d}
+.b-transf{background:#dbeafe;color:#1d4ed8}
+.b-done{background:#dcfce7;color:#15803d;text-decoration:line-through}
 .btn{padding:9px 14px;border-radius:11px;border:none;font-weight:800;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;transition:opacity .15s}
 .btn:active{opacity:.75}
 .bp{background:linear-gradient(90deg,#0ea5e9,#0284c7);color:#fff}
@@ -108,25 +117,34 @@ select.fi{appearance:none}
 .map-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 12px;background:#f0f9ff;border-radius:11px;border:1.5px solid var(--border);color:var(--p);font-weight:700;font-size:12px;text-decoration:none;flex:1}
 .confirm-box{background:#fff1f2;border:1.5px solid #fca5a5;border-radius:13px;padding:13px;text-align:center;margin-top:10px}
 .cb2{display:flex;gap:7px;margin-top:9px}
-
-/* ZONA TAG */
 .zona-tag{display:inline-block;padding:1px 7px;border-radius:999px;font-size:9px;font-weight:700;background:#e0f2fe;color:#0369a1;margin-left:4px}
-
-/* AGENDA HOY */
 .hoy-card{background:linear-gradient(135deg,#0e3460,#0ea5e9);color:#fff;border-radius:14px;padding:14px;margin-bottom:10px}
 .hoy-title{font-weight:900;font-size:16px;margin-bottom:3px}
 .hoy-sub{font-size:11px;opacity:.8;margin-bottom:12px}
 .hoy-item{background:rgba(255,255,255,.15);border-radius:10px;padding:9px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.hoy-item.done{opacity:.5}
 .hoy-nombre{font-weight:800;font-size:13px}
 .hoy-dir{font-size:10px;opacity:.8;margin-top:2px}
-
-/* NRO CLIENTE */
 .nro{display:inline-block;background:#f0f9ff;color:var(--p);font-weight:900;font-size:10px;padding:1px 7px;border-radius:999px;margin-right:4px}
-
-/* QUICK ACTIONS */
 .qa{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .qa-btn{border-radius:12px;padding:11px 8px;border:none;font-weight:800;font-size:12px;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px}
 .qa-icon{font-size:22px}
+.metodo-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.metodo-btn{padding:10px;border-radius:11px;border:2px solid var(--border);background:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px}
+.metodo-btn.active{border-color:var(--p);background:#f0f9ff;color:var(--p)}
+.metodo-btn.efectivo.active{border-color:var(--ok);background:#f0fdf4;color:var(--ok)}
+.metodo-btn.transferencia.active{border-color:var(--p);background:#f0f9ff;color:var(--p)}
+.repartidor-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.repartidor-btn{padding:10px;border-radius:11px;border:2px solid var(--border);background:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px}
+.repartidor-btn.lorenzo.active{border-color:var(--lorenzo);background:#ede9fe;color:#6d28d9}
+.repartidor-btn.renato.active{border-color:var(--renato);background:#ffedd5;color:#c2410c}
+.check-icon{width:22px;height:22px;border-radius:50%;border:2px solid #cbd5e1;display:inline-flex;align-items:center;justify-content:center;font-size:14px;background:#fff;color:transparent}
+.check-icon.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.caja-box{border-radius:14px;padding:12px;color:#fff}
+.caja-lorenzo{background:linear-gradient(135deg,#8b5cf6,#7c3aed)}
+.caja-renato{background:linear-gradient(135deg,#f97316,#ea580c)}
+.caja-num{font-weight:900;font-size:22px}
+.caja-lbl{font-size:10px;opacity:.9;font-weight:700}
 </style>
 </head>
 <body>
@@ -134,18 +152,26 @@ select.fi{appearance:none}
 <div id="app"></div>
 <div id="modal"></div>
 <script>
+const REPARTIDORES = [
+  {id:'lorenzo', nombre:'Lorenzo', emoji:'👤', color:'#8b5cf6'},
+  {id:'renato', nombre:'Renato', emoji:'👤', color:'#f97316'}
+];
+
 const S={
   view:'setup', tab:'hoy',
-  clients:[], pagos:[], stock:{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]}, entregas:[],
+  clients:[], pagos:[], entregas:[], arqueos:[],
+  stock:{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]},
   selected:null, search:'', filter:'todos', ordenar:'proxima',
   loading:false, syncing:false,
   scriptUrl:localStorage.getItem('aguacontrol_url')||'',
+  usuarioActual: localStorage.getItem('aguacontrol_user')||'',
+  completadasHoy: JSON.parse(localStorage.getItem('completadasHoy_'+today())||'[]'),
   showConfirmDelete:false, form:emptyForm(), detailTab:'info',
   modal:null, entregaForm:emptyEF(),
 };
 
 function emptyForm(){return{nroCliente:'',nombre:'',telefono:'',direccion:'',barrio:'',zona:'',bidones:6,notas:'',precioPorEntrega:40000,fotoUrl:'',dispenserFrioCalor:1,dispenserNatural:0,fechaInicio:today(),estado:'activo'};}
-function emptyEF(){return{bidones:6,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0,rapida:false};}
+function emptyEF(){return{bidones:6,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0,metodoPago:'',repartidor:S.usuarioActual||'',comprobante:''};}
 
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function addMonths(ds,n){const c=String(ds).substring(0,10).split('-');const d=new Date(+c[0],+c[1]-1+n,+c[2]);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -155,6 +181,7 @@ function fmtDate(ds){const c=cleanDate(ds);if(!c)return'—';const[y,m,d]=c.spli
 function fmtDateLong(ds){const c=cleanDate(ds);if(!c)return'—';const p=c.split('-');const d=new Date(+p[0],+p[1]-1,+p[2]);return d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});}
 function fmtMoney(n){return'$'+Number(n||0).toLocaleString('es-AR');}
 function fmtDateNow(){const d=new Date();return d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});}
+function repNombre(id){const r=REPARTIDORES.find(x=>x.id===id);return r?r.nombre:(id||'—');}
 
 function badgeD(days){
   if(days<0)return`<span class="badge b-ovd">Vencido ${Math.abs(days)}d</span>`;
@@ -164,7 +191,6 @@ function badgeD(days){
   return`<span class="badge b-ok">En ${days}d</span>`;
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
-
 function stats(){
   const ac=S.clients.filter(c=>c.estado==='activo');
   const v=ac.filter(c=>daysUntil(c.proximaEntrega)<0).length;
@@ -177,7 +203,26 @@ function totalCobrado(){return S.pagos.filter(p=>p.estado==='pagado').reduce((a,
 function entsCli(id){return S.entregas.filter(e=>e.clienteId==id).sort((a,b)=>new Date(cleanDate(b.fecha))-new Date(cleanDate(a.fecha)));}
 function nextNro(){return S.clients.length>0?Math.max(...S.clients.map(c=>parseInt(c.nroCliente)||0))+1:1;}
 
-// API
+// CAJA del día
+function cajaRepartidor(repId, metodo){
+  const hoy=today();
+  let total=0;
+  S.pagos.forEach(p=>{if(p.repartidor===repId&&cleanDate(p.fecha)===hoy&&p.estado==='pagado'&&(!metodo||p.metodoPago===metodo))total+=Number(p.monto);});
+  S.entregas.forEach(e=>{if(e.repartidor===repId&&cleanDate(e.fecha)===hoy&&e.cobrado&&(!metodo||e.metodoPago===metodo))total+=Number(e.monto);});
+  // Restar arqueos
+  S.arqueos.filter(a=>a.repartidor===repId&&cleanDate(a.fecha)===hoy).forEach(a=>{total-=Number(a.efectivoEntregado);});
+  return total;
+}
+function cajaMes(repId){
+  const mes=today().slice(0,7);
+  return S.pagos.filter(p=>p.repartidor===repId&&cleanDate(p.fecha).startsWith(mes)&&p.estado==='pagado').reduce((a,p)=>a+Number(p.monto),0)
+    +S.entregas.filter(e=>e.repartidor===repId&&cleanDate(e.fecha).startsWith(mes)&&e.cobrado).reduce((a,e)=>a+Number(e.monto),0);
+}
+function entregasHoyRep(repId){
+  return S.entregas.filter(e=>e.repartidor===repId&&cleanDate(e.fecha)===today()).length;
+}
+
+// JSONP API
 function jsonpCall(url){
   return new Promise((resolve,reject)=>{
     const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*9999);
@@ -192,16 +237,19 @@ function jsonpCall(url){
 async function api(action,data){let url=S.scriptUrl+'?action='+action;if(data)url+='&data='+encodeURIComponent(JSON.stringify(data));return jsonpCall(url);}
 async function fetchAll(){
   if(!S.scriptUrl)return;S.loading=true;render();
-  try{const r=await api('getAll');if(r.success){S.clients=r.clients||[];S.pagos=r.pagos||[];S.stock=r.stock||{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]};S.entregas=r.entregas||[];}else showToast('⚠️ '+r.error);}
+  try{const r=await api('getAll');if(r.success){S.clients=r.clients||[];S.pagos=r.pagos||[];S.stock=r.stock||{fcDisponibles:0,fcEnCasas:0,fcReparacion:0,natDisponibles:0,bidonesLlenos:0,bidonesVacios:0,historial:[]};S.entregas=r.entregas||[];S.arqueos=r.arqueos||[];}else showToast('⚠️ '+r.error);}
   catch(e){showToast('⚠️ '+e.message);}
   S.loading=false;render();
 }
 async function saveClients(){S.syncing=true;render();try{await api('saveClients',S.clients);}catch(e){showToast('⚠️ '+e.message);}S.syncing=false;render();}
 async function savePagoApi(p){try{await api('savePago',p);}catch(e){showToast('⚠️ '+e.message);}}
 async function saveStockApi(d){try{await api('saveStock',d);}catch(e){showToast('⚠️ '+e.message);}}
-async function saveEntregaApi(e){try{await api('saveEntrega',e);}catch(e){showToast('⚠️ '+e.message);}}
+async function saveEntregaApi(e){try{await api('saveEntrega',e);}catch(ex){showToast('⚠️ '+ex.message);}}
+async function saveArqueoApi(a){try{await api('saveArqueo',a);}catch(e){showToast('⚠️ '+e.message);}}
 
 // ACCIONES
+function setUsuario(id){S.usuarioActual=id;localStorage.setItem('aguacontrol_user',id);render();}
+
 function saveForm(){
   const f=S.form;if(!f.nombre.trim()||!f.direccion.trim()){showToast('⚠️ Completá nombre y dirección');return;}
   const prox=addMonths(f.fechaInicio,1);
@@ -218,16 +266,16 @@ function saveForm(){
   saveClients();S.view='lista';S.tab='clientes';S.form=emptyForm();S.selected=null;render();
 }
 
-function abrirModalEntrega(clienteId, rapida){
+function abrirModalEntrega(clienteId){
   const c=S.clients.find(x=>x.id===clienteId);if(!c)return;
   S.selected=c;
   const ult=entsCli(c.id)[0];
   S.entregaForm={
     bidones: ult?ult.bidones:c.bidones,
-    dispenserFCEntregados: ult?ult.dispenserFCEntregados:0,
-    dispenserFCRetirados: ult?ult.dispenserFCRetirados:0,
+    dispenserFCEntregados: 0, dispenserFCRetirados: 0,
     dispenserNatVendidos: ult?ult.dispenserNatVendidos:0,
-    notas:'', cobrado:false, monto:c.precioPorEntrega||0, rapida:!!rapida
+    notas:'', cobrado:false, monto:c.precioPorEntrega||0,
+    metodoPago:'', repartidor:S.usuarioActual||'',comprobante:''
   };
   S.modal='entrega';render();
 }
@@ -235,34 +283,79 @@ function abrirModalEntrega(clienteId, rapida){
 function confirmarEntrega(){
   const c=S.clients.find(x=>x.id===S.selected?.id)||S.selected;if(!c)return;
   const f=S.entregaForm;
+  if(f.cobrado&&!f.metodoPago){showToast('⚠️ Elegí método de pago');return;}
+  if(!f.repartidor){showToast('⚠️ Elegí el repartidor');return;}
   const bid=parseInt(f.bidones)||0,fcE=parseInt(f.dispenserFCEntregados)||0,fcR=parseInt(f.dispenserFCRetirados)||0,natV=parseInt(f.dispenserNatVendidos)||0,monto=parseFloat(f.monto)||0;
   const fechaHoy=today();
-  const entrega={id:Date.now(),clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,bidones:bid,dispenserFCEntregados:fcE,dispenserFCRetirados:fcR,dispenserNatVendidos:natV,notas:f.notas,cobrado:f.cobrado,monto};
+  const entrega={id:Date.now(),clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,bidones:bid,dispenserFCEntregados:fcE,dispenserFCRetirados:fcR,dispenserNatVendidos:natV,notas:f.notas,cobrado:f.cobrado,monto,metodoPago:f.cobrado?f.metodoPago:'',repartidor:f.repartidor,comprobante:f.comprobante||''};
   S.entregas.push(entrega);saveEntregaApi(entrega);
-  let ha=`Entrega — ${bid} bid.`;
-  if(fcE>0)ha+=` | +${fcE} F/C`;if(fcR>0)ha+=` | -${fcR} F/C ret.`;if(natV>0)ha+=` | ${natV} Nat.`;if(monto>0)ha+=` | ${f.cobrado?'✅':'⏳'} ${fmtMoney(monto)}`;
+  let ha=`📦 ${bid} bid.`;
+  if(fcE>0)ha+=` | +${fcE} F/C`;if(fcR>0)ha+=` | -${fcR} F/C ret.`;if(natV>0)ha+=` | ${natV} Nat.`;
+  if(monto>0)ha+=` | ${f.cobrado?'✅ '+f.metodoPago:'⏳ pendiente'}: ${fmtMoney(monto)}`;
+  if(f.repartidor)ha+=` | 👤 ${repNombre(f.repartidor)}`;
   const idx=S.clients.findIndex(x=>x.id===c.id);
   S.clients[idx]={...c,proximaEntrega:addMonths(fechaHoy,1),dispenserFrioCalor:Math.max(0,(c.dispenserFrioCalor||0)+fcE-fcR),historial:[{fecha:fechaHoy,accion:ha},...(c.historial||[])]};
   S.selected=S.clients[idx];
-  if(monto>0){const pago={id:Date.now()+1,clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,monto,concepto:`Entrega ${fmtDate(fechaHoy)}`,estado:f.cobrado?'pagado':'pendiente'};S.pagos.push(pago);savePagoApi(pago);}
+  if(monto>0){const pago={id:Date.now()+1,clienteId:c.id,clienteNombre:c.nombre,fecha:fechaHoy,monto,concepto:`Entrega ${fmtDate(fechaHoy)}`,estado:f.cobrado?'pagado':'pendiente',metodoPago:f.cobrado?f.metodoPago:'',repartidor:f.repartidor,comprobante:f.comprobante||''};S.pagos.push(pago);savePagoApi(pago);}
   const st={...S.stock};st.bidonesLlenos=Math.max(0,(st.bidonesLlenos||0)-bid);st.bidonesVacios=(st.bidonesVacios||0)+bid;st.fcDisponibles=Math.max(0,(st.fcDisponibles||0)-fcE+fcR);st.fcEnCasas=Math.max(0,(st.fcEnCasas||0)+fcE-fcR);st.natDisponibles=Math.max(0,(st.natDisponibles||0)-natV);
   S.stock=st;saveStockApi({...st,fecha:fechaHoy,nota:`Entrega ${c.nombre}`});
+  // Marcar como completada en checklist
+  if(!S.completadasHoy.includes(c.id)){S.completadasHoy.push(c.id);localStorage.setItem('completadasHoy_'+fechaHoy,JSON.stringify(S.completadasHoy));}
   saveClients();S.modal=null;S.entregaForm=emptyEF();showToast('✅ Entrega registrada');render();
 }
 
-function marcarPagado(id){const idx=S.pagos.findIndex(p=>p.id===id);if(idx<0)return;S.pagos[idx].estado='pagado';savePagoApi({updateId:id});showToast('✅ Cobro registrado');render();}
+function marcarPagado(id, metodo, rep){
+  const idx=S.pagos.findIndex(p=>p.id===id);if(idx<0)return;
+  if(!metodo){S.modal='cobrarPago';S.selected={pagoId:id};render();return;}
+  S.pagos[idx].estado='pagado';S.pagos[idx].metodoPago=metodo;S.pagos[idx].repartidor=rep||S.usuarioActual;
+  savePagoApi({updateId:id,metodoPago:metodo,repartidor:rep||S.usuarioActual});
+  showToast('✅ Cobro registrado');render();
+}
+
 function agregarPago(form){
   if(!form.clienteId||!form.monto){showToast('⚠️ Completá cliente y monto');return;}
+  if(form.estado==='pagado'&&!form.metodoPago){showToast('⚠️ Elegí método de pago');return;}
   const c=S.clients.find(x=>x.id==form.clienteId);
-  const p={id:Date.now(),clienteId:parseInt(form.clienteId),clienteNombre:c?.nombre||'',fecha:form.fecha||today(),monto:parseFloat(form.monto),concepto:form.concepto||'Entrega mensual',estado:form.estado||'pagado'};
+  const p={id:Date.now(),clienteId:parseInt(form.clienteId),clienteNombre:c?.nombre||'',fecha:form.fecha||today(),monto:parseFloat(form.monto),concepto:form.concepto||'Entrega mensual',estado:form.estado||'pagado',metodoPago:form.metodoPago||'',repartidor:form.repartidor||S.usuarioActual||''};
   S.pagos.push(p);savePagoApi(p);showToast('✅ Pago agregado');render();
 }
+
 function actualizarStock(form){
   const st={fcDisponibles:parseInt(form.fcD)||0,fcEnCasas:S.stock.fcEnCasas||0,fcReparacion:parseInt(form.fcR)||0,natDisponibles:parseInt(form.natD)||0,bidonesLlenos:parseInt(form.bL)||0,bidonesVacios:parseInt(form.bV)||0};
   S.stock={...S.stock,...st};saveStockApi({...st,fecha:today(),nota:form.nota||'Actualización manual'});showToast('✅ Stock actualizado');render();
 }
+
+function hacerArqueo(repId, monto, notas){
+  if(!monto||monto<=0){showToast('⚠️ Ingresá monto');return;}
+  const a={id:Date.now(),fecha:today(),repartidor:repId,efectivoEntregado:parseFloat(monto),notas:notas||''};
+  S.arqueos.push(a);saveArqueoApi(a);showToast(`✅ Arqueo de ${repNombre(repId)}: ${fmtMoney(monto)}`);S.modal=null;render();
+}
+
 function deleteClient(id){S.clients=S.clients.filter(c=>c.id!==id);S.showConfirmDelete=false;S.view='lista';S.selected=null;saveClients();render();}
-function cambiarEstado(id,estado){const idx=S.clients.findIndex(c=>c.id===id);if(idx>=0){S.clients[idx].estado=estado;saveClients();showToast(`✅ Cliente ${estado==='activo'?'activado':'pausado'}`);render();}}
+function cambiarEstado(id,estado){const idx=S.clients.findIndex(c=>c.id===id);if(idx>=0){S.clients[idx].estado=estado;saveClients();showToast(`✅ ${estado==='activo'?'Activado':'Pausado'}`);render();}}
+
+function generarResumenWA(){
+  const hoy=today();
+  const entsHoy=S.entregas.filter(e=>cleanDate(e.fecha)===hoy);
+  const cobradoEf=entsHoy.filter(e=>e.cobrado&&e.metodoPago==='efectivo').reduce((a,e)=>a+Number(e.monto),0);
+  const cobradoTr=entsHoy.filter(e=>e.cobrado&&e.metodoPago==='transferencia').reduce((a,e)=>a+Number(e.monto),0);
+  const pendiente=entsHoy.filter(e=>e.monto>0&&!e.cobrado).reduce((a,e)=>a+Number(e.monto),0);
+  let msg=`💧 *AguaControl — Resumen ${fmtDate(hoy)}*\n\n`;
+  msg+=`📦 Entregas realizadas: ${entsHoy.length}\n`;
+  msg+=`🫙 Bidones entregados: ${entsHoy.reduce((a,e)=>a+Number(e.bidones),0)}\n\n`;
+  msg+=`💰 *COBROS DEL DÍA*\n`;
+  msg+=`💵 Efectivo: ${fmtMoney(cobradoEf)}\n`;
+  msg+=`🏦 Transferencia: ${fmtMoney(cobradoTr)}\n`;
+  if(pendiente>0)msg+=`⏳ Pendiente: ${fmtMoney(pendiente)}\n`;
+  msg+=`\n👥 *POR REPARTIDOR*\n`;
+  REPARTIDORES.forEach(r=>{
+    const ents=entsHoy.filter(e=>e.repartidor===r.id);
+    if(ents.length>0){
+      msg+=`${r.nombre}: ${ents.length} entregas · ${fmtMoney(cajaRepartidor(r.id))}\n`;
+    }
+  });
+  return msg;
+}
 
 function filteredClients(){
   let list=[...S.clients];
@@ -272,7 +365,6 @@ function filteredClients(){
   if(S.filter==='urg')list=list.filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=5;});
   if(S.filter==='ovd')list=list.filter(c=>daysUntil(c.proximaEntrega)<0);
   if(S.filter==='deuda')list=list.filter(c=>cDeuda(c.id)>0);
-  // Ordenar
   if(S.ordenar==='proxima')list.sort((a,b)=>new Date(cleanDate(a.proximaEntrega))-new Date(cleanDate(b.proximaEntrega)));
   if(S.ordenar==='nombre')list.sort((a,b)=>a.nombre.localeCompare(b.nombre));
   if(S.ordenar==='nro')list.sort((a,b)=>(parseInt(a.nroCliente)||0)-(parseInt(b.nroCliente)||0));
@@ -281,7 +373,7 @@ function filteredClients(){
   return list;
 }
 
-// ============================================================ RENDER
+// RENDER
 function render(){document.getElementById('app').innerHTML=buildApp();renderModal();bindEvents();}
 
 function renderModal(){
@@ -293,38 +385,104 @@ function renderModal(){
         <div class="mt">📦 Registrar entrega<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:10px;background:#f0f9ff;border-radius:10px">
           <span class="nro">#${c.nroCliente}</span>
-          <div><div style="font-weight:800;font-size:14px">${c.nombre}</div><div style="font-size:11px;color:var(--muted)">${fmtDateLong(today())}</div></div>
+          <div><div style="font-weight:800;font-size:14px">${c.nombre}</div><div style="font-size:11px;color:var(--muted);text-transform:capitalize">${fmtDateLong(today())}</div></div>
         </div>
+
+        <div class="fg"><label class="fl">👤 Repartidor *</label>
+          <div class="repartidor-btns">
+            ${REPARTIDORES.map(r=>`<button type="button" class="repartidor-btn ${r.id} ${f.repartidor===r.id?'active':''}" data-rep="${r.id}">${r.emoji} ${r.nombre}</button>`).join('')}
+          </div>
+        </div>
+
         <div class="fg"><label class="fl">🫙 Bidones entregados</label><input class="fi" id="efB" type="number" min="0" value="${f.bidones}" style="font-size:18px;font-weight:900;text-align:center"></div>
         <div class="fr">
           <div class="fg"><label class="fl">❄️🔥 Disp. F/C entregados</label><input class="fi" id="efFCE" type="number" min="0" value="${f.dispenserFCEntregados}"></div>
           <div class="fg"><label class="fl">↩️ Disp. F/C retirados</label><input class="fi" id="efFCR" type="number" min="0" value="${f.dispenserFCRetirados}"></div>
         </div>
         <div class="fg"><label class="fl">💧 Disp. Natural vendidos</label><input class="fi" id="efNat" type="number" min="0" value="${f.dispenserNatVendidos}"></div>
-        <div class="fr">
-          <div class="fg"><label class="fl">💲 Monto</label><input class="fi" id="efM" type="number" min="0" value="${f.monto}"></div>
-          <div class="fg"><label class="fl">Estado cobro</label><select class="fi" id="efCob"><option value="false">⏳ Pendiente</option><option value="true">✅ Cobrado</option></select></div>
+
+        <div style="background:#f0f9ff;border-radius:11px;padding:10px;margin-bottom:10px">
+          <div class="fr">
+            <div class="fg" style="margin-bottom:0"><label class="fl">💲 Monto a cobrar</label><input class="fi" id="efM" type="number" min="0" value="${f.monto}" style="font-size:16px;font-weight:800"></div>
+            <div class="fg" style="margin-bottom:0"><label class="fl">Estado</label><select class="fi" id="efCob" style="font-size:13px"><option value="false">⏳ Pendiente</option><option value="true" ${f.cobrado?'selected':''}>✅ Cobrado</option></select></div>
+          </div>
+          <div id="metodoPagoBox" style="margin-top:10px;display:${f.cobrado?'block':'none'}">
+            <label class="fl">💳 Método de pago *</label>
+            <div class="metodo-btns">
+              <button type="button" class="metodo-btn efectivo ${f.metodoPago==='efectivo'?'active':''}" data-metodo="efectivo">💵 Efectivo</button>
+              <button type="button" class="metodo-btn transferencia ${f.metodoPago==='transferencia'?'active':''}" data-metodo="transferencia">🏦 Transferencia</button>
+            </div>
+          </div>
         </div>
+
+        <div class="fg"><label class="fl">📸 URL comprobante (opcional)</label><input class="fi" id="efComp" type="url" placeholder="https://..." value="${f.comprobante||''}"></div>
         <div class="fg"><label class="fl">📝 Notas</label><input class="fi" id="efN" type="text" placeholder="Observaciones..." value="${f.notas}"></div>
+
         <button class="btn bp btn-blk" id="cfBtn">✅ Confirmar entrega</button>
         <button class="btn btn-gr btn-blk" id="mClose2">Cancelar</button>
       </div></div>`;
-  }else{m.innerHTML='';}
+  }
+  else if(S.modal==='cobrarPago'&&S.selected?.pagoId){
+    const p=S.pagos.find(x=>x.id===S.selected.pagoId);if(!p){S.modal=null;return;}
+    m.innerHTML=`<div class="mo" id="mOv">
+      <div class="md">
+        <div class="mt">💰 Registrar cobro<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>
+        <div style="padding:10px;background:#f0f9ff;border-radius:10px;margin-bottom:14px">
+          <div style="font-weight:800;font-size:14px">${p.clienteNombre}</div>
+          <div style="font-size:12px;color:var(--muted)">${p.concepto} — ${fmtDate(p.fecha)}</div>
+          <div style="font-weight:900;font-size:22px;color:var(--ok);margin-top:6px">${fmtMoney(p.monto)}</div>
+        </div>
+        <div class="fg"><label class="fl">💳 Método de pago *</label>
+          <div class="metodo-btns">
+            <button type="button" class="metodo-btn efectivo" data-cmet="efectivo">💵 Efectivo</button>
+            <button type="button" class="metodo-btn transferencia" data-cmet="transferencia">🏦 Transferencia</button>
+          </div>
+        </div>
+        <div class="fg"><label class="fl">👤 Repartidor que cobra *</label>
+          <div class="repartidor-btns">
+            ${REPARTIDORES.map(r=>`<button type="button" class="repartidor-btn ${r.id} ${(S.usuarioActual===r.id)?'active':''}" data-crep="${r.id}">${r.emoji} ${r.nombre}</button>`).join('')}
+          </div>
+        </div>
+        <button class="btn bs btn-blk" id="cConfirmBtn">✅ Confirmar cobro</button>
+        <button class="btn btn-gr btn-blk" id="mClose2">Cancelar</button>
+      </div></div>`;
+  }
+  else if(S.modal==='arqueo'&&S.selected?.repartidor){
+    const repId=S.selected.repartidor;const r=REPARTIDORES.find(x=>x.id===repId);
+    const caja=cajaRepartidor(repId,'efectivo');
+    m.innerHTML=`<div class="mo" id="mOv">
+      <div class="md">
+        <div class="mt">🏦 Arqueo de caja<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>
+        <div class="caja-box caja-${repId}" style="margin-bottom:14px">
+          <div class="caja-lbl">💵 EFECTIVO EN CAJA</div>
+          <div style="font-weight:800;font-size:14px">${r.nombre}</div>
+          <div class="caja-num">${fmtMoney(caja)}</div>
+        </div>
+        <div class="fg"><label class="fl">💰 Efectivo a entregar</label><input class="fi" id="arqMonto" type="number" value="${caja}" style="font-size:18px;font-weight:900;text-align:center"></div>
+        <div class="fg"><label class="fl">📝 Notas</label><input class="fi" id="arqNotas" type="text" placeholder="Entregado a..."></div>
+        <button class="btn bs btn-blk" id="arqConfirmBtn">✅ Registrar arqueo</button>
+        <button class="btn btn-gr btn-blk" id="mClose2">Cancelar</button>
+      </div></div>`;
+  }
+  else{m.innerHTML='';}
 }
 
 function buildApp(){
   if(S.view==='setup')return buildSetup();
+  if(!S.usuarioActual)return buildSelectUser();
   const s=stats();
-  const fechaHoy=fmtDateNow();
   return`<div class="header">
     <div class="header-top">
       <span style="font-size:22px">💧</span>
-      <div><div class="header-title">AguaControl</div><div style="font-size:10px;opacity:.7;text-transform:capitalize">${fechaHoy}</div></div>
+      <div><div class="header-title">AguaControl</div><div style="font-size:10px;opacity:.7;text-transform:capitalize">${fmtDateNow()}</div></div>
       ${S.syncing?'<span style="margin-left:auto;font-size:10px;opacity:.7">☁️...</span>':''}
+    </div>
+    <div class="user-selector">
+      ${REPARTIDORES.map(r=>`<button class="user-btn ${S.usuarioActual===r.id?'active':''}" data-user="${r.id}"><span class="user-dot" style="background:${r.color}"></span>${r.emoji} ${r.nombre}</button>`).join('')}
     </div>
     <div class="stats">
       ${[{l:'Clientes',v:s.total,c:'#38bdf8',bg:'rgba(56,189,248,.15)'},{l:'Hoy',v:s.hoy,c:'#4ade80',bg:'rgba(74,222,128,.15)'},{l:'Urgentes',v:s.urgentes,c:'#fb923c',bg:'rgba(251,146,60,.15)'},{l:'Deuda',v:fmtMoney(totalDeuda()),c:'#a78bfa',bg:'rgba(167,139,250,.15)'}]
-        .map(x=>`<div class="sc" style="background:${x.bg};border-color:${x.c}33"><div class="sv" style="color:${x.c};font-size:${x.l==='Deuda'?'10px':'16px'}">${x.v}</div><div class="sl">${x.l}</div></div>`).join('')}
+        .map(x=>`<div class="sc" style="background:${x.bg};border-color:${x.c}33"><div class="sv" style="color:${x.c};font-size:${x.l==='Deuda'?'10px':'15px'}">${x.v}</div><div class="sl">${x.l}</div></div>`).join('')}
     </div></div>
   <div class="main">
     ${S.tab==='hoy'?buildHoy():''}
@@ -342,19 +500,30 @@ function buildApp(){
   </nav>`;
 }
 
+function buildSelectUser(){
+  return`<div class="header"><div class="header-top"><span style="font-size:22px">💧</span><div><div class="header-title">AguaControl</div><div style="font-size:10px;opacity:.7">¿Quién sos?</div></div></div></div>
+  <div style="max-width:480px;margin:0 auto;padding:30px 16px">
+    <div class="card" style="text-align:center;padding:20px">
+      <div style="font-size:40px;margin-bottom:10px">👋</div>
+      <div style="font-weight:900;font-size:18px;margin-bottom:4px">¡Hola!</div>
+      <div style="color:var(--muted);font-size:13px;margin-bottom:20px">Seleccioná quién sos para continuar</div>
+      ${REPARTIDORES.map(r=>`<button class="btn btn-blk" style="background:${r.color};color:#fff" data-selectuser="${r.id}">${r.emoji} Soy ${r.nombre}</button>`).join('')}
+    </div>
+  </div>`;
+}
+
 function buildSetup(){
-  return`<div class="header"><div class="header-top"><span style="font-size:22px">💧</span><div><div class="header-title">AguaControl</div><div style="font-size:10px;opacity:.7">Configuración inicial</div></div></div></div>
+  return`<div class="header"><div class="header-top"><span style="font-size:22px">💧</span><div><div class="header-title">AguaControl</div><div style="font-size:10px;opacity:.7">Configuración</div></div></div></div>
   <div style="max-width:480px;margin:0 auto;padding:20px 16px"><div class="card">
     <div style="font-weight:900;font-size:18px;margin-bottom:5px">⚙️ Conectar Google Sheets</div>
-    <div style="color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.5">Pegá la URL de tu Google Apps Script para guardar todo en la nube.</div>
-    <div class="fg"><label class="fl">URL de Google Apps Script</label>
+    <div style="color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.5">Pegá la URL de Google Apps Script.</div>
+    <div class="fg"><label class="fl">URL</label>
       <input class="fi" id="urlInput" type="url" placeholder="https://script.google.com/macros/s/..." value="${S.scriptUrl}" style="font-size:11px"></div>
     <button class="btn bp btn-blk" id="connectBtn">🔗 Conectar</button>
-    ${S.scriptUrl?`<button class="btn btn-out btn-blk" id="skipBtn">Continuar sin cambios</button>`:''}
+    ${S.scriptUrl?`<button class="btn btn-out btn-blk" id="skipBtn">Continuar</button>`:''}
   </div></div>`;
 }
 
-// INICIO / HOY
 function buildHoy(){
   const hoy=S.clients.filter(c=>c.estado==='activo'&&daysUntil(c.proximaEntrega)===0);
   const esta_semana=S.clients.filter(c=>c.estado==='activo'&&daysUntil(c.proximaEntrega)>0&&daysUntil(c.proximaEntrega)<=7).sort((a,b)=>daysUntil(a.proximaEntrega)-daysUntil(b.proximaEntrega));
@@ -362,23 +531,34 @@ function buildHoy(){
   const pendientes=S.pagos.filter(p=>p.estado==='pendiente');
   return`${S.loading?'<div class="spinner"></div>':''}
   ${!S.loading?`
+  <!-- Cajas del día -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+    ${REPARTIDORES.map(r=>`<div class="caja-box caja-${r.id}">
+      <div class="caja-lbl">💵 CAJA ${r.nombre.toUpperCase()}</div>
+      <div class="caja-num">${fmtMoney(cajaRepartidor(r.id))}</div>
+      <div style="font-size:10px;opacity:.9;margin-top:4px">${entregasHoyRep(r.id)} entregas hoy</div>
+      ${cajaRepartidor(r.id,'efectivo')>0?`<button class="btn" style="background:rgba(255,255,255,.2);color:#fff;margin-top:6px;width:100%;padding:5px;font-size:11px" data-arqueo="${r.id}">🏦 Arqueo</button>`:''}
+    </div>`).join('')}
+  </div>
+
   <div class="qa">
-    <button class="qa-btn" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff" id="qaNewClient">
-      <span class="qa-icon">👤</span>Nuevo cliente
-    </button>
-    <button class="qa-btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff" id="qaRefresh">
-      <span class="qa-icon">🔄</span>Actualizar
-    </button>
+    <button class="qa-btn" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff" id="qaNewClient"><span class="qa-icon">👤</span>Nuevo cliente</button>
+    <button class="qa-btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff" id="qaResumen"><span class="qa-icon">📄</span>Resumen WA</button>
   </div>
 
   ${hoy.length>0?`<div class="hoy-card">
     <div class="hoy-title">🔔 Entregas de HOY (${hoy.length})</div>
-    <div class="hoy-sub">${fmtDateLong(today())}</div>
-    ${hoy.map(c=>`<div class="hoy-item">
-      <div><div class="hoy-nombre"><span class="nro" style="background:rgba(255,255,255,.2);color:#fff">#${c.nroCliente}</span>${c.nombre}</div>
-      <div class="hoy-dir">📍 ${c.barrio||c.direccion}${c.zona?' · '+c.zona:''} | 🫙 ${c.bidones} bid.</div></div>
-      <button class="btn bs btn-sm" data-cid="${c.id}" data-action="entregar">📦</button>
-    </div>`).join('')}
+    <div class="hoy-sub" style="text-transform:capitalize">${fmtDateLong(today())}</div>
+    ${hoy.map(c=>{
+      const done=S.completadasHoy.includes(c.id);
+      return`<div class="hoy-item ${done?'done':''}">
+        <div style="display:flex;align-items:center;gap:8px;flex:1">
+          <div class="check-icon ${done?'done':''}">${done?'✓':''}</div>
+          <div><div class="hoy-nombre"><span class="nro" style="background:rgba(255,255,255,.2);color:#fff">#${c.nroCliente}</span>${c.nombre}</div>
+          <div class="hoy-dir">📍 ${c.barrio||c.direccion}${c.zona?' · '+c.zona:''} | 🫙 ${c.bidones} bid.</div></div>
+        </div>
+        ${!done?`<button class="btn bs btn-sm" data-cid="${c.id}" data-action="entregar">📦</button>`:''}
+      </div>`;}).join('')}
   </div>`:`<div class="card ok-c" style="text-align:center;padding:16px"><div style="font-size:28px">✅</div><div style="font-weight:800;margin-top:4px">Sin entregas pendientes hoy</div></div>`}
 
   ${vencidos.length>0?`<div class="card" style="border-color:#fca5a5;background:#fff9f9">
@@ -403,18 +583,11 @@ function buildHoy(){
     </div>`).join('')}
     ${pendientes.length>5?`<div style="text-align:center;font-size:12px;color:var(--muted);margin-top:6px">y ${pendientes.length-5} más...</div>`:''}
   </div>`:''}
-
-  <div class="card">
-    <div class="st">📊 Resumen rápido</div>
-    ${[['👥 Clientes activos',S.clients.filter(c=>c.estado==='activo').length],['❄️🔥 Disp. F/C en casas',S.clients.reduce((a,c)=>a+(c.dispenserFrioCalor||0),0)],['🫙 Bidones llenos',S.stock.bidonesLlenos||0],['💰 Cobrado total',fmtMoney(totalCobrado())],['💸 Deuda total',fmtMoney(totalDeuda())]]
-      .map(([k,v])=>`<div class="sr"><span class="sk">${k}</span><span class="sv2">${v}</span></div>`).join('')}
-  </div>`:''}`;
+  `:''}`;
 }
 
-// LISTA CLIENTES
 function buildLista(){
   const list=filteredClients();
-  const zonas=[...new Set(S.clients.map(c=>c.zona).filter(Boolean))];
   return`<div class="sb"><input class="fi" id="srch" placeholder="🔍 Buscar por nombre, #, barrio, zona..." value="${S.search}"></div>
   <div class="fls">
     ${[['todos','Todos'],['urg','⚠️ Urgentes'],['ovd','🔴 Vencidos'],['deuda','💰 Deuda'],['pausados','⏸️ Pausados']]
@@ -432,7 +605,7 @@ function buildLista(){
     </select>
   </div>
   ${S.loading?'<div class="spinner"></div>':''}
-  ${!S.loading&&list.length===0?`<div class="empty"><div style="font-size:44px">📋</div><div style="font-weight:700;margin-top:8px">${S.clients.length===0?'Sin clientes aún':'Sin resultados'}</div><div style="font-size:12px;margin-top:4px">${S.clients.length===0?'Tocá + para agregar tu primer cliente':'Probá otro filtro'}</div></div>`:''}
+  ${!S.loading&&list.length===0?`<div class="empty"><div style="font-size:44px">📋</div><div style="font-weight:700;margin-top:8px">${S.clients.length===0?'Sin clientes aún':'Sin resultados'}</div><div style="font-size:12px;margin-top:4px">${S.clients.length===0?'Tocá + para agregar':'Probá otro filtro'}</div></div>`:''}
   ${list.map(c=>{
     const d=daysUntil(c.proximaEntrega),deuda=cDeuda(c.id),ult=entsCli(c.id)[0];
     return`<div class="card ${c.estado==='pausado'?'paused':d<0?'ovd':d<=5?'urg':''}" data-id="${c.id}" data-action="open" style="cursor:pointer">
@@ -452,14 +625,13 @@ function buildLista(){
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
         <div style="font-size:10px;color:var(--p);font-weight:700">
           🫙 ${c.bidones} bid. | 📅 ${fmtDate(c.proximaEntrega)}
-          ${ult?`<br>Última: ${fmtDate(ult.fecha)}`:''}
+          ${ult?`<br>Última: ${fmtDate(ult.fecha)}${ult.repartidor?' ('+repNombre(ult.repartidor)+')':''}`:''}
         </div>
         ${c.estado==='activo'?`<button class="btn bp btn-sm" data-cid="${c.id}" data-action="entregar">📦 Entregar</button>`:''}
       </div>
     </div>`;}).join('')}`;
 }
 
-// FORM
 function buildForm(){
   const f=S.form,isNew=S.view==='nuevo';
   return`<div class="ph"><button class="bb" id="backBtn">←</button><div class="pt">${isNew?'Nuevo Cliente':'Editar Cliente'}</div></div>
@@ -490,11 +662,10 @@ function buildForm(){
     <div class="fg"><label class="fl">💲 Precio/mes</label><input class="fi" data-field="precioPorEntrega" type="number" value="${f.precioPorEntrega||40000}"></div>
   </div>
   <div class="fg"><label class="fl">📷 URL foto (opcional)</label><input class="fi" data-field="fotoUrl" type="url" placeholder="https://..." value="${f.fotoUrl||''}"></div>
-  <div class="fg"><label class="fl">Notas</label><textarea class="fi" data-field="notas" rows="2" placeholder="Horarios, referencias, observaciones...">${f.notas||''}</textarea></div>
+  <div class="fg"><label class="fl">Notas</label><textarea class="fi" data-field="notas" rows="2" placeholder="Horarios, referencias...">${f.notas||''}</textarea></div>
   <button class="btn bp btn-blk" id="saveBtn">${isNew?'💧 Agregar cliente':'✏️ Guardar cambios'}</button>`;
 }
 
-// DETALLE
 function buildDetalle(){
   const c=S.clients.find(x=>x.id===S.selected?.id)||S.selected;if(!c)return'';
   const d=daysUntil(c.proximaEntrega),deuda=cDeuda(c.id);
@@ -502,7 +673,6 @@ function buildDetalle(){
   const ents=entsCli(c.id);
   const mapsUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.direccion+' '+(c.barrio||''))}`;
   const waUrl=c.telefono?`https://wa.me/54${c.telefono.replace(/\D/g,'')}`:null;
-
   return`<div class="ph">
     <button class="bb" id="backBtn">←</button>
     <div class="pt" style="font-size:14px"><span class="nro">#${c.nroCliente}</span>${c.nombre}</div>
@@ -514,7 +684,6 @@ function buildDetalle(){
     <button class="tab ${S.detailTab==='ents'?'active':''}" data-dtab="ents">📦 Entregas (${ents.length})</button>
     <button class="tab ${S.detailTab==='pagos'?'active':''}" data-dtab="pagos">💰 Pagos${deuda>0?' 🔴':''}</button>
   </div>
-
   ${S.detailTab==='info'?`
     <div class="card">
       <div class="dg">
@@ -522,9 +691,9 @@ function buildDetalle(){
           .map(x=>`<div class="di"><div class="dl">${x.i} ${x.l}</div><div class="dv">${x.v}</div></div>`).join('')}
       </div>
       <div style="background:#f0f9ff;border-radius:9px;padding:9px;margin-top:6px">
-        <div style="font-size:10px;font-weight:800;color:var(--p);margin-bottom:6px">🫙 DISPENSERS Y ESTADÍSTICAS</div>
+        <div style="font-size:10px;font-weight:800;color:var(--p);margin-bottom:6px">🫙 DISPENSERS Y STATS</div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
-          ${[{l:'F/C',v:c.dispenserFrioCalor||0},{l:'Natural',v:c.dispenserNatural||0},{l:'Entregas',v:ents.length},{l:'Bid. totales',v:ents.reduce((a,e)=>a+Number(e.bidones),0)}]
+          ${[{l:'F/C',v:c.dispenserFrioCalor||0},{l:'Natural',v:c.dispenserNatural||0},{l:'Entregas',v:ents.length},{l:'Bid. total',v:ents.reduce((a,e)=>a+Number(e.bidones),0)}]
             .map(x=>`<div style="text-align:center"><div style="font-weight:900;font-size:17px">${x.v}</div><div style="font-size:8px;color:var(--muted);font-weight:700">${x.l}</div></div>`).join('')}
         </div>
       </div>
@@ -537,75 +706,68 @@ function buildDetalle(){
     <div class="card ${d<0?'ovd':d<=5?'urg':'ok-c'}">
       <div style="font-weight:800;font-size:13px;margin-bottom:6px">📅 Próxima entrega</div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div><div style="font-size:20px;font-weight:900">${fmtDate(c.proximaEntrega)}</div><div style="font-size:11px;color:var(--muted)">${fmtDateLong(c.proximaEntrega)}</div></div>
+        <div><div style="font-size:20px;font-weight:900">${fmtDate(c.proximaEntrega)}</div><div style="font-size:11px;color:var(--muted);text-transform:capitalize">${fmtDateLong(c.proximaEntrega)}</div></div>
         ${badgeD(d)}
       </div>
       <button class="btn bp btn-blk" id="entBtn">📦 Registrar entrega</button>
     </div>
     <div class="card">
       <div class="st">⚙️ Acciones</div>
-      ${c.estado==='activo'
-        ?`<button class="btn btn-blk" style="background:#f1f5f9;color:var(--muted)" id="pausarBtn">⏸️ Pausar cliente</button>`
-        :`<button class="btn bs btn-blk" id="activarBtn">✅ Activar cliente</button>`}
+      ${c.estado==='activo'?`<button class="btn btn-blk" style="background:#f1f5f9;color:var(--muted)" id="pausarBtn">⏸️ Pausar cliente</button>`:`<button class="btn bs btn-blk" id="activarBtn">✅ Activar cliente</button>`}
       ${S.showConfirmDelete?`<div class="confirm-box"><div style="font-weight:700">¿Eliminar a ${c.nombre}?</div>
         <div class="cb2"><button class="btn btn-gr" style="flex:1" id="cancelDel">Cancelar</button><button class="btn" style="flex:1;background:#dc2626;color:#fff" id="confirmDel">Eliminar</button></div></div>`
         :`<button class="btn btn-danger btn-blk" id="deleteBtn">🗑️ Eliminar cliente</button>`}
     </div>
   `:''}
-
   ${S.detailTab==='ents'?`
     <div class="card">
       <div class="st">📦 Historial de entregas</div>
-      ${ents.length===0?'<div style="color:var(--muted);font-size:12px">Sin entregas registradas aún</div>':
+      ${ents.length===0?'<div style="color:var(--muted);font-size:12px">Sin entregas</div>':
         ents.map(e=>`<div class="ec">
-          <div class="ef">📅 ${fmtDate(e.fecha)}</div>
-          <div style="font-size:10px;color:var(--muted);margin-top:1px">${fmtDateLong(e.fecha)}</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div class="ef">📅 ${fmtDate(e.fecha)}</div>
+            ${e.repartidor?`<span class="chip b-${e.repartidor}">👤 ${repNombre(e.repartidor)}</span>`:''}
+          </div>
+          <div style="font-size:10px;color:var(--muted);margin-top:1px;text-transform:capitalize">${fmtDateLong(e.fecha)}</div>
           <div class="chips" style="margin-top:5px">
             <span class="chip" style="background:#dbeafe;color:#1d4ed8">🫙 ${e.bidones} bid.</span>
             ${e.dispenserFCEntregados>0?`<span class="chip b-fc">❄️🔥 +${e.dispenserFCEntregados}</span>`:''}
             ${e.dispenserFCRetirados>0?`<span class="chip" style="background:#fce7f3;color:#be185d">↩️ -${e.dispenserFCRetirados}</span>`:''}
             ${e.dispenserNatVendidos>0?`<span class="chip b-nat">💧 ${e.dispenserNatVendidos}</span>`:''}
-            ${e.monto>0?`<span class="chip ${e.cobrado?'b-paid':'b-pend'}">${e.cobrado?'✅':'⏳'} ${fmtMoney(e.monto)}</span>`:''}
+            ${e.monto>0?`<span class="chip ${e.cobrado?'b-paid':'b-pend'}">${e.cobrado?'✅':'⏳'} ${fmtMoney(e.monto)}${e.metodoPago?' '+(e.metodoPago==='efectivo'?'💵':'🏦'):''}</span>`:''}
           </div>
           ${e.notas?`<div style="font-size:10px;color:var(--muted);margin-top:3px">📝 ${e.notas}</div>`:''}
+          ${e.comprobante?`<div style="margin-top:5px"><a href="${e.comprobante}" target="_blank" style="font-size:10px;color:var(--p)">📸 Ver comprobante</a></div>`:''}
         </div>`).join('')}
     </div>
     <div style="text-align:center"><button class="btn bp btn-sm" id="entBtn2">📦 Nueva entrega</button></div>
   `:''}
-
   ${S.detailTab==='pagos'?`
     ${deuda>0?`<div class="card wn-c"><div style="font-weight:800">💰 Deuda: ${fmtMoney(deuda)}</div></div>`:`<div class="card ok-c"><div style="font-weight:800">✅ Sin deudas</div></div>`}
     <div class="card">
       <div class="st">📋 Pagos</div>
       ${pagosCli.length===0?'<div style="color:var(--muted);font-size:12px">Sin pagos</div>':
         pagosCli.map(p=>`<div class="pr">
-          <div><div class="pn">${p.concepto}</div><div class="pf">${fmtDate(p.fecha)}</div></div>
+          <div><div class="pn">${p.concepto}</div><div class="pf">${fmtDate(p.fecha)}${p.metodoPago?' · '+(p.metodoPago==='efectivo'?'💵 Efectivo':'🏦 Transf.'):''}${p.repartidor?' · 👤 '+repNombre(p.repartidor):''}</div></div>
           <div style="display:flex;align-items:center;gap:6px">
             <div class="pm">${fmtMoney(p.monto)}</div>
             ${p.estado==='pendiente'?`<button class="btn bs btn-sm" data-pagoid="${p.id}">✓</button>`:`<span class="badge b-paid">✅</span>`}
           </div>
         </div>`).join('')}
     </div>
-    <div class="card">
-      <div class="st">➕ Agregar pago</div>
-      <div class="fr">
-        <div class="fg"><label class="fl">Monto</label><input class="fi" id="dPM" type="number" placeholder="0"></div>
-        <div class="fg"><label class="fl">Estado</label><select class="fi" id="dPE"><option value="pagado">Pagado</option><option value="pendiente">Pendiente</option></select></div>
-      </div>
-      <div class="fg"><label class="fl">Concepto</label><input class="fi" id="dPC" type="text" value="Entrega mensual"></div>
-      <button class="btn bp btn-blk" id="addDetPago">💰 Agregar</button>
-    </div>
   `:''}`;
 }
 
-// PAGOS
 function buildPagos(){
   const pend=S.pagos.filter(p=>p.estado==='pendiente').sort((a,b)=>new Date(cleanDate(a.fecha))-new Date(cleanDate(b.fecha)));
   const rec=S.pagos.filter(p=>p.estado==='pagado').sort((a,b)=>new Date(cleanDate(b.fecha))-new Date(cleanDate(a.fecha))).slice(0,15);
-  return`<div class="st">💰 Pagos y cobros</div>
+  const mes=today().slice(0,7);
+  const efMes=S.pagos.filter(p=>p.estado==='pagado'&&p.metodoPago==='efectivo'&&cleanDate(p.fecha).startsWith(mes)).reduce((a,p)=>a+Number(p.monto),0);
+  const trMes=S.pagos.filter(p=>p.estado==='pagado'&&p.metodoPago==='transferencia'&&cleanDate(p.fecha).startsWith(mes)).reduce((a,p)=>a+Number(p.monto),0);
+  return`<div class="st">💰 Pagos</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-    <div class="card ok-c" style="text-align:center"><div style="font-size:9px;color:var(--muted);font-weight:700">COBRADO TOTAL</div><div style="font-weight:900;font-size:17px;color:var(--ok)">${fmtMoney(totalCobrado())}</div></div>
-    <div class="card" style="text-align:center;border-color:#fca5a5;background:#fff9f9"><div style="font-size:9px;color:var(--muted);font-weight:700">PENDIENTE</div><div style="font-weight:900;font-size:17px;color:var(--danger)">${fmtMoney(totalDeuda())}</div></div>
+    <div class="card" style="text-align:center;border-color:#86efac;background:#f0fdf4"><div style="font-size:9px;color:var(--muted);font-weight:700">💵 EFECTIVO (mes)</div><div style="font-weight:900;font-size:15px;color:var(--ok)">${fmtMoney(efMes)}</div></div>
+    <div class="card" style="text-align:center;border-color:#93c5fd;background:#eff6ff"><div style="font-size:9px;color:var(--muted);font-weight:700">🏦 TRANSFER. (mes)</div><div style="font-weight:900;font-size:15px;color:var(--p)">${fmtMoney(trMes)}</div></div>
   </div>
   ${pend.length>0?`<div class="card">
     <div class="st">🔴 Pendientes (${pend.length})</div>
@@ -616,8 +778,8 @@ function buildPagos(){
   </div>`:''}
   <div class="card">
     <div class="st">✅ Últimos cobros</div>
-    ${rec.length===0?'<div style="color:var(--muted);font-size:12px">Sin cobros aún</div>':
-      rec.map(p=>`<div class="pr"><div><div class="pn">${p.clienteNombre}</div><div class="pf">${p.concepto} — ${fmtDate(p.fecha)}</div></div><div class="pm">${fmtMoney(p.monto)}</div></div>`).join('')}
+    ${rec.length===0?'<div style="color:var(--muted);font-size:12px">Sin cobros</div>':
+      rec.map(p=>`<div class="pr"><div><div class="pn">${p.clienteNombre}</div><div class="pf">${p.concepto} — ${fmtDate(p.fecha)}${p.metodoPago?' · '+(p.metodoPago==='efectivo'?'💵':'🏦'):''}${p.repartidor?' · '+repNombre(p.repartidor):''}</div></div><div class="pm">${fmtMoney(p.monto)}</div></div>`).join('')}
   </div>
   <div class="card">
     <div class="st">➕ Registrar cobro</div>
@@ -626,12 +788,18 @@ function buildPagos(){
       <div class="fg"><label class="fl">Monto</label><input class="fi" id="gPM" type="number" placeholder="0"></div>
       <div class="fg"><label class="fl">Estado</label><select class="fi" id="gPE"><option value="pagado">Pagado</option><option value="pendiente">Pendiente</option></select></div>
     </div>
+    <div class="fg" id="gMetodoBox"><label class="fl">💳 Método</label>
+      <div class="metodo-btns">
+        <button type="button" class="metodo-btn efectivo" data-gmet="efectivo">💵 Efectivo</button>
+        <button type="button" class="metodo-btn transferencia" data-gmet="transferencia">🏦 Transferencia</button>
+      </div>
+      <input type="hidden" id="gPMet" value="">
+    </div>
     <div class="fg"><label class="fl">Concepto</label><input class="fi" id="gPCon" type="text" value="Entrega mensual"></div>
     <button class="btn bp btn-blk" id="gAddPago">💰 Registrar</button>
   </div>`;
 }
 
-// STOCK
 function buildStock(){
   const st=S.stock;
   const fcEnCasas=S.clients.filter(c=>c.estado==='activo').reduce((a,c)=>a+(c.dispenserFrioCalor||0),0);
@@ -661,7 +829,7 @@ function buildStock(){
       <div style="background:#fee2e2;border-radius:9px;padding:9px;text-align:center"><div style="font-weight:900;font-size:26px;color:#dc2626">${st.bidonesVacios||0}</div><div style="font-size:9px;font-weight:700;color:var(--muted)">🪣 VACÍOS</div></div>
     </div>
     <div class="pb"><div class="pf2" style="width:${pctBid}%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div>
-    <div style="font-size:10px;color:var(--muted);margin-top:3px">${pctBid}% llenos de ${totalBid} totales</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:3px">${pctBid}% llenos</div>
   </div>
   <div class="card">
     <div class="st">📝 Actualizar stock</div>
@@ -672,17 +840,16 @@ function buildStock(){
         <div class="fg"><label class="fl">En reparación</label><input class="fi" id="sFCr" type="number" min="0" value="${st.fcReparacion||0}"></div>
       </div>
     </div>
-    <div class="fg"><label class="fl">💧 Dispensers Natural disponibles</label><input class="fi" id="sNat" type="number" min="0" value="${st.natDisponibles||0}"></div>
+    <div class="fg"><label class="fl">💧 Dispensers Natural</label><input class="fi" id="sNat" type="number" min="0" value="${st.natDisponibles||0}"></div>
     <div class="fr">
       <div class="fg"><label class="fl">🫙 Bidones llenos</label><input class="fi" id="sBL" type="number" min="0" value="${st.bidonesLlenos||0}"></div>
       <div class="fg"><label class="fl">🪣 Bidones vacíos</label><input class="fi" id="sBV" type="number" min="0" value="${st.bidonesVacios||0}"></div>
     </div>
-    <div class="fg"><label class="fl">Nota</label><input class="fi" id="sNota" type="text" placeholder="Ej: Recibí 50 bidones llenos..."></div>
+    <div class="fg"><label class="fl">Nota</label><input class="fi" id="sNota" type="text" placeholder="Ej: Recibí 50 llenos..."></div>
     <button class="btn bp btn-blk" id="saveStockBtn">📦 Guardar stock</button>
   </div>`;
 }
 
-// REPORTE
 function buildReporte(){
   const mes=today().slice(0,7);
   const eM=S.entregas.filter(e=>cleanDate(e.fecha).startsWith(mes));
@@ -690,28 +857,36 @@ function buildReporte(){
   const fcM=eM.reduce((a,e)=>a+Number(e.dispenserFCEntregados||0),0);
   const natM=eM.reduce((a,e)=>a+Number(e.dispenserNatVendidos||0),0);
   const ingM=S.pagos.filter(p=>p.estado==='pagado'&&cleanDate(p.fecha).startsWith(mes)).reduce((a,p)=>a+Number(p.monto),0);
+  const efM=S.pagos.filter(p=>p.estado==='pagado'&&p.metodoPago==='efectivo'&&cleanDate(p.fecha).startsWith(mes)).reduce((a,p)=>a+Number(p.monto),0);
+  const trM=S.pagos.filter(p=>p.estado==='pagado'&&p.metodoPago==='transferencia'&&cleanDate(p.fecha).startsWith(mes)).reduce((a,p)=>a+Number(p.monto),0);
   const conDeuda=S.clients.filter(c=>cDeuda(c.id)>0);
-  const prox=S.clients.filter(c=>c.estado==='activo').filter(c=>{const d=daysUntil(c.proximaEntrega);return d>=0&&d<=7;}).sort((a,b)=>daysUntil(a.proximaEntrega)-daysUntil(b.proximaEntrega));
   const mesN=new Date().toLocaleString('es-AR',{month:'long',year:'numeric'});
-  // Agrupar por zona
-  const zonas={};S.clients.filter(c=>c.estado==='activo').forEach(c=>{const z=c.zona||c.barrio||'Sin zona';if(!zonas[z])zonas[z]=0;zonas[z]++;});
+  // Ranking repartidores
+  const ranking=REPARTIDORES.map(r=>{
+    const ents=S.entregas.filter(e=>e.repartidor===r.id&&cleanDate(e.fecha).startsWith(mes));
+    const cobrado=cajaMes(r.id);
+    return{...r,entregas:ents.length,cobrado,bidones:ents.reduce((a,e)=>a+Number(e.bidones),0)};
+  }).sort((a,b)=>b.cobrado-a.cobrado);
 
-  return`<div class="st">📊 Reporte</div>
+  return`<div class="st">📊 Reporte del mes</div>
   <div class="card">
     <div class="st" style="font-size:12px;text-transform:capitalize">📅 ${mesN}</div>
-    ${[['🚚 Entregas',eM.length],['🫙 Bidones entregados',bidM],['❄️🔥 Disp. F/C entregados',fcM],['💧 Disp. Natural vendidos',natM],['💰 Cobrado este mes',fmtMoney(ingM)],['🔴 Clientes con deuda',conDeuda.length],['💸 Deuda total',fmtMoney(totalDeuda())],['👥 Clientes activos',S.clients.filter(c=>c.estado==='activo').length],['⏸️ Clientes pausados',S.clients.filter(c=>c.estado==='pausado').length]]
+    ${[['🚚 Entregas',eM.length],['🫙 Bidones entregados',bidM],['❄️🔥 Disp. F/C entregados',fcM],['💧 Disp. Natural vendidos',natM],['💰 Cobrado total',fmtMoney(ingM)],['💵 Efectivo',fmtMoney(efM)],['🏦 Transferencia',fmtMoney(trM)],['🔴 Clientes con deuda',conDeuda.length],['💸 Deuda total',fmtMoney(totalDeuda())],['👥 Clientes activos',S.clients.filter(c=>c.estado==='activo').length]]
       .map(([k,v])=>`<div class="sr"><span class="sk">${k}</span><span class="sv2">${v}</span></div>`).join('')}
   </div>
-  ${prox.length>0?`<div class="card">
-    <div class="st">📅 Próximos 7 días</div>
-    ${prox.map(c=>`<div class="sr"><span class="sk"><span class="nro">#${c.nroCliente}</span>${c.nombre}<span class="zona-tag">${c.barrio||''}</span></span>
-      <div style="display:flex;align-items:center;gap:5px">${badgeD(daysUntil(c.proximaEntrega))}<span style="font-size:10px;color:var(--muted)">${fmtDate(c.proximaEntrega)}</span></div>
+
+  <div class="card">
+    <div class="st">🏆 Ranking de repartidores</div>
+    ${ranking.map((r,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9">
+      <div style="font-size:18px">${i===0?'🥇':i===1?'🥈':'🥉'}</div>
+      <div style="flex:1">
+        <div style="font-weight:800;font-size:13px">${r.emoji} ${r.nombre}</div>
+        <div style="font-size:10px;color:var(--muted)">${r.entregas} entregas · ${r.bidones} bidones</div>
+      </div>
+      <div style="font-weight:900;font-size:14px;color:var(--ok)">${fmtMoney(r.cobrado)}</div>
     </div>`).join('')}
-  </div>`:''}
-  ${Object.keys(zonas).length>0?`<div class="card">
-    <div class="st">📍 Clientes por zona</div>
-    ${Object.entries(zonas).sort((a,b)=>b[1]-a[1]).map(([z,n])=>`<div class="sr"><span class="sk">${z}</span><span class="sv2">${n} clientes</span></div>`).join('')}
-  </div>`:''}
+  </div>
+
   ${conDeuda.length>0?`<div class="card">
     <div class="st">💰 Clientes con deuda</div>
     ${conDeuda.map(c=>`<div class="sr"><span class="sk"><span class="nro">#${c.nroCliente}</span>${c.nombre}</span><span class="sv2" style="color:var(--danger)">${fmtMoney(cDeuda(c.id))}</span></div>`).join('')}
@@ -720,14 +895,24 @@ function buildReporte(){
 
 // BIND EVENTS
 function bindEvents(){
+  // Select user inicial
+  document.querySelectorAll('[data-selectuser]').forEach(b=>{b.onclick=()=>setUsuario(b.dataset.selectuser);});
+  // User switch
+  document.querySelectorAll('[data-user]').forEach(b=>{b.onclick=()=>setUsuario(b.dataset.user);});
+  // Tabs
   document.querySelectorAll('[data-tab]').forEach(b=>{b.onclick=()=>{S.tab=b.dataset.tab;if(S.tab!=='clientes')S.view='lista';render();};});
   const conn=document.getElementById('connectBtn');
   if(conn)conn.onclick=()=>{const url=document.getElementById('urlInput').value.trim();if(!url){showToast('⚠️ Ingresá la URL');return;}S.scriptUrl=url;localStorage.setItem('aguacontrol_url',url);S.view='lista';fetchAll();};
   const skip=document.getElementById('skipBtn');if(skip)skip.onclick=()=>{S.view='lista';fetchAll();};
   const fab=document.getElementById('fabBtn');if(fab)fab.onclick=()=>{S.form=emptyForm();S.view='nuevo';render();};
-  // Quick actions inicio
   const qaNC=document.getElementById('qaNewClient');if(qaNC)qaNC.onclick=()=>{S.tab='clientes';S.form=emptyForm();S.view='nuevo';render();};
-  const qaR=document.getElementById('qaRefresh');if(qaR)qaR.onclick=fetchAll;
+  const qaR=document.getElementById('qaResumen');if(qaR)qaR.onclick=()=>{
+    const msg=generarResumenWA();
+    const url='https://wa.me/?text='+encodeURIComponent(msg);
+    window.open(url,'_blank');
+  };
+  // Arqueo botones
+  document.querySelectorAll('[data-arqueo]').forEach(b=>{b.onclick=e=>{e.stopPropagation();S.modal='arqueo';S.selected={repartidor:b.dataset.arqueo};render();};});
   // Search & filter
   const srch=document.getElementById('srch');if(srch)srch.oninput=e=>{S.search=e.target.value;render();};
   document.querySelectorAll('[data-filter]').forEach(b=>{b.onclick=()=>{S.filter=b.dataset.filter;render();};});
@@ -739,9 +924,9 @@ function bindEvents(){
       S.selected=S.clients.find(c=>c.id===parseInt(card.dataset.id));
       S.showConfirmDelete=false;S.detailTab='info';S.view='detalle';render();};
   });
-  document.querySelectorAll('[data-action="entregar"],[data-cid]').forEach(b=>{
-    if(b.dataset.action==='entregar'||b.dataset.cid){
-      b.onclick=e=>{e.stopPropagation();const id=parseInt(b.dataset.cid||b.dataset.id);abrirModalEntrega(id);};
+  document.querySelectorAll('[data-cid]').forEach(b=>{
+    if(b.dataset.action==='entregar'||!b.dataset.arqueo){
+      b.onclick=e=>{e.stopPropagation();const id=parseInt(b.dataset.cid);abrirModalEntrega(id);};
     }
   });
   // Form fields
@@ -756,16 +941,15 @@ function bindEvents(){
   const backBtn=document.getElementById('backBtn');if(backBtn)backBtn.onclick=()=>{S.view='lista';S.selected=null;S.form=emptyForm();render();};
   const editBtn=document.getElementById('editBtn');
   if(editBtn)editBtn.onclick=()=>{const c=S.selected;S.form={nroCliente:c.nroCliente,nombre:c.nombre,telefono:c.telefono||'',direccion:c.direccion,barrio:c.barrio||'',zona:c.zona||'',fechaInicio:addMonths(c.proximaEntrega,-1),bidones:c.bidones,notas:c.notas||'',precioPorEntrega:c.precioPorEntrega||40000,fotoUrl:c.fotoUrl||'',dispenserFrioCalor:c.dispenserFrioCalor||0,dispenserNatural:c.dispenserNatural||0,estado:c.estado||'activo'};S.view='editar';render();};
-  // Detail tabs
   document.querySelectorAll('[data-dtab]').forEach(b=>{b.onclick=()=>{S.detailTab=b.dataset.dtab;render();};});
   const entBtn=document.getElementById('entBtn');if(entBtn)entBtn.onclick=()=>abrirModalEntrega(S.selected.id);
   const entBtn2=document.getElementById('entBtn2');if(entBtn2)entBtn2.onclick=()=>abrirModalEntrega(S.selected.id);
-  // Pagos
+  // Pagos - marcar pagado abre modal
   document.querySelectorAll('[data-pagoid]').forEach(b=>{b.onclick=()=>marcarPagado(parseInt(b.dataset.pagoid));});
-  const addDetPago=document.getElementById('addDetPago');
-  if(addDetPago)addDetPago.onclick=()=>agregarPago({clienteId:S.selected.id,monto:document.getElementById('dPM').value,estado:document.getElementById('dPE').value,concepto:document.getElementById('dPC').value});
+  // Pagos global
+  document.querySelectorAll('[data-gmet]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-gmet]').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('gPMet').value=b.dataset.gmet;};});
   const gAddPago=document.getElementById('gAddPago');
-  if(gAddPago)gAddPago.onclick=()=>agregarPago({clienteId:document.getElementById('gPC').value,monto:document.getElementById('gPM').value,estado:document.getElementById('gPE').value,concepto:document.getElementById('gPCon').value});
+  if(gAddPago)gAddPago.onclick=()=>agregarPago({clienteId:document.getElementById('gPC').value,monto:document.getElementById('gPM').value,estado:document.getElementById('gPE').value,concepto:document.getElementById('gPCon').value,metodoPago:document.getElementById('gPMet').value,repartidor:S.usuarioActual});
   // Stock
   const sStock=document.getElementById('saveStockBtn');
   if(sStock)sStock.onclick=()=>actualizarStock({fcD:document.getElementById('sFCd').value,fcR:document.getElementById('sFCr').value,natD:document.getElementById('sNat').value,bL:document.getElementById('sBL').value,bV:document.getElementById('sBV').value,nota:document.getElementById('sNota').value});
@@ -776,10 +960,18 @@ function bindEvents(){
   const delBtn=document.getElementById('deleteBtn');if(delBtn)delBtn.onclick=()=>{S.showConfirmDelete=true;render();};
   const cancelDel=document.getElementById('cancelDel');if(cancelDel)cancelDel.onclick=()=>{S.showConfirmDelete=false;render();};
   const confirmDel=document.getElementById('confirmDel');if(confirmDel)confirmDel.onclick=()=>deleteClient(S.selected.id);
-  // Modal
+  // Modal entrega
   const mClose=document.getElementById('mClose');if(mClose)mClose.onclick=()=>{S.modal=null;render();};
   const mClose2=document.getElementById('mClose2');if(mClose2)mClose2.onclick=()=>{S.modal=null;render();};
   const mOv=document.getElementById('mOv');if(mOv)mOv.onclick=e=>{if(e.target===mOv){S.modal=null;render();}};
+  // Método pago en modal entrega
+  document.querySelectorAll('[data-metodo]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-metodo]').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.entregaForm.metodoPago=b.dataset.metodo;};});
+  // Repartidor en modal entrega
+  document.querySelectorAll('[data-rep]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-rep]').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.entregaForm.repartidor=b.dataset.rep;};});
+  // Estado cobrado cambia visibilidad método
+  const efCob=document.getElementById('efCob');
+  if(efCob)efCob.onchange=e=>{document.getElementById('metodoPagoBox').style.display=e.target.value==='true'?'block':'none';S.entregaForm.cobrado=e.target.value==='true';};
+  // Confirmar entrega
   const cfBtn=document.getElementById('cfBtn');
   if(cfBtn)cfBtn.onclick=()=>{
     S.entregaForm.bidones=document.getElementById('efB').value;
@@ -789,11 +981,22 @@ function bindEvents(){
     S.entregaForm.monto=document.getElementById('efM').value;
     S.entregaForm.cobrado=document.getElementById('efCob').value==='true';
     S.entregaForm.notas=document.getElementById('efN').value;
+    S.entregaForm.comprobante=document.getElementById('efComp').value;
     confirmarEntrega();
   };
+  // Modal cobrar pago
+  let cobrarMet='',cobrarRep=S.usuarioActual;
+  document.querySelectorAll('[data-cmet]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-cmet]').forEach(x=>x.classList.remove('active'));b.classList.add('active');cobrarMet=b.dataset.cmet;};});
+  document.querySelectorAll('[data-crep]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('[data-crep]').forEach(x=>x.classList.remove('active'));b.classList.add('active');cobrarRep=b.dataset.crep;};});
+  const cConfirm=document.getElementById('cConfirmBtn');
+  if(cConfirm)cConfirm.onclick=()=>{if(!cobrarMet){showToast('⚠️ Elegí método');return;}if(!cobrarRep){showToast('⚠️ Elegí repartidor');return;}marcarPagado(S.selected.pagoId,cobrarMet,cobrarRep);S.modal=null;render();};
+  // Arqueo
+  const arqConfirm=document.getElementById('arqConfirmBtn');
+  if(arqConfirm)arqConfirm.onclick=()=>hacerArqueo(S.selected.repartidor,document.getElementById('arqMonto').value,document.getElementById('arqNotas').value);
 }
 
 if(S.scriptUrl){S.view='lista';render();fetchAll();}else render();
+
 </script>
 </body>
 </html>
