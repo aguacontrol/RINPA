@@ -157,8 +157,6 @@ const REPARTIDORES = [
   {id:'renato', nombre:'Renato', emoji:'👤', color:'#f97316'}
 ];
 
-function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-
 const S={
   view:'setup', tab:'hoy',
   clients:[], pagos:[], entregas:[], arqueos:[],
@@ -173,8 +171,9 @@ const S={
 };
 
 function emptyForm(){return{nroCliente:'',nombre:'',telefono:'',direccion:'',barrio:'',zona:'',bidones:6,notas:'',precioPorEntrega:40000,fotoUrl:'',dispenserFrioCalor:1,dispenserNatural:0,fechaInicio:today(),estado:'activo'};}
-function emptyEF(){return{bidones:6,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0,metodoPago:'',repartidor:(typeof S!=='undefined'?S.usuarioActual:'')||'',comprobante:''};}
+function emptyEF(){return{bidones:6,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0,metodoPago:'',repartidor:S.usuarioActual||'',comprobante:''};}
 
+function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function addMonths(ds,n){const c=String(ds).substring(0,10).split('-');const d=new Date(+c[0],+c[1]-1+n,+c[2]);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function cleanDate(ds){return ds?String(ds).substring(0,10):'';}
 function daysUntil(ds){const c=cleanDate(ds);if(!c)return 999;const p=c.split('-');const f=new Date(+p[0],+p[1]-1,+p[2]);const h=new Date();h.setHours(0,0,0,0);return Math.ceil((f-h)/864e5);}
