@@ -222,8 +222,9 @@ function showToast(msg){
   t.textContent = msg; t.classList.add('on');
   setTimeout(function(){t.classList.remove('on');}, 2800);
 }
+function esActivo(c){return c.estado!=='pausado';}
 function stats(){
-  var ac = S.clients.filter(function(c){return c.estado==='activo';});
+  var ac = S.clients.filter(esActivo);
   var v = ac.filter(function(c){return daysUntil(c.proximaEntrega)<0;}).length;
   var u = ac.filter(function(c){var d=daysUntil(c.proximaEntrega);return d>=0&&d<=5;}).length;
   var h = ac.filter(function(c){return daysUntil(c.proximaEntrega)===0;}).length;
@@ -525,7 +526,7 @@ function cambiarEstado(id, estado){
 function filteredClients(){
   var list = S.clients.slice();
   if(S.filter!=='todos' && S.filter!=='pausados')
-    list = list.filter(function(c){return c.estado==='activo';});
+    list = list.filter(function(c){return esActivo(c);});
   if(S.filter==='pausados')
     list = list.filter(function(c){return c.estado==='pausado';});
   if(S.search.trim()){
@@ -690,9 +691,9 @@ function buildSetup(){
 }
 
 function buildHoy(){
-  var hoy = S.clients.filter(function(c){return c.estado==='activo'&&daysUntil(c.proximaEntrega)===0;});
-  var semana = S.clients.filter(function(c){return c.estado==='activo'&&daysUntil(c.proximaEntrega)>0&&daysUntil(c.proximaEntrega)<=7;}).sort(function(a,b){return daysUntil(a.proximaEntrega)-daysUntil(b.proximaEntrega);});
-  var venc = S.clients.filter(function(c){return c.estado==='activo'&&daysUntil(c.proximaEntrega)<0;});
+  var hoy = S.clients.filter(function(c){return esActivo(c)&&daysUntil(c.proximaEntrega)===0;});
+  var semana = S.clients.filter(function(c){return esActivo(c)&&daysUntil(c.proximaEntrega)>0&&daysUntil(c.proximaEntrega)<=7;}).sort(function(a,b){return daysUntil(a.proximaEntrega)-daysUntil(b.proximaEntrega);});
+  var venc = S.clients.filter(function(c){return esActivo(c)&&daysUntil(c.proximaEntrega)<0;});
   var pend = S.pagos.filter(function(p){return p.estado==='pendiente';});
 
   var html = '';
@@ -787,7 +788,7 @@ function buildLista(){
     html += '<div class="card '+cls+'" data-id="'+c.id+'" data-act="open" style="cursor:pointer">'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px">'+
       '<div style="flex:1;min-width:0">'+
-      '<div style="font-weight:800;font-size:14px"><span class="nro">#'+c.nroCliente+'</span>'+c.nombre+(c.estado==='pausado'?'<span class="bdg" style="margin-left:4px;background:#f1f5f9;color:#64748b">Pausado</span>':'')+'</div>'+
+      '<div style="font-weight:800;font-size:14px"><span class="nro">#'+(c.nroCliente||'—')+'</span>'+c.nombre+(c.estado==='pausado'?'<span class="bdg" style="margin-left:4px;background:#f1f5f9;color:#64748b">Pausado</span>':'')+'</div>'+
       '<div style="font-size:11px;color:#64748b;margin-top:2px">📍 '+c.direccion+(c.barrio?' — '+c.barrio:'')+(c.zona?' <span class="zt">'+c.zona+'</span>':'')+'</div>'+
       (c.telefono?'<div style="font-size:11px;color:#64748b">📞 '+c.telefono+'</div>':'')+
       '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+
@@ -800,7 +801,7 @@ function buildLista(){
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">'+
       '<div style="font-size:10px;color:#0ea5e9;font-weight:700">🫙 '+c.bidones+' bid. | 📅 '+fmtDate(c.proximaEntrega)+
       (ult?'<br>Última: '+fmtDate(ult.fecha)+(ult.repartidor?' ('+repNombre(ult.repartidor)+')':''):'')+'</div>'+
-      (c.estado==='activo'?'<button class="btn bp bsm" data-cid="'+c.id+'" data-act="ent">📦 Entregar</button>':'')+
+      (esActivo(c)?'<button class="btn bp bsm" data-cid="'+c.id+'" data-act="ent">📦 Entregar</button>':'')+
       '</div></div>';
   });
   return html;
@@ -889,7 +890,7 @@ function buildDetalle(){
       '<button class="btn bp bb" id="entBtn">📦 Registrar entrega</button></div>';
 
     html += '<div class="card"><div class="st">⚙️ Acciones</div>';
-    if(c.estado==='activo') html += '<button class="btn bb" style="background:#f1f5f9;color:#64748b" id="psBtn">⏸️ Pausar cliente</button>';
+    if(esActivo(c)) html += '<button class="btn bb" style="background:#f1f5f9;color:#64748b" id="psBtn">⏸️ Pausar cliente</button>';
     else html += '<button class="btn bs bb" id="acBtn">✅ Activar cliente</button>';
     if(S.showConfirmDelete){
       html += '<div class="cbox"><div style="font-weight:700">¿Eliminar a '+c.nombre+'?</div>'+
@@ -985,7 +986,7 @@ function buildPagos(){
 
   html += '<div class="card"><div class="st">➕ Registrar cobro</div>'+
     '<div class="fg"><label class="fl">Cliente</label><select class="fi" id="gPC"><option value="">Seleccioná...</option>'+
-    S.clients.filter(function(c){return c.estado==='activo';}).sort(function(a,b){return a.nombre.localeCompare(b.nombre);}).map(function(c){return '<option value="'+c.id+'">#'+c.nroCliente+' '+c.nombre+'</option>';}).join('')+
+    S.clients.filter(function(c){return esActivo(c);}).sort(function(a,b){return a.nombre.localeCompare(b.nombre);}).map(function(c){return '<option value="'+c.id+'">#'+c.nroCliente+' '+c.nombre+'</option>';}).join('')+
     '</select></div>'+
     '<div class="fr">'+
     '<div class="fg"><label class="fl">Monto</label><input class="fi" id="gPM" type="number" placeholder="0"></div>'+
@@ -1004,7 +1005,7 @@ function buildPagos(){
 
 function buildStock(){
   var st = S.stock;
-  var fcEnCasas = S.clients.filter(function(c){return c.estado==='activo';}).reduce(function(a,c){return a+(c.dispenserFrioCalor||0);},0);
+  var fcEnCasas = S.clients.filter(function(c){return esActivo(c);}).reduce(function(a,c){return a+(c.dispenserFrioCalor||0);},0);
   var totalFC = (st.fcDisponibles||0)+fcEnCasas+(st.fcReparacion||0);
   var totalBid = (st.bidonesLlenos||0)+(st.bidonesVacios||0);
   var pctFC = totalFC>0?Math.round(((st.fcDisponibles||0)/totalFC)*100):0;
@@ -1068,7 +1069,7 @@ function buildReporte(){
   var html = '<div class="st">📊 Reporte del mes</div>'+
     '<div class="card">'+
     '<div class="st" style="font-size:12px;text-transform:capitalize">📅 '+mesN+'</div>'+
-    [['🚚 Entregas',eM.length],['🫙 Bidones entregados',bidM],['❄️🔥 Disp. F/C entregados',fcM],['💧 Disp. Natural vendidos',natM],['💰 Cobrado total',fmtMoney(ingM)],['💵 Efectivo',fmtMoney(efM)],['🏦 Transferencia',fmtMoney(trM)],['🔴 Con deuda',conDeuda.length],['💸 Deuda total',fmtMoney(totalDeuda())],['👥 Clientes activos',S.clients.filter(function(c){return c.estado==='activo';}).length]]
+    [['🚚 Entregas',eM.length],['🫙 Bidones entregados',bidM],['❄️🔥 Disp. F/C entregados',fcM],['💧 Disp. Natural vendidos',natM],['💰 Cobrado total',fmtMoney(ingM)],['💵 Efectivo',fmtMoney(efM)],['🏦 Transferencia',fmtMoney(trM)],['🔴 Con deuda',conDeuda.length],['💸 Deuda total',fmtMoney(totalDeuda())],['👥 Clientes activos',S.clients.filter(function(c){return esActivo(c);}).length]]
       .map(function(x){return '<div class="sr"><span class="sk">'+x[0]+'</span><span class="sv">'+x[1]+'</span></div>';}).join('')+
     '</div>';
 
