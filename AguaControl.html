@@ -144,8 +144,8 @@ select.fi{appearance:none}
 <div id="modal"></div>
 <script>
 var REPARTIDORES = [
-  {id:'lorenzo', nombre:'Lorenzo', color:'#8b5cf6', wa:'5492664878575'},
-  {id:'renato',  nombre:'Renato',  color:'#f97316', wa:'5492664878580'}
+  {id:'lorenzo', nombre:'Lorenzo', color:'#8b5cf6'},
+  {id:'renato', nombre:'Renato', color:'#f97316'}
 ];
 
 function today(){
@@ -164,21 +164,14 @@ var S = {
   showConfirmDelete: false,
   form: null, entregaForm: null,
   detailTab: 'info', modal: null,
-  cobrarMet: '', cobrarRep: '',
-  lastEntrega: null
+  cobrarMet: '', cobrarRep: ''
 };
 
 function emptyForm(){
   return {nroCliente:'',nombre:'',telefono:'',direccion:'',barrio:'',zona:'',bidones:6,notas:'',precioPorEntrega:40000,fotoUrl:'',dispenserFrioCalor:1,dispenserNatural:0,fechaInicio:today(),estado:'activo'};
 }
 function emptyEF(){
-  return {bidonesPromo:0,bidonesExtra:0,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0,metodoPago:'',repartidor:S.usuarioActual||'',comprobante:''};
-}
-
-function bidonesPromoDelMes(clientId){
-  var mes = today().slice(0,7);
-  return S.entregas.filter(function(e){return e.clienteId==clientId&&cleanDate(e.fecha).indexOf(mes)===0;})
-    .reduce(function(a,e){return a+(Number(e.bidonesPromo)||0);},0);
+  return {bidones:6,dispenserFCEntregados:0,dispenserFCRetirados:0,dispenserNatVendidos:0,notas:'',cobrado:false,monto:0,metodoPago:'',repartidor:S.usuarioActual||'',comprobante:''};
 }
 
 S.form = emptyForm();
@@ -353,7 +346,7 @@ function saveForm(){
         c.notas = f.notas; c.precioPorEntrega = parseFloat(f.precioPorEntrega)||40000;
         c.fotoUrl = f.fotoUrl; c.dispenserFrioCalor = fc; c.dispenserNatural = nat;
         c.estado = f.estado; c.proximaEntrega = prox;
-        c.nroCliente = (f.nroCliente !== '' && f.nroCliente !== null && f.nroCliente !== 0) ? f.nroCliente : c.nroCliente;
+        if(f.nroCliente) c.nroCliente = f.nroCliente;
         break;
       }
     }
@@ -368,11 +361,9 @@ function abrirModalEntrega(id){
   for(var i=0;i<S.clients.length;i++) if(S.clients[i].id===id){c=S.clients[i];break;}
   if(!c) return;
   S.selected = c;
-  var promoTotal = (c.dispenserFrioCalor||0)*6;
-  var promoRest = Math.max(0, promoTotal - bidonesPromoDelMes(c.id));
+  var ult = entsCli(c.id)[0];
   S.entregaForm = {
-    bidonesPromo: promoRest,
-    bidonesExtra: 0,
+    bidones: ult ? ult.bidones : c.bidones,
     dispenserFCEntregados: 0, dispenserFCRetirados: 0,
     dispenserNatVendidos: 0,
     notas: '', cobrado: false, monto: c.precioPorEntrega||0,
@@ -386,9 +377,7 @@ function confirmarEntrega(){
   var f = S.entregaForm;
   if(f.cobrado && !f.metodoPago){showToast('⚠️ Elegí método de pago'); return;}
   if(!f.repartidor){showToast('⚠️ Elegí repartidor'); return;}
-  var bidonesPromo = parseInt(f.bidonesPromo)||0;
-  var bidonesExtra = parseInt(f.bidonesExtra)||0;
-  var bid = bidonesPromo + bidonesExtra;
+  var bid = parseInt(f.bidones)||0;
   var fcE = parseInt(f.dispenserFCEntregados)||0;
   var fcR = parseInt(f.dispenserFCRetirados)||0;
   var natV = parseInt(f.dispenserNatVendidos)||0;
@@ -397,8 +386,7 @@ function confirmarEntrega(){
 
   var entrega = {
     id: Date.now(), clienteId: c.id, clienteNombre: c.nombre, fecha: fechaHoy,
-    bidones: bid, bidonesPromo: bidonesPromo, bidonesExtra: bidonesExtra,
-    dispenserFCEntregados: fcE, dispenserFCRetirados: fcR,
+    bidones: bid, dispenserFCEntregados: fcE, dispenserFCRetirados: fcR,
     dispenserNatVendidos: natV, notas: f.notas, cobrado: f.cobrado, monto: monto,
     metodoPago: f.cobrado ? f.metodoPago : '', repartidor: f.repartidor,
     comprobante: f.comprobante||''
@@ -406,10 +394,7 @@ function confirmarEntrega(){
   S.entregas.push(entrega);
   saveEntregaApi(entrega);
 
-  var ha = '📦 ';
-  if(bidonesPromo>0) ha += bidonesPromo+' promo';
-  if(bidonesExtra>0) ha += (bidonesPromo>0?' + ':'')+bidonesExtra+' extra';
-  if(bid===0) ha += '0 bid.'; else ha += ' bid.';
+  var ha = '📦 '+bid+' bid.';
   if(fcE>0) ha += ' | +'+fcE+' F/C';
   if(fcR>0) ha += ' | -'+fcR+' F/C ret.';
   if(natV>0) ha += ' | '+natV+' Nat.';
@@ -451,9 +436,8 @@ function confirmarEntrega(){
   });
 
   saveClients();
-  S.lastEntrega = entrega;
-  S.entregaForm = emptyEF();
-  S.modal = 'notifWA';
+  S.modal = null; S.entregaForm = emptyEF();
+  showToast('✅ Entrega registrada');
   render();
 }
 
@@ -577,32 +561,15 @@ function renderModal(){
   var m = document.getElementById('modal');
   if(S.modal==='entrega' && S.selected){
     var c = S.selected, f = S.entregaForm;
-    var tieneFC = (c.dispenserFrioCalor||0) > 0;
-    var promoTotal = (c.dispenserFrioCalor||0)*6;
-    var promoEnt = bidonesPromoDelMes(c.id);
-    var promoRest = Math.max(0, promoTotal - promoEnt);
     m.innerHTML = '<div class="mo" id="mOv"><div class="md">'+
       '<div class="mtt">📦 Registrar entrega<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>'+
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:10px;background:#f0f9ff;border-radius:10px">'+
-      '<span class="nro">#'+(c.nroCliente||'?')+'</span>'+
+      '<span class="nro">#'+c.nroCliente+'</span>'+
       '<div><div style="font-weight:800;font-size:14px">'+c.nombre+'</div><div style="font-size:11px;color:#64748b;text-transform:capitalize">'+fmtDateLong(today())+'</div></div></div>'+
       '<div class="fg"><label class="fl">👤 Repartidor *</label><div class="rpb">'+
       REPARTIDORES.map(function(r){return '<button type="button" class="rbn '+(r.id==='lorenzo'?'lo':'re')+' '+(f.repartidor===r.id?'on':'')+'" data-rep="'+r.id+'">👤 '+r.nombre+'</button>';}).join('')+
       '</div></div>'+
-      (tieneFC ?
-        '<div style="background:#f0fdf4;border-radius:11px;padding:10px;margin-bottom:10px;border:1.5px solid #86efac">'+
-        '<div style="font-size:10px;font-weight:800;color:#15803d;margin-bottom:7px">❄️🔥 PROMO FC — '+c.dispenserFrioCalor+' dispenser(s) · 6 bid./mes c/u</div>'+
-        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px">'+
-        '<div style="text-align:center"><div style="font-weight:900;font-size:22px;color:#15803d">'+promoTotal+'</div><div style="font-size:9px;color:#64748b;font-weight:700">Total/mes</div></div>'+
-        '<div style="text-align:center"><div style="font-weight:900;font-size:22px;color:'+(promoEnt>0?'#f97316':'#94a3b8')+'">'+promoEnt+'</div><div style="font-size:9px;color:#64748b;font-weight:700">Ya entregados</div></div>'+
-        '<div style="text-align:center"><div style="font-weight:900;font-size:22px;color:'+(promoRest>0?'#0ea5e9':'#22c55e')+'">'+promoRest+'</div><div style="font-size:9px;color:#64748b;font-weight:700">Restantes</div></div>'+
-        '</div>'+
-        '<label class="fl">🫙 Bidones PROMO a entregar ahora</label>'+
-        '<input class="fi" id="efBP" type="number" min="0" value="'+f.bidonesPromo+'" style="font-size:20px;font-weight:900;text-align:center">'+
-        '</div>'
-      : '')+
-      '<div class="fg"><label class="fl">'+(tieneFC?'➕ Bidones EXTRA (fuera de promo)':'🫙 Bidones a entregar')+'</label>'+
-      '<input class="fi" id="efBE" type="number" min="0" value="'+f.bidonesExtra+'" style="font-size:20px;font-weight:900;text-align:center"></div>'+
+      '<div class="fg"><label class="fl">🫙 Bidones entregados</label><input class="fi" id="efB" type="number" min="0" value="'+f.bidones+'" style="font-size:18px;font-weight:900;text-align:center"></div>'+
       '<div class="fr">'+
       '<div class="fg"><label class="fl">❄️🔥 F/C entregados</label><input class="fi" id="efFCE" type="number" min="0" value="'+f.dispenserFCEntregados+'"></div>'+
       '<div class="fg"><label class="fl">↩️ F/C retirados</label><input class="fi" id="efFCR" type="number" min="0" value="'+f.dispenserFCRetirados+'"></div>'+
@@ -662,26 +629,29 @@ function renderModal(){
       '<button class="btn bg bb" id="mClose2">Cancelar</button>'+
       '</div></div>';
   }
-  else if(S.modal==='notifWA' && S.lastEntrega){
-    var e = S.lastEntrega;
-    var prom = Number(e.bidonesPromo)||0, ext = Number(e.bidonesExtra)||0;
-    var bid = prom+ext || Number(e.bidones)||0;
-    var bidTxt = prom>0 ? (prom+' promo'+(ext>0?' + '+ext+' extra':'')) : bid+' bid.';
-    var waMsg =
-      '📦 *Entrega registrada*\n'+
-      '👤 '+e.clienteNombre+'\n'+
-      '🫙 '+bidTxt+'\n'+
-      '💰 '+(e.cobrado?'✅ Cobrado $'+e.monto:'⏳ Pendiente $'+e.monto)+
-      (e.metodoPago?' ('+e.metodoPago+')':'')+'\n'+
-      '👤 Repartidor: '+repNombre(e.repartidor)+'\n'+
-      '📅 '+fmtDate(e.fecha);
+  else if(S.modal==='cambiarFecha' && S.selected){
+    var c = S.selected;
     m.innerHTML = '<div class="mo" id="mOv"><div class="md">'+
-      '<div class="mtt">✅ Entrega registrada<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>'+
-      '<div style="background:#f0fdf4;border-radius:12px;padding:12px;margin-bottom:14px;border:1.5px solid #86efac;font-size:13px;white-space:pre-line;line-height:1.6" id="waMsgBox">'+waMsg+'</div>'+
-      '<div style="font-size:11px;color:#64748b;margin-bottom:10px;text-align:center">Copiá el mensaje y pegalo en el grupo 👇</div>'+
-      '<button class="btn bs bb" id="waCopyBtn">📋 Copiar mensaje</button>'+
-      '<a href="whatsapp://" class="btn bb" style="display:block;text-align:center;background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff;text-decoration:none;padding:12px;border-radius:11px;font-weight:800;font-size:13px;margin-bottom:7px">💬 Abrir WhatsApp</a>'+
-      '<button class="btn bg bb" id="mClose2">Cerrar sin avisar</button>'+
+      '<div class="mtt">📅 Cambiar fecha<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>'+
+      '<div class="fg"><label class="fl">Nueva fecha de próxima entrega</label>'+
+      '<input class="fi" id="nuevaFecha" type="date" value="'+cleanDate(c.proximaEntrega)+'" style="font-size:16px;font-weight:800"></div>'+
+      '<button class="btn bp bb" id="guardarFechaBtn">✅ Guardar</button>'+
+      '<button class="btn bg bb" id="mClose2">Cancelar</button>'+
+      '</div></div>';
+  }
+  else if(S.modal==='editarPago' && S.selected && S.selected.pagoId){
+    var p = null;
+    for(var i=0;i<S.pagos.length;i++) if(S.pagos[i].id===S.selected.pagoId){p=S.pagos[i];break;}
+    if(!p){S.modal=null; m.innerHTML=''; return;}
+    m.innerHTML = '<div class="mo" id="mOv"><div class="md">'+
+      '<div class="mtt">✏️ Editar pago<button style="background:none;border:none;font-size:20px;cursor:pointer" id="mClose">✕</button></div>'+
+      '<div style="padding:10px;background:#f0f9ff;border-radius:10px;margin-bottom:14px">'+
+      '<div style="font-weight:800;font-size:14px">'+p.clienteNombre+'</div>'+
+      '<div style="font-size:12px;color:#64748b">'+p.concepto+' — '+fmtDate(p.fecha)+'</div>'+
+      '<div style="font-weight:900;font-size:22px;color:#22c55e;margin-top:6px">'+fmtMoney(p.monto)+'</div></div>'+
+      '<div class="fg"><label class="fl">📸 Comprobante (URL)</label><input class="fi" id="editComprobante" type="url" placeholder="https://..." value="'+(p.comprobante||'')+'"></div>'+
+      '<button class="btn bs bb" id="guardarComprobanteBtn">✅ Guardar comprobante</button>'+
+      '<button class="btn bg bb" id="mClose2">Cancelar</button>'+
       '</div></div>';
   }
   else {
@@ -774,7 +744,7 @@ function buildHoy(){
       '<div class="hcs" style="text-transform:capitalize">'+fmtDateLong(today())+'</div>';
     hoy.forEach(function(c){
       html += '<div class="hci"><div style="display:flex;align-items:center;gap:8px;flex:1">'+
-        '<div><div class="hcn"><span class="nro" style="background:rgba(255,255,255,.2);color:#fff">#'+(c.nroCliente||'?')+'</span>'+c.nombre+'</div>'+
+        '<div><div class="hcn"><span class="nro" style="background:rgba(255,255,255,.2);color:#fff">#'+c.nroCliente+'</span>'+c.nombre+'</div>'+
         '<div class="hcd">📍 '+(c.barrio||c.direccion)+(c.zona?' · '+c.zona:'')+' | 🫙 '+c.bidones+' bid.</div></div></div>'+
         '<button class="btn bs bsm" data-cid="'+c.id+'" data-act="ent">📦</button></div>';
     });
@@ -786,7 +756,7 @@ function buildHoy(){
   if(venc.length>0){
     html += '<div class="card ovd"><div class="st">🔴 Vencidos ('+venc.length+')</div>';
     venc.forEach(function(c){
-      html += '<div class="sr"><span class="sk"><span class="nro">#'+(c.nroCliente||'?')+'</span>'+c.nombre+'</span>'+
+      html += '<div class="sr"><span class="sk"><span class="nro">#'+c.nroCliente+'</span>'+c.nombre+'</span>'+
         '<div style="display:flex;align-items:center;gap:6px">'+badgeD(daysUntil(c.proximaEntrega))+'<button class="btn bp bsm" data-cid="'+c.id+'" data-act="ent">📦</button></div></div>';
     });
     html += '</div>';
@@ -795,7 +765,7 @@ function buildHoy(){
   if(semana.length>0){
     html += '<div class="card"><div class="st">📅 Esta semana</div>';
     semana.forEach(function(c){
-      html += '<div class="sr"><span class="sk"><span class="nro">#'+(c.nroCliente||'?')+'</span>'+c.nombre+'<span class="zt">'+(c.barrio||'')+'</span></span>'+
+      html += '<div class="sr"><span class="sk"><span class="nro">#'+c.nroCliente+'</span>'+c.nombre+'<span class="zt">'+(c.barrio||'')+'</span></span>'+
         '<div style="display:flex;align-items:center;gap:5px">'+badgeD(daysUntil(c.proximaEntrega))+'<button class="btn bp bsm" data-cid="'+c.id+'" data-act="ent">📦</button></div></div>';
     });
     html += '</div>';
@@ -908,7 +878,7 @@ function buildDetalle(){
   var waUrl = c.telefono?'https://wa.me/54'+c.telefono.replace(/\D/g,''):null;
 
   var html = '<div class="ph"><button class="pbk" id="bkBtn">←</button>'+
-    '<div class="pt" style="font-size:14px"><span class="nro">#'+(c.nroCliente||'?')+'</span>'+c.nombre+'</div>'+
+    '<div class="pt" style="font-size:14px"><span class="nro">#'+c.nroCliente+'</span>'+c.nombre+'</div>'+
     '<button class="btn bo2" style="padding:5px 9px;font-size:11px" id="edBtn">✏️</button></div>';
 
   if(c.fotoUrl) html += '<img src="'+c.fotoUrl+'" class="fp" alt="foto">';
@@ -930,16 +900,6 @@ function buildDetalle(){
       [{l:'F/C',v:c.dispenserFrioCalor||0},{l:'Natural',v:c.dispenserNatural||0},{l:'Entregas',v:ents.length},{l:'Bid.total',v:ents.reduce(function(a,e){return a+Number(e.bidones);},0)}]
         .map(function(x){return '<div style="text-align:center"><div style="font-weight:900;font-size:17px">'+x.v+'</div><div style="font-size:8px;color:#64748b;font-weight:700">'+x.l+'</div></div>';}).join('')+
       '</div></div>';
-    if((c.dispenserFrioCalor||0)>0){
-      var pT=c.dispenserFrioCalor*6, pE=bidonesPromoDelMes(c.id), pR=Math.max(0,pT-pE);
-      html += '<div style="background:#f0fdf4;border-radius:9px;padding:9px;margin-top:7px;border:1.5px solid #86efac">'+
-        '<div style="font-size:10px;font-weight:800;color:#15803d;margin-bottom:5px">❄️🔥 PROMO FC ESTE MES</div>'+
-        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">'+
-        '<div style="text-align:center"><div style="font-weight:900;font-size:18px;color:#15803d">'+pT+'</div><div style="font-size:8px;color:#64748b;font-weight:700">Total</div></div>'+
-        '<div style="text-align:center"><div style="font-weight:900;font-size:18px;color:'+(pE>0?'#f97316':'#94a3b8')+'">'+pE+'</div><div style="font-size:8px;color:#64748b;font-weight:700">Entregados</div></div>'+
-        '<div style="text-align:center"><div style="font-weight:900;font-size:18px;color:'+(pR>0?'#0ea5e9':'#22c55e')+'">'+pR+'</div><div style="font-size:8px;color:#64748b;font-weight:700">Restantes</div></div>'+
-        '</div></div>';
-    }
     if(c.notas) html += '<div style="margin-top:8px;padding:7px 11px;background:#f0f9ff;border-radius:9px;font-size:12px;color:#0369a1">📝 '+c.notas+'</div>';
     html += '<div style="display:flex;gap:7px;margin-top:9px">'+
       '<a href="'+mapsUrl+'" target="_blank" class="mpb">🗺️ Mapa</a>'+
@@ -952,7 +912,8 @@ function buildDetalle(){
       '<div><div style="font-size:20px;font-weight:900">'+fmtDate(c.proximaEntrega)+'</div><div style="font-size:11px;color:#64748b;text-transform:capitalize">'+fmtDateLong(c.proximaEntrega)+'</div></div>'+
       badgeD(d)+
       '</div>'+
-      '<button class="btn bp bb" id="entBtn">📦 Registrar entrega</button></div>';
+      '<button class="btn bp bb" id="entBtn">📦 Registrar entrega</button>'+
+      '<button class="btn bo2 bb" id="cambiarFechaBtn">📅 Cambiar fecha</button></div>';
 
     html += '<div class="card"><div class="st">⚙️ Acciones</div>';
     if(esActivo(c)) html += '<button class="btn bb" style="background:#f1f5f9;color:#64748b" id="psBtn">⏸️ Pausar cliente</button>';
@@ -979,9 +940,7 @@ function buildDetalle(){
           '</div>'+
           '<div style="font-size:10px;color:#64748b;margin-top:1px;text-transform:capitalize">'+fmtDateLong(e.fecha)+'</div>'+
           '<div class="chips" style="margin-top:5px">'+
-          (e.bidonesPromo>0?'<span class="chip" style="background:#dcfce7;color:#15803d">🫙 '+e.bidonesPromo+' promo</span>':'')+
-          (e.bidonesExtra>0?'<span class="chip" style="background:#dbeafe;color:#1d4ed8">➕ '+e.bidonesExtra+' extra</span>':'')+
-          (!e.bidonesPromo&&!e.bidonesExtra&&e.bidones>0?'<span class="chip" style="background:#dbeafe;color:#1d4ed8">🫙 '+e.bidones+' bid.</span>':'')+
+          '<span class="chip" style="background:#dbeafe;color:#1d4ed8">🫙 '+e.bidones+' bid.</span>'+
           (e.dispenserFCEntregados>0?'<span class="chip b-fc">❄️🔥 +'+e.dispenserFCEntregados+'</span>':'')+
           (e.dispenserFCRetirados>0?'<span class="chip" style="background:#fce7f3;color:#be185d">↩️ -'+e.dispenserFCRetirados+'</span>':'')+
           (e.dispenserNatVendidos>0?'<span class="chip b-nt">💧 '+e.dispenserNatVendidos+'</span>':'')+
@@ -1002,13 +961,14 @@ function buildDetalle(){
     if(pagosCli.length===0) html += '<div style="color:#64748b;font-size:12px">Sin pagos</div>';
     else {
       pagosCli.forEach(function(p){
-        html += '<div class="pr">'+
+        html += '<div class="pr" style="cursor:pointer" data-editpago="'+p.id+'">'+
           '<div><div class="pn">'+p.concepto+'</div><div class="pf">'+fmtDate(p.fecha)+
           (p.metodoPago?' · '+(p.metodoPago==='efectivo'?'💵 Efectivo':'🏦 Transf.'):'')+
-          (p.repartidor?' · 👤 '+repNombre(p.repartidor):'')+'</div></div>'+
+          (p.repartidor?' · 👤 '+repNombre(p.repartidor):'')+
+          (p.comprobante?' · 📸':'')+'</div></div>'+
           '<div style="display:flex;align-items:center;gap:6px">'+
           '<div class="pm">'+fmtMoney(p.monto)+'</div>'+
-          (p.estado==='pendiente'?'<button class="btn bs bsm" data-pid="'+p.id+'">✓</button>':'<span class="bdg b-p">✅</span>')+
+          (p.estado==='pendiente'?'<button class="btn bs bsm" data-pid="'+p.id+'" onclick="event.stopPropagation()">✓</button>':'<span class="bdg b-p">✅</span>')+
           '</div></div>';
       });
     }
@@ -1156,7 +1116,7 @@ function buildReporte(){
   if(conDeuda.length>0){
     html += '<div class="card"><div class="st">💰 Clientes con deuda</div>';
     conDeuda.forEach(function(c){
-      html += '<div class="sr"><span class="sk"><span class="nro">#'+(c.nroCliente||'?')+'</span>'+c.nombre+'</span><span class="sv" style="color:#dc2626">'+fmtMoney(cDeuda(c.id))+'</span></div>';
+      html += '<div class="sr"><span class="sk"><span class="nro">#'+c.nroCliente+'</span>'+c.nombre+'</span><span class="sv" style="color:#dc2626">'+fmtMoney(cDeuda(c.id))+'</span></div>';
     });
     html += '</div>';
   }
@@ -1228,11 +1188,7 @@ function bindEvents(){
         else if(k==='precioPorEntrega') S.form[k]=parseFloat(e.target.value)||0;
         else S.form[k]=e.target.value;
       };
-      inp.onchange = function(e){
-        if(['bidones','dispenserFrioCalor','dispenserNatural','nroCliente'].indexOf(k)>=0) S.form[k]=parseInt(e.target.value)||0;
-        else if(k==='precioPorEntrega') S.form[k]=parseFloat(e.target.value)||0;
-        else S.form[k]=e.target.value;
-      };
+      inp.onchange = function(e){S.form[k]=e.target.value;};
     })(fields[i]);
   }
   var svBtn = document.getElementById('svBtn');
@@ -1310,11 +1266,11 @@ function bindEvents(){
   if(cfDl) cfDl.onclick = function(){deleteClient(S.selected.id);};
   // Modal close
   var mClose = document.getElementById('mClose');
-  if(mClose) mClose.onclick = function(){S.modal=null;S.lastEntrega=null;showToast('✅ Entrega registrada');render();};
+  if(mClose) mClose.onclick = function(){S.modal=null;render();};
   var mClose2 = document.getElementById('mClose2');
-  if(mClose2) mClose2.onclick = function(){S.modal=null;S.lastEntrega=null;showToast('✅ Entrega registrada');render();};
+  if(mClose2) mClose2.onclick = function(){S.modal=null;render();};
   var mOv = document.getElementById('mOv');
-  if(mOv) mOv.onclick = function(e){if(e.target===mOv){S.modal=null;S.lastEntrega=null;render();}};
+  if(mOv) mOv.onclick = function(e){if(e.target===mOv){S.modal=null;render();}};
   // Método entrega
   var mets = document.querySelectorAll('[data-met]');
   for(var i=0;i<mets.length;i++){
@@ -1346,9 +1302,7 @@ function bindEvents(){
   // Confirmar entrega
   var cfBtn = document.getElementById('cfBtn');
   if(cfBtn) cfBtn.onclick = function(){
-    var efBP = document.getElementById('efBP');
-    S.entregaForm.bidonesPromo = efBP ? (parseInt(efBP.value)||0) : 0;
-    S.entregaForm.bidonesExtra = parseInt(document.getElementById('efBE').value)||0;
+    S.entregaForm.bidones = document.getElementById('efB').value;
     S.entregaForm.dispenserFCEntregados = document.getElementById('efFCE').value;
     S.entregaForm.dispenserFCRetirados = document.getElementById('efFCR').value;
     S.entregaForm.dispenserNatVendidos = document.getElementById('efNat').value;
@@ -1386,17 +1340,49 @@ function bindEvents(){
   if(arqBtn) arqBtn.onclick = function(){
     hacerArqueo(S.selected.repartidor, document.getElementById('arqM').value, document.getElementById('arqN').value);
   };
-  var waCopyBtn = document.getElementById('waCopyBtn');
-  if(waCopyBtn) waCopyBtn.onclick = function(){
-    var txt = document.getElementById('waMsgBox') ? document.getElementById('waMsgBox').innerText : '';
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(txt).then(function(){showToast('📋 Mensaje copiado');});
-    } else {
-      var ta = document.createElement('textarea');
-      ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
-      document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); document.body.removeChild(ta);
-      showToast('📋 Mensaje copiado');
+  // Cambiar fecha
+  var cambiarFechaBtn = document.getElementById('cambiarFechaBtn');
+  if(cambiarFechaBtn) cambiarFechaBtn.onclick = function(){S.modal='cambiarFecha';render();};
+  var guardarFechaBtn = document.getElementById('guardarFechaBtn');
+  if(guardarFechaBtn) guardarFechaBtn.onclick = function(){
+    var nuevaFecha = document.getElementById('nuevaFecha').value;
+    if(!nuevaFecha){showToast('⚠️ Ingresá una fecha');return;}
+    for(var i=0;i<S.clients.length;i++){
+      if(S.clients[i].id===S.selected.id){
+        S.clients[i].proximaEntrega = nuevaFecha;
+        S.selected = S.clients[i];
+        break;
+      }
+    }
+    saveClients();
+    S.modal=null;
+    showToast('✅ Fecha actualizada');
+    render();
+  };
+  // Editar pago
+  var editPagos = document.querySelectorAll('[data-editpago]');
+  for(var i=0;i<editPagos.length;i++){
+    (function(el){
+      el.onclick = function(){
+        S.modal='editarPago';
+        S.selected = {pagoId: parseInt(el.getAttribute('data-editpago'))};
+        render();
+      };
+    })(editPagos[i]);
+  }
+  var guardarComprobanteBtn = document.getElementById('guardarComprobanteBtn');
+  if(guardarComprobanteBtn) guardarComprobanteBtn.onclick = function(){
+    var comprobante = document.getElementById('editComprobante').value;
+    for(var i=0;i<S.pagos.length;i++){
+      if(S.pagos[i].id === S.selected.pagoId){
+        S.pagos[i].comprobante = comprobante;
+        // Guardar en el backend
+        savePagoApi({pagoId: S.selected.pagoId, comprobante: comprobante});
+        showToast('✅ Comprobante guardado');
+        S.modal = null;
+        render();
+        return;
+      }
     }
   };
 }
