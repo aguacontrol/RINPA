@@ -1,0 +1,8 @@
+# Salidas generadas por los motores de imagen
+/salidas/*
+!/salidas/.gitkeep
+
+# Entornos / secrets
+.env
+__pycache__/
+*.pyc
